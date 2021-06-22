@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyAspect : IAspectBehaviour //may actually be a scriptable object or something
+public class DummyAspect : IAspectBehaviour
 {
     public int PlayerID { get; }
 

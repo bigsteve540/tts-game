@@ -8,6 +8,9 @@ using System;
 public enum ServerPackets
 {
     Welcome = 1,
+    TestPingReceived,
+    LoadDraft,
+    AspectLocked,
     SpawnAspects,
     ModifyAspectHealth
 }
@@ -15,15 +18,19 @@ public enum ServerPackets
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
 {
-    WelcomeReceived = 1
+    WelcomeReceived = 1,
+    TestPing,
+    DraftInteract
 }
 
 public static class Client
 {
+    public static System.Diagnostics.Stopwatch PingTimer = new System.Diagnostics.Stopwatch();
+    public static float CurrentPing;
 
     public static int dataBufferSize = 4096;
 
-    public static string IP = "127.0.0.1"; //<-- change this to some other shit for other servers
+    public static string IP = "94.15.186.228"; //<-- change this to some other shit for other servers
     public static int Port = 9009;
     public static int ID = 0;
     public static TCP tcp = new TCP();
@@ -150,7 +157,7 @@ public static class Client
                 {
                     using (NetworkPacket _packet = new NetworkPacket(_packetBytes))
                     {
-                        int _packetId = _packet.ReadInt();
+                        int _packetId = _packet.ReadInt(); //TODO: convert this to box the int into the enum instead, looks cleaner overall.
                         packetHandlers[_packetId](_packet); // Call appropriate method to handle the packet
                     }
                 });
@@ -289,6 +296,9 @@ public static class Client
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
             { (int)ServerPackets.Welcome, ClientHandle.Welcome },
+            { (int)ServerPackets.TestPingReceived, ClientHandle.TestPingReceived },
+            { (int)ServerPackets.LoadDraft, ClientHandle.LoadDraft },
+            { (int)ServerPackets.AspectLocked, ClientHandle.AspectLocked },
             { (int)ServerPackets.SpawnAspects, ClientHandle.SpawnAspects },
             { (int)ServerPackets.ModifyAspectHealth, ClientHandle.ModifyAspectHealth }
         };

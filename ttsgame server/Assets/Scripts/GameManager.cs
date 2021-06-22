@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public static int ActivePlayerID { get; private set; } = 0; //0 indicates not set
+    public static string[] ActiveBannedAspects;
+
     public static Dictionary<int, IAspectBehaviour> Entities = new Dictionary<int, IAspectBehaviour>();
     public static Dictionary<string, Type> AspectCodes = new Dictionary<string, Type>
     {
@@ -29,8 +32,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] tileVisuals;
 
-    // Start is called before the first frame update
     private static int IDCounter = 0;
+    private static int pickCounter = 0;
+    private static int banCounter = 0;
+
+    // Start is called before the first frame update
     public static int RegisterEntity(IAspectBehaviour _entity)
     {
         Entities.Add(IDCounter, _entity);
@@ -38,19 +44,47 @@ public class GameManager : MonoBehaviour
         return IDCounter++;
     }
 
+    public static void AssignNextActivePlayer()
+    {
+        if (ActivePlayerID == 0 || ++ActivePlayerID > GameSettings.TotalPlayers)
+            ActivePlayerID = 1;
+        Debug.Log($"Active player is {ActivePlayerID}");
+    }
+
+    public static void AssignAspect(string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
+    {
+        if (Server.State != ServerState.BanPhase && Server.State != ServerState.PickPhase)
+            return;
+
+        switch (Server.State)
+        {
+            case ServerState.BanPhase:
+                ActiveBannedAspects[banCounter] = _aspectCode;
+                banCounter++;
+                Debug.Log($"Successfully banned {_aspectCode}");
+                ServerSend.AspectLocked(true, _aspectCode);
+                if (banCounter >= GameSettings.TotalBans)
+                    Server.State = ServerState.PickPhase;
+                break;
+            case ServerState.PickPhase:
+                Server.Clients[ActivePlayerID].AddSelectedAspect(_aspectCode);
+                ServerSend.AspectLocked(false, _aspectCode);
+                if (pickCounter >= GameSettings.TotalAspects)
+                    Server.State = ServerState.Deployment;
+                break;
+        }
+    }
+
     void Start()
     {
-        GameSettings.Init(GameMode.Standard);
-        Tilemap.Init(10, 10/*, MapType.*/);
-
-        Server.Start(9009); //maybe can do drafting right before the game starts on the same server instance?
+        Tilemap.Init(GameMaps.TestMap); //TODO: move this after drafting phase is complete
+        Server.Start(9009, GameMode.Standard);
 
         //IAspectBehaviour gen = new GeneviveAspect(new Vector2(0, 1));
         //IAspectBehaviour d = new DummyAspect();
 
         //GameEventSystem.SubInterrupt(TestInterrupt); // <-- interrupt sample   
 
-        //Timeline.Progress();
         //Timeline.Progress();
         //Timeline.Progress();
         //d.MoveToTile(0, 9);
@@ -67,7 +101,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //private bool TestInterrupt(TimelineEventType[] _types)
+    //private bool TestInterrupt(int _IDofInteruppted, TimelineEventType[] _types)
     //{
     //    if (!_types.Contains(TimelineEventType.Damage))
     //        return false;

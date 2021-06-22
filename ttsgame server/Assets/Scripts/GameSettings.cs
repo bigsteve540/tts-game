@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameMode { Standard }
-public class GameSettings
+public static class GameSettings
 {
     public static int TeamCount { get; private set; }
-    public static int PlayerCount { get; private set; }
-    public static int PlayerAspectCount { get; private set; }
+    public static int PlayerCountPerTeam { get; private set; }
 
-    public static int PlayerTurnTimeLimit { get; private set; }
+    public static int AspectCountPerPlayer { get; private set; }
+    public static int AspectBansPerPlayer { get; private set; }
+
+    public static int TotalBans { get { return AspectBansPerPlayer * TotalPlayers; } }
+    public static int TotalPlayers { get { return TeamCount * PlayerCountPerTeam; } }
+    public static int TotalAspects { get { return AspectCountPerPlayer * TotalPlayers; } }
+
+    public static int PlayerDraftSelectionTime { get; private set; }
+    public static int PlayerTurnTime { get; private set; }
 
     public static void Init(GameMode _mode)
     {
@@ -17,10 +24,12 @@ public class GameSettings
         {
             case GameMode.Standard:
                 TeamCount = 2;
-                PlayerCount = 2;
-                PlayerAspectCount = 5;
+                PlayerCountPerTeam = 1;
+                AspectCountPerPlayer = 5;
+                AspectBansPerPlayer = 3;
 
-                PlayerTurnTimeLimit = 90;
+                PlayerDraftSelectionTime = 30;
+                PlayerTurnTime = 90;
                 break;
         }
     }

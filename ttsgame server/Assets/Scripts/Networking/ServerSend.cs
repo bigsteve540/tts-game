@@ -8,14 +8,14 @@ public static class ServerSend
     private static void SendTCPData(int _toClient, NetworkPacket _packet)
     {
         _packet.WriteLength();
-        Server.clients[_toClient].tcp.SendData(_packet);
+        Server.Clients[_toClient].tcp.SendData(_packet);
     }
     private static void SendTCPDataToAll(NetworkPacket _packet)
     {
         _packet.WriteLength();
         for (int i = 1; i <= Server.MaxPlayers; i++)
         {
-            Server.clients[i].tcp.SendData(_packet);
+            Server.Clients[i].tcp.SendData(_packet);
         }
     }
     private static void SendTCPDataToAll(int _exceptClient, NetworkPacket _packet)
@@ -25,7 +25,7 @@ public static class ServerSend
         {
             if (i != _exceptClient)
             {
-                Server.clients[i].tcp.SendData(_packet);
+                Server.Clients[i].tcp.SendData(_packet);
             }
         }
     }
@@ -33,14 +33,14 @@ public static class ServerSend
     private static void SendUDPData(int _toClient, NetworkPacket _packet)
     {
         _packet.WriteLength();
-        Server.clients[_toClient].udp.SendData(_packet);
+        Server.Clients[_toClient].udp.SendData(_packet);
     }
     private static void SendUDPDataToAll(NetworkPacket _packet)
     {
         _packet.WriteLength();
         for (int i = 1; i <= Server.MaxPlayers; i++)
         {
-            Server.clients[i].udp.SendData(_packet);
+            Server.Clients[i].udp.SendData(_packet);
         }
     }
     private static void SendUDPDataToAll(int _exceptClient, NetworkPacket _packet)
@@ -50,26 +50,54 @@ public static class ServerSend
         {
             if (i != _exceptClient)
             {
-                Server.clients[i].udp.SendData(_packet);
+                Server.Clients[i].udp.SendData(_packet);
             }
         }
     }
     #endregion  
 
-    public static void Welcome(int _toClient, Vector2 _mapDimensions, byte[] _mapData)
+    public static void Welcome(int _toClient)
     {
-        using (NetworkPacket _packet = new NetworkPacket((int)ServerPackets.welcome))
+        using (NetworkPacket _packet = new NetworkPacket((int)ServerPackets.Welcome))
         {
-            _packet.Write((int)_mapDimensions.y);
-            _packet.Write((int)_mapDimensions.x);
+            _packet.Write((int)Tilemap.Dimensions.y);
+            _packet.Write((int)Tilemap.Dimensions.x);
 
-            _packet.Write(_mapData);
+            _packet.Write(Tilemap.ConvertMapToBytes());
             _packet.Write(_toClient);
 
             SendTCPData(_toClient, _packet);
         }
     }
 
+    public static void TestPingReceived(int _fromClient)
+    {
+        using (NetworkPacket _packet = new NetworkPacket((int)ServerPackets.TestPingReceived))
+        {
+            SendTCPData(_fromClient, _packet);
+        }
+    }
+
+    public static void LoadDraft()
+    {
+        GameManager.ActiveBannedAspects = new string[GameSettings.AspectBansPerPlayer * GameSettings.TotalPlayers];
+        using(NetworkPacket _packet = new NetworkPacket((int)ServerPackets.LoadDraft))
+        {
+            SendTCPDataToAll(_packet);
+        }
+        SystemClockManager.Begin(GameSettings.PlayerDraftSelectionTime);
+    }
+
+    public static void AspectLocked(bool _isBanned, string _aspectCode)
+    {
+        using(NetworkPacket _packet = new NetworkPacket((int)ServerPackets.AspectLocked))
+        {
+            _packet.Write(_isBanned);
+            _packet.Write(GameManager.ActivePlayerID);
+            _packet.Write(_aspectCode);
+            SendTCPDataToAll(_packet);
+        }
+    }
     public static void SpawnAspects(IAspectBehaviour[] _aspects, int _toClient = -1)
     {
         using (NetworkPacket _packet = new NetworkPacket((int)ServerPackets.SpawnAspects))
@@ -78,9 +106,7 @@ public static class ServerSend
 
             foreach (IAspectBehaviour aspect in _aspects)
             {
-                int aspectID = aspect.AspectID;
-
-                _packet.Write(aspectID);
+                _packet.Write(aspect.AspectID);
                 _packet.Write(aspect.AspectName);
                 _packet.Write(aspect.CurrentHP);
 

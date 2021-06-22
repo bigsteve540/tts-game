@@ -5,11 +5,20 @@ using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
+public enum ServerState { Prep, BanPhase, PickPhase, Deployment, InGame, PostGame }
 public static class Server
 {
+    public static ServerState State = ServerState.Prep;
+
     public static int MaxPlayers { get; private set; }
+
+    public static int CurrentPlayers = 0;
+    public static bool IsFull { get { return CurrentPlayers == MaxPlayers; } }
+
     public static int Port { get; private set; }
-    public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
+
+    public static Dictionary<int, Client> Clients = new Dictionary<int, Client>();
+
     public delegate void PacketHandler(int _fromClient, NetworkPacket _packet);
     public static Dictionary<int, PacketHandler> packetHandlers;
 
@@ -19,11 +28,13 @@ public static class Server
     /// <summary>Starts the server.</summary>
     /// <param name="_maxPlayers">The maximum players that can be connected simultaneously.</param>
     /// <param name="_port">The port to start the server on.</param>
-    public static void Start(int _port)
+    public static void Start(int _port, GameMode _mode)
     {
         SystemLog.Print("Starting Server...");
 
-        MaxPlayers = GameSettings.PlayerCount;
+        GameSettings.Init(_mode);
+
+        MaxPlayers = GameSettings.TotalPlayers;
         Port = _port; 
 
         InitializeServerData();
@@ -50,9 +61,9 @@ public static class Server
 
         for (int i = 1; i <= MaxPlayers; i++)
         {
-            if (clients[i].tcp.socket == null)
+            if (Clients[i].tcp.socket == null)
             {
-                clients[i].tcp.Connect(_client);
+                Clients[i].tcp.Connect(_client);
                 return;
             }
         }
@@ -83,17 +94,17 @@ public static class Server
                     return;
                 }
 
-                if (clients[_clientId].udp.endPoint == null)
+                if (Clients[_clientId].udp.endPoint == null)
                 {
                     // If this is a new connection
-                    clients[_clientId].udp.Connect(_clientEndPoint);
+                    Clients[_clientId].udp.Connect(_clientEndPoint);
                     return;
                 }
 
-                if (clients[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
+                if (Clients[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
                 {
                     // Ensures that the client is not being impersonated by another by sending a false clientID
-                    clients[_clientId].udp.HandleData(_packet);
+                    Clients[_clientId].udp.HandleData(_packet);
                 }
             }
         }
@@ -122,12 +133,14 @@ public static class Server
     {
         for (int i = 1; i <= MaxPlayers; i++)
         {
-            clients.Add(i, new Client(i));
+            Clients.Add(i, new Client(i));
         }
 
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
-            { (int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
+            { (int)ClientPackets.WelcomeReceived, ServerHandle.WelcomeReceived },
+            { (int)ClientPackets.TestPing, ServerHandle.TestPing },
+            { (int)ClientPackets.DraftInteract, ServerHandle.DraftInteract }
         };
         SystemLog.Print("Initialized packets.");
     }

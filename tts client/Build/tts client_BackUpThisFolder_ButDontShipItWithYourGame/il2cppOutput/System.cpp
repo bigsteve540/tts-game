@@ -1238,6 +1238,7 @@ IL2CPP_EXTERN_C const uint32_t Socket_set_Blocking_mB447A573F44452B55F5D6B6105FD
 IL2CPP_EXTERN_C const uint32_t Socket_set_DontFragment_m2683AAA1C87A0E2CCC426EFA4D8BF5790AA2D136_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Socket_set_DualMode_mDC9084953B95EBF0B75B69D0E37F7E8B43612C9A_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Stopwatch_Start_mF61332B96D7753ADA18366A29E22E2A92E25739A_MetadataUsageId;
+IL2CPP_EXTERN_C const uint32_t Stopwatch_Stop_m8AE20980FC1C80DFAC27FA7E2BAFC88E94B839B3_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Stopwatch__cctor_m137C0B2E7182FAEA6E030CD1EDC909E5A3F7A064_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Stopwatch_get_ElapsedMilliseconds_mE39424FB61C885BCFCC4B583C58A8630C3AD8177_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Stopwatch_get_ElapsedTicks_mABB4710231090C75F057E90A29C71C553077A901_MetadataUsageId;
@@ -11572,6 +11573,15 @@ IL_000f:
 		return ((int64_t)il2cpp_codegen_add((int64_t)((int64_t)il2cpp_codegen_subtract((int64_t)L_2, (int64_t)L_3)), (int64_t)L_4));
 	}
 }
+// System.Void System.Diagnostics.Stopwatch::Reset()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Stopwatch_Reset_mB73BF189F4BF781A8587C2CAAD00B2B0EBA79765 (Stopwatch_t0778B5C8DF8FE1D87FC57A2411DA695850BD64D4 * __this, const RuntimeMethod* method)
+{
+	{
+		__this->set_elapsed_2((((int64_t)((int64_t)0))));
+		__this->set_is_running_4((bool)0);
+		return;
+	}
+}
 // System.Void System.Diagnostics.Stopwatch::Start()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Stopwatch_Start_mF61332B96D7753ADA18366A29E22E2A92E25739A (Stopwatch_t0778B5C8DF8FE1D87FC57A2411DA695850BD64D4 * __this, const RuntimeMethod* method)
 {
@@ -11598,6 +11608,49 @@ IL_0009:
 		int64_t L_1 = Stopwatch_GetTimestamp_m7A4B2D144D880343DB783326F36F6996C1D1A1CA(/*hidden argument*/NULL);
 		__this->set_started_3(L_1);
 		__this->set_is_running_4((bool)1);
+		return;
+	}
+}
+// System.Void System.Diagnostics.Stopwatch::Stop()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Stopwatch_Stop_m8AE20980FC1C80DFAC27FA7E2BAFC88E94B839B3 (Stopwatch_t0778B5C8DF8FE1D87FC57A2411DA695850BD64D4 * __this, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_method (Stopwatch_Stop_m8AE20980FC1C80DFAC27FA7E2BAFC88E94B839B3_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	{
+		bool L_0 = __this->get_is_running_4();
+		if (L_0)
+		{
+			goto IL_0009;
+		}
+	}
+	{
+		return;
+	}
+
+IL_0009:
+	{
+		int64_t L_1 = __this->get_elapsed_2();
+		IL2CPP_RUNTIME_CLASS_INIT(Stopwatch_t0778B5C8DF8FE1D87FC57A2411DA695850BD64D4_il2cpp_TypeInfo_var);
+		int64_t L_2 = Stopwatch_GetTimestamp_m7A4B2D144D880343DB783326F36F6996C1D1A1CA(/*hidden argument*/NULL);
+		int64_t L_3 = __this->get_started_3();
+		__this->set_elapsed_2(((int64_t)il2cpp_codegen_add((int64_t)L_1, (int64_t)((int64_t)il2cpp_codegen_subtract((int64_t)L_2, (int64_t)L_3)))));
+		int64_t L_4 = __this->get_elapsed_2();
+		if ((((int64_t)L_4) >= ((int64_t)(((int64_t)((int64_t)0))))))
+		{
+			goto IL_0034;
+		}
+	}
+	{
+		__this->set_elapsed_2((((int64_t)((int64_t)0))));
+	}
+
+IL_0034:
+	{
+		__this->set_is_running_4((bool)0);
 		return;
 	}
 }

@@ -7,18 +7,6 @@ public abstract class GameEventInfo
 
 }
 
-public class TimelineEventInfo : GameEventInfo
-{
-    public int AspectID { get; }
-    public TimelineEventType[] Types { get; }
-
-    public TimelineEventInfo(int _id, TimelineEventType[] _types)
-    {
-        AspectID = _id;
-        Types = _types;
-    }
-}
-
 public enum StatModifierType { Flat, Max, Missing, Current }
 public class HealthModifiedEventInfo : GameEventInfo
 {
@@ -27,7 +15,7 @@ public class HealthModifiedEventInfo : GameEventInfo
     public int TargetID { get; }
 
     public StatModifierType Type;
-    public float Value; //unsigned int; negative for damage positive for healing
+    public float Value; //unsigned value; negative for damage, positive for healing
 
     public bool IsDamage()
     {

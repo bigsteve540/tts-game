@@ -5,8 +5,6 @@ using UnityEngine;
 public enum TimelineEventType { Any, Movement, Damage, Heal, Interrupt }
 public static class Timeline
 {
-    public delegate void EventInterruptHandler(in TimelineEventInfo _eventInfo, ref bool _interrupted);
-
     public static int TotalElapsedInitiative { get; private set; } = 0;
 
     private static List<ITimelineEvent> timelineEvents = new List<ITimelineEvent>();

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         Client.ConnectToServer();
+        StartCoroutine(TestPingRoundTrip());
     }
 
     public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _posXZ)
@@ -41,6 +42,15 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, 0, y), Quaternion.identity);
             }
+        }
+    }
+
+    private IEnumerator TestPingRoundTrip()
+    {
+        while (true)
+        {
+            ClientSend.TestPing();
+            yield return new WaitForSecondsRealtime(UpdateDebugUI.UpdateRate);
         }
     }
 
