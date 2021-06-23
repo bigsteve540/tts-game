@@ -51,11 +51,15 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_InputLegacyModuleCodeGen
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_Physics2DModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_UIModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_XRModuleCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_System_Diagnostics_StackTraceCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_System_Globalization_ExtensionsCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_UICodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_VRModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipelines_Core_RuntimeCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AudioModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_GridModuleCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_netstandardCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_RiptideNetworkingCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipeline_Universal_ShaderLibraryCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AIModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AndroidJNIModuleCodeGenModule;
@@ -74,7 +78,7 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipelines_Universal_Runt
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngineCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule;
 extern const Il2CppCodeGenModule* g_CodeGenModules[];
-const Il2CppCodeGenModule* g_CodeGenModules[39] = 
+const Il2CppCodeGenModule* g_CodeGenModules[43] = 
 {
 	(&g_mscorlibCodeGenModule),
 	(&g_System_ConfigurationCodeGenModule),
@@ -93,11 +97,15 @@ const Il2CppCodeGenModule* g_CodeGenModules[39] =
 	(&g_UnityEngine_Physics2DModuleCodeGenModule),
 	(&g_UnityEngine_UIModuleCodeGenModule),
 	(&g_UnityEngine_XRModuleCodeGenModule),
+	(&g_System_Diagnostics_StackTraceCodeGenModule),
+	(&g_System_Globalization_ExtensionsCodeGenModule),
 	(&g_UnityEngine_UICodeGenModule),
 	(&g_UnityEngine_VRModuleCodeGenModule),
 	(&g_Unity_RenderPipelines_Core_RuntimeCodeGenModule),
 	(&g_UnityEngine_AudioModuleCodeGenModule),
 	(&g_UnityEngine_GridModuleCodeGenModule),
+	(&g_netstandardCodeGenModule),
+	(&g_RiptideNetworkingCodeGenModule),
 	(&g_Unity_RenderPipeline_Universal_ShaderLibraryCodeGenModule),
 	(&g_UnityEngine_AIModuleCodeGenModule),
 	(&g_UnityEngine_AndroidJNIModuleCodeGenModule),
@@ -121,19 +129,19 @@ const Il2CppCodeRegistration g_CodeRegistration =
 {
 	2,
 	g_ReversePInvokeWrapperPointers,
-	13646,
+	13818,
 	g_Il2CppGenericMethodPointers,
-	3319,
+	3344,
 	g_Il2CppInvokerPointers,
-	4953,
+	5061,
 	g_AttributeGenerators,
-	624,
+	631,
 	g_UnresolvedVirtualMethodPointers,
-	243,
+	244,
 	g_Il2CppInteropData,
 	0,
 	NULL,
-	39,
+	43,
 	g_CodeGenModules,
 };
 IL2CPP_EXTERN_C_CONST Il2CppMetadataRegistration g_MetadataRegistration;

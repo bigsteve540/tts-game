@@ -11,7 +11,7 @@ public static class ClientHandle
     }
     public static void LoadDraft(Message _message)
     {
-
+        UIManager.Instance.OpenDraftUI();
     }
     public static void AspectLocked(Message _message)
     {

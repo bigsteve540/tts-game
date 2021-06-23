@@ -465,7 +465,7 @@
         {
             "managedAssemblyName": "Assembly-CSharp.dll",
             "nativeClass": "",
-            "fullManagedTypeName": "ThreadManager",
+            "fullManagedTypeName": "NetworkManager",
             "moduleName": "",
             "usedInScenes": []
         },
@@ -711,6 +711,20 @@
             "managedAssemblyName": "Unity.RenderPipelines.Universal.Runtime.dll",
             "nativeClass": "",
             "fullManagedTypeName": "UnityEngine.Rendering.Universal.Vignette",
+            "moduleName": "",
+            "usedInScenes": []
+        },
+        {
+            "managedAssemblyName": "UnityEngine.UI.dll",
+            "nativeClass": "",
+            "fullManagedTypeName": "UnityEngine.EventSystems.EventSystem",
+            "moduleName": "",
+            "usedInScenes": []
+        },
+        {
+            "managedAssemblyName": "UnityEngine.UI.dll",
+            "nativeClass": "",
+            "fullManagedTypeName": "UnityEngine.EventSystems.StandaloneInputModule",
             "moduleName": "",
             "usedInScenes": []
         },

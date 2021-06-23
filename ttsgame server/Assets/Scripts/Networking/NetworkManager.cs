@@ -92,7 +92,8 @@ public class NetworkManager : MonoBehaviour
 
     private void NewPlayerConnected(object sender, ServerClientConnectedEventArgs e)
     {
-        Debug.Log("Wow is that a PLAYER OMG WOW");
+        if (Server.ClientCount == maxClientCount)
+            Server.SendToAll(Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.LoadDraft));
     }
 
     private void MessageReceived(object sender, ServerMessageReceivedEventArgs e)
