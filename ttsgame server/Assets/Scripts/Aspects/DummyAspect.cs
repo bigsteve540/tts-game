@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyAspect : IAspectBehaviour //may actually be a scriptable object or something
+public class DummyAspect : IAspectBehaviour
 {
     public int PlayerID { get; }
 
@@ -110,7 +110,7 @@ public class DummyAspect : IAspectBehaviour //may actually be a scriptable objec
             val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
 
         CurrentHP = (int)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
-        SystemLog.Print($"Previous {prevHP} Current {CurrentHP}");
+        Debug.Log($"Previous {prevHP} Current {CurrentHP}");
         //send updated hp and entity id to client
     }
 }
@@ -138,7 +138,7 @@ public class AspectTurn : ITimelineEvent
         //how would you wait for user input using this method tho?
         caster.Active = true;
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity
-        SystemLog.Print($"this is {caster.AspectName}'s turn");
+        Debug.Log($"this is {caster.AspectName}'s turn");
 
         #region ability trigger example
         //if (caster.AspectID == 0)

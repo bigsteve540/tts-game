@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -10,9 +11,10 @@ public class Client
     public static int dataBufferSize = 4096;
 
     public int id;
-    public IAspectBehaviour[] Aspects = null;
     public TCP tcp;
     public UDP udp;
+    
+    public IAspectBehaviour[] Aspects = null;
 
     public Client(int _clientId)
     {
@@ -50,7 +52,7 @@ public class Client
 
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
 
-            ServerSend.Welcome(id, Tilemap.Dimensions, Tilemap.ConvertMapToBytes());
+            ServerSend.Welcome(id);
         }
 
         /// <summary>Sends data to the client via TCP.</summary>
@@ -66,7 +68,7 @@ public class Client
             }
             catch (Exception _ex)
             {
-                SystemLog.Print($"Error sending data to player {id} via TCP: {_ex}");
+                Debug.Log($"Error sending data to player {id} via TCP: {_ex}");
             }
         }
 
@@ -78,7 +80,7 @@ public class Client
                 int _byteLength = stream.EndRead(_result);
                 if (_byteLength <= 0)
                 {
-                    Server.clients[id].Disconnect();
+                    Server.Clients[id].Disconnect();
                     return;
                 }
 
@@ -90,8 +92,8 @@ public class Client
             }
             catch (Exception _ex)
             {
-                SystemLog.Print($"Error receiving TCP data: {_ex}");
-                Server.clients[id].Disconnect();
+                Debug.Log($"Error receiving TCP data: {_ex}");
+                Server.Clients[id].Disconnect();
             }
         }
 
@@ -122,7 +124,7 @@ public class Client
                 {
                     using (NetworkPacket _packet = new NetworkPacket(_packetBytes))
                     {
-                        int _packetId = _packet.ReadInt();
+                        int _packetId = _packet.ReadInt(); //TODO: convert this to box the int into the enum instead, looks cleaner overall.
                         Server.packetHandlers[_packetId](id, _packet); // Call appropriate method to handle the packet
                     }
                 });
@@ -214,31 +216,34 @@ public class Client
     {
         string[] aspectCodes = _aspectList.Split(',');
 
-        Aspects = new IAspectBehaviour[GameSettings.PlayerAspectCount];
+        Aspects = new IAspectBehaviour[GameSettings.AspectCountPerPlayer];
 
         //send all current entities to new player
-        IAspectBehaviour[] entities = new IAspectBehaviour[GameManager.Entities.Count];
-        GameManager.Entities.Values.CopyTo(entities, 0);
-        ServerSend.SpawnAspects(entities, id);
+        ServerSend.SpawnAspects(GameManager.Entities.Values.ToArray(), id);
 
         //Add new entities to entities dictionary
-        int i = 0;
-        foreach (string code in aspectCodes)
-        {
-            Aspects[i] = Activator.CreateInstance(GameManager.AspectCodes[code], id, new Vector2(0, 0)) as IAspectBehaviour;
-            i++;
-        }
+        for (int i = 0; i < aspectCodes.Length; i++)
+            Aspects[i] = Activator.CreateInstance(Utilities.AspectTypeFromCode[aspectCodes[i]], id, new Vector2(0, 0)) as IAspectBehaviour;
 
         // Send all new entities to all players
-        ServerSend.SpawnAspects(Aspects); //TODO: test if this format works, else loop over all clients
+        ServerSend.SpawnAspects(Aspects);
     }
 
     /// <summary>Disconnects the client and stops all network traffic.</summary>
     private void Disconnect()
-    {
-        SystemLog.Print($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+    { 
+        //TODO: if the game is in pick or ban, assume it's a dodge and disconnect all players.
+        Server.CurrentPlayers--;
 
-        Aspects = null;
+        if(Aspects != null)
+        {
+            foreach (IAspectBehaviour aspect in Aspects)
+                if(aspect != null)
+                    GameManager.Entities.Remove(aspect.AspectID);
+            Aspects = null;
+        }
+
+        Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
 
         tcp.Disconnect();
         udp.Disconnect();

@@ -24,13 +24,33 @@ public static class ClientSend
     /// <summary>Lets the server know that the welcome message was received.</summary>
     public static void WelcomeReceived()
     {
+        Debug.Log("Sending acknowledgement.");
         using (NetworkPacket _packet = new NetworkPacket((int)ClientPackets.WelcomeReceived))
         {
             _packet.Write(Client.ID);
-            _packet.Write("A001,A001,A001,A001,A001");
+            _packet.Write("A000,A000,A000,A000,A000");
 
             SendTCPData(_packet);
         }
+    }
+
+    public static void TestPing()
+    {
+        Client.PingTimer.Start();
+        using (NetworkPacket _packet = new NetworkPacket((int)ClientPackets.TestPing))
+        {
+            SendUDPData(_packet);
+        }
+    }
+
+    public static void DraftInteract()
+    {
+        using (NetworkPacket _packet = new NetworkPacket((int)ClientPackets.DraftInteract))
+        {
+            _packet.Write(DraftUI.SelectedAspect);
+            SendTCPData(_packet);
+        }
+        DraftUI.SelectedAspect = string.Empty;
     }
     #endregion
 }

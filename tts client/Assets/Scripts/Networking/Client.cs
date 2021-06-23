@@ -8,6 +8,9 @@ using System;
 public enum ServerPackets
 {
     Welcome = 1,
+    TestPingReceived,
+    LoadDraft,
+    AspectLocked,
     SpawnAspects,
     ModifyAspectHealth
 }
@@ -15,15 +18,19 @@ public enum ServerPackets
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
 {
-    WelcomeReceived = 1
+    WelcomeReceived = 1,
+    TestPing,
+    DraftInteract
 }
 
 public static class Client
 {
+    public static System.Diagnostics.Stopwatch PingTimer = new System.Diagnostics.Stopwatch();
+    public static float CurrentPing;
 
     public static int dataBufferSize = 4096;
 
-    public static string IP = "127.0.0.1"; //<-- change this to some other shit for other servers
+    public static string IP = "127.0.0.1"; //FIXME: <-- change this to some other shit for other servers
     public static int Port = 9009;
     public static int ID = 0;
     public static TCP tcp = new TCP();
@@ -55,6 +62,7 @@ public static class Client
         /// <summary>Attempts to connect to the server via TCP.</summary>
         public void Connect()
         {
+            Debug.Log("TCP Connected");
             socket = new TcpClient
             {
                 ReceiveBufferSize = dataBufferSize,
@@ -62,24 +70,23 @@ public static class Client
             };
 
             receiveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(IP, Port, ConnectCallback, socket);
+            socket.BeginConnect(IP, Port, new AsyncCallback(ConnectCallback), socket);
         }
 
         /// <summary>Initializes the newly connected client's TCP-related info.</summary>
         private void ConnectCallback(IAsyncResult _result)
         {
+            Debug.Log("Connect callback");
             socket.EndConnect(_result);
 
             if (!socket.Connected)
-            {
                 return;
-            }
 
             stream = socket.GetStream();
 
             receivedData = new NetworkPacket();
 
-            stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
+            stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
         }
 
         /// <summary>Sends data to the client via TCP.</summary>
@@ -102,6 +109,7 @@ public static class Client
         /// <summary>Reads incoming data from the stream.</summary>
         private void ReceiveCallback(IAsyncResult _result)
         {
+            Debug.Log("receive callback");
             try
             {
                 int _byteLength = stream.EndRead(_result);
@@ -150,7 +158,7 @@ public static class Client
                 {
                     using (NetworkPacket _packet = new NetworkPacket(_packetBytes))
                     {
-                        int _packetId = _packet.ReadInt();
+                        int _packetId = _packet.ReadInt(); //TODO: convert this to box the int into the enum instead, looks cleaner overall.
                         packetHandlers[_packetId](_packet); // Call appropriate method to handle the packet
                     }
                 });
@@ -289,6 +297,9 @@ public static class Client
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
             { (int)ServerPackets.Welcome, ClientHandle.Welcome },
+            { (int)ServerPackets.TestPingReceived, ClientHandle.TestPingReceived },
+            { (int)ServerPackets.LoadDraft, ClientHandle.LoadDraft },
+            { (int)ServerPackets.AspectLocked, ClientHandle.AspectLocked },
             { (int)ServerPackets.SpawnAspects, ClientHandle.SpawnAspects },
             { (int)ServerPackets.ModifyAspectHealth, ClientHandle.ModifyAspectHealth }
         };

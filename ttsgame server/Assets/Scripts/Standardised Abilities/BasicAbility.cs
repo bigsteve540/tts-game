@@ -27,7 +27,7 @@ public class BasicAbility : IAbilityBehaviour
         if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
             return;
 
-        SystemLog.Print("Melee Slash");
+        Debug.Log("Melee Slash");
         int targetAspectID = 1; //would retrieve this from packet
         IAspectBehaviour target = GameManager.Entities[targetAspectID];
 

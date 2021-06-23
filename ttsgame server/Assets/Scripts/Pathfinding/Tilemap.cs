@@ -21,14 +21,19 @@ public static class Tilemap
         { TileType.Difficult, 1.5f },
         { TileType.Impassable, 999f }
     };
-
-    public static void Init(int _sizeX, int _sizeY)
+    private static Dictionary<char, TileType> mapdataMapper = new Dictionary<char, TileType>
     {
-        Generate(_sizeX, _sizeY);
-        GeneratePathingGraph(_sizeX, _sizeY);
-        GameManager.Instance.DrawMap(_sizeX, _sizeY); //remove this after testing
-    }
+        {'.', TileType.Normal },
+        {'/', TileType.Difficult },
+        {'X', TileType.Impassable }
+    };
 
+    public static void Init(GameMapLayout _layout)
+    {
+        Generate(_layout);
+        GeneratePathingGraph(_layout.Width, _layout.Height);
+        GameManager.Instance.DrawMap(_layout.Width, _layout.Height); //remove this after testing
+    }
 
     public static TileType GetTile(int _indexX, int _indexY)
     {
@@ -98,7 +103,7 @@ public static class Tilemap
 
         if (previous[goal] == null)
         {
-            SystemLog.Print("no valid path, illegal movement");
+            Debug.Log("no valid path, illegal movement");
             return;
         }
 
@@ -172,7 +177,7 @@ public static class Tilemap
 
         if (previous[goal] == null)
         {
-            SystemLog.Print("no valid path, illegal movement");
+            Debug.Log("no valid path, illegal movement");
             return null;
         }
 
@@ -193,71 +198,24 @@ public static class Tilemap
         return goalPath;
     }
 
-    private static void Generate(int _sizeX, int _sizeY)
+    private static void Generate(GameMapLayout _layout)
     {
-        defaultMaptiles = new TileType[_sizeX, _sizeY];
+        defaultMaptiles = new TileType[_layout.Width, _layout.Height];
+        tiles = new TileType[_layout.Width, _layout.Height];
 
         for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
-        {
             for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-            {
-                defaultMaptiles[x, y] = TileType.Normal;
-            }
-        }
+                defaultMaptiles[x, y] = mapdataMapper[_layout.Mapdata[_layout.Width * y + x]];
 
-        defaultMaptiles[4, 4] = TileType.Impassable;
-        defaultMaptiles[5, 4] = TileType.Impassable;
-        defaultMaptiles[6, 4] = TileType.Impassable;
-        defaultMaptiles[7, 4] = TileType.Impassable;
-        defaultMaptiles[8, 4] = TileType.Impassable;
-
-        defaultMaptiles[4, 5] = TileType.Impassable;
-        defaultMaptiles[4, 6] = TileType.Impassable;
-        defaultMaptiles[8, 5] = TileType.Impassable;
-        defaultMaptiles[8, 6] = TileType.Impassable;
-
-        defaultMaptiles[4, 7] = TileType.Difficult;
-        defaultMaptiles[4, 8] = TileType.Difficult;
-        defaultMaptiles[4, 9] = TileType.Difficult;
-        defaultMaptiles[5, 7] = TileType.Difficult;
-        defaultMaptiles[5, 8] = TileType.Difficult;
-        defaultMaptiles[5, 9] = TileType.Difficult;
-        defaultMaptiles[6, 7] = TileType.Difficult;
-        defaultMaptiles[6, 8] = TileType.Difficult;
-        defaultMaptiles[6, 9] = TileType.Difficult;
-        defaultMaptiles[7, 7] = TileType.Difficult;
-        defaultMaptiles[7, 8] = TileType.Difficult;
-        defaultMaptiles[7, 9] = TileType.Difficult;
-        defaultMaptiles[8, 7] = TileType.Difficult;
-        defaultMaptiles[8, 8] = TileType.Difficult;
-        defaultMaptiles[8, 9] = TileType.Difficult;
-        defaultMaptiles[9, 7] = TileType.Difficult;
-        defaultMaptiles[9, 8] = TileType.Difficult;
-        defaultMaptiles[9, 9] = TileType.Difficult;
-
-        tiles = new TileType[_sizeX, _sizeY];
-
-        for (int x = 0; x < tiles.GetLength(0); x++)
-        {
-            for (int y = 0; y < tiles.GetLength(1); y++)
-            {
-                tiles[x, y] = defaultMaptiles[x,y];
-            }
-        }
+        Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
     }
 
     public static byte[] ConvertMapToBytes()
     {
         List<byte> tileTypes = new List<byte>();
-
         for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
-        {
             for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-            {
                 tileTypes.Add(Convert.ToByte((int)defaultMaptiles[x, y]));
-            }
-        }
-
         return tileTypes.ToArray();
     }
 
@@ -307,6 +265,5 @@ public static class Tilemap
 
             }
         }
-
     }
 }

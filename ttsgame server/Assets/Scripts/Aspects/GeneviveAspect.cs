@@ -108,7 +108,7 @@ public class GeneviveAspect : IAspectBehaviour
             val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
 
         CurrentHP = (int)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
-        SystemLog.Print($"Previous {prevHP} Current {CurrentHP}");
+        Debug.Log($"Previous {prevHP} Current {CurrentHP}");
         //send updated hp and entity id to client
     }
 
@@ -131,7 +131,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[2] { TimelineEventType.Movement, TimelineEventType.Damage }))
                 return;
 
-            SystemLog.Print("Ionic Shatter");
+            Debug.Log("Ionic Shatter");
             int targetAspectID = _packet.ReadInt();
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
@@ -182,7 +182,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             public void Activate()
             {
-                SystemLog.Print("Poison Tick");
+                Debug.Log("Poison Tick");
                 GameManager.Entities[TargetID].ModifyHealth(new HealthModifiedEventInfo(CasterID, TargetID, this, StatModifierType.Flat, -200));
             }
         }
@@ -209,7 +209,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             private void Trigger(HealthModifiedEventInfo _info)
             {
-                SystemLog.Print("Tainted Edge Debuff");
+                Debug.Log("Tainted Edge Debuff");
                 if (_info.TargetID != TargetID && _info.TargetID != CasterID || !_info.IsDamage() || _info.Source.GetType() == typeof(PoisonTick))
                     return;
 
@@ -224,7 +224,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
                 return;
 
-            SystemLog.Print("Tainted Edge");
+            Debug.Log("Tainted Edge");
             int targetAspectID = _packet.ReadInt();
 
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
@@ -234,7 +234,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (path == null || path.Count > CastRange) //TODO: test if this is blocking progression in current test situation
                 return;
 
-            SystemLog.Print("Target in Range");
+            Debug.Log("Target in Range");
 
             int counter = 15;
             for (int i = 0; i < 3; i++)
@@ -269,7 +269,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Caster.Active)
                 return;
 
-            SystemLog.Print("Death Mark");
+            Debug.Log("Death Mark");
             int targetAspectID = _packet.ReadInt();
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
@@ -282,7 +282,7 @@ public class GeneviveAspect : IAspectBehaviour
                 if (GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[1] { TimelineEventType.Any }))
                     return;
 
-                SystemLog.Print("Marking");
+                Debug.Log("Marking");
 
                 DeathMarkDebuff debuff = new DeathMarkDebuff(Caster.AspectID, targetAspectID, 200, OnMarkFade);
 
@@ -293,7 +293,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             if (target.CurrentHP <= target.MaxHP * 0.15f)
             {
-                SystemLog.Print("Executing");
+                Debug.Log("Executing");
                 GameManager.Entities[targetAspectID].ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, targetAspectID, this, StatModifierType.Max, -1));
                 markIDs[targetAspectID].Activate();
             }
@@ -341,7 +341,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Caster.Active)
                 return;
 
-            SystemLog.Print("Kneecapper");
+            Debug.Log("Kneecapper");
 
             Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, -0.1f), true);
 
@@ -354,7 +354,7 @@ public class GeneviveAspect : IAspectBehaviour
                 if (path == null || path.Count > CastRange)
                     return false;
 
-                SystemLog.Print("Interrupted using Kneecapper");
+                Debug.Log("Interrupted using Kneecapper");
 
                 Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
                 GameManager.Entities[_targetID].ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, _targetID, this, StatModifierType.Flat, -400));
