@@ -6,9 +6,15 @@ public enum GameMode { Standard }
 public class GameSettings
 {
     public static int TeamCount { get; private set; }
-    public static int PlayerCount { get; private set; }
-    public static int PlayerAspectCount { get; private set; }
+    public static int PlayersPerTeam { get; private set; }
+    public static int AspectCountPerPlayer { get; private set; }
+    public static int BanCountPerPlayer { get; private set; }
 
+    public static int TotalPlayers { get { return TeamCount * PlayersPerTeam; } }
+    public static int TotalBans { get { return BanCountPerPlayer * TotalPlayers; } }
+    public static int TotalAspects {  get{ return PlayersPerTeam * AspectCountPerPlayer; }  }
+
+    public static int PlayerDraftSelectionTime { get; private set; }
     public static int PlayerTurnTimeLimit { get; private set; }
 
     public static void Init(GameMode _mode)
@@ -17,9 +23,10 @@ public class GameSettings
         {
             case GameMode.Standard:
                 TeamCount = 2;
-                PlayerCount = 2;
-                PlayerAspectCount = 5;
+                PlayersPerTeam = 1;
+                AspectCountPerPlayer = 5;
 
+                PlayerDraftSelectionTime = 30;
                 PlayerTurnTimeLimit = 90;
                 break;
         }

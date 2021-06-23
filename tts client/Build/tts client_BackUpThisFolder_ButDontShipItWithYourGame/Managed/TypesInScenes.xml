@@ -46,6 +46,7 @@
 		<type fullname="EntityController" preserve="nothing"/>
 		<type fullname="GameManager" preserve="nothing"/>
 		<type fullname="ThreadManager" preserve="nothing"/>
+		<type fullname="UIManager" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.RenderPipelines.Core.Runtime">
 		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerBitField" preserve="nothing"/>

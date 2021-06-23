@@ -190,13 +190,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298799683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 674d4a0d2bc32514184676d796d0bafc, type: 3}
+  m_Script: {fileID: 11500000, guid: c2027ca0bd698dc44a2dd9aafc69b285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tileVisuals:
-  - {fileID: 1237414048366703489, guid: f1388ecd3a33d59458fb8e2f340f4035, type: 3}
-  - {fileID: 9029930141734368481, guid: b18e6b486f1f52749b4c9b449d64d513, type: 3}
   - {fileID: 2594384324901930032, guid: 2ecce39be6fe5c74cbb0c247213462c2, type: 3}
+  - {fileID: 9029930141734368481, guid: b18e6b486f1f52749b4c9b449d64d513, type: 3}
+  - {fileID: 1237414048366703489, guid: f1388ecd3a33d59458fb8e2f340f4035, type: 3}
 --- !u!4 &1298799685
 Transform:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ public static class Client
             };
 
             receiveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(IP, Port, new AsyncCallback(ConnectCallback), socket);
+            socket.BeginConnect(IP, Port, ConnectCallback, socket);
         }
 
         /// <summary>Initializes the newly connected client's TCP-related info.</summary>
@@ -86,7 +86,7 @@ public static class Client
 
             receivedData = new NetworkPacket();
 
-            stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
+            stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
         }
 
         /// <summary>Sends data to the client via TCP.</summary>

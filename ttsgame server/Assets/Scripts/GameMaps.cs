@@ -4,7 +4,16 @@ using UnityEngine;
 
 public static class GameMaps
 {
-    
+    public static GameMapLayout TestMap = new GameMapLayout(9, 10,
+        ".........." +
+        ".........." +
+        ".........." +
+        ".........." +
+        ".........." +
+        ".........." +
+        ".........." +
+        ".........." +
+        "..........");
 }
 public struct GameMapLayout
 {

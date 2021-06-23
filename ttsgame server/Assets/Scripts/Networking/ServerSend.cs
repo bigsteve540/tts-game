@@ -58,7 +58,7 @@ public static class ServerSend
 
     public static void Welcome(int _toClient)
     {
-        Debug.Log("Welcome sent, pending acknowledgement.");
+        Debug.Log($"Welcome sent to client {_toClient}, pending acknowledgement.");
         using (NetworkPacket _packet = new NetworkPacket((int)ServerPackets.Welcome))
         {
             _packet.Write((int)Tilemap.Dimensions.y);

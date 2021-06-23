@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
     public GameObject[] tileVisuals;
 
+    public static GameManager Instance;
     public void Awake()
     {
         if (Instance != null)
