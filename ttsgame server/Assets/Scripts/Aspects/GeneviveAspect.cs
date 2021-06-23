@@ -126,13 +126,13 @@ public class GeneviveAspect : IAspectBehaviour
             Caster = _caster;
         }
 
-        public void Activate(ref NetworkPacket _packet)
+        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
         {
             if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[2] { TimelineEventType.Movement, TimelineEventType.Damage }))
                 return;
 
             Debug.Log("Ionic Shatter");
-            int targetAspectID = _packet.ReadInt();
+            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
             List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);
@@ -219,13 +219,13 @@ public class GeneviveAspect : IAspectBehaviour
             }
         }
 
-        public void Activate(ref NetworkPacket _packet)
+        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
         {
             if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
                 return;
 
             Debug.Log("Tainted Edge");
-            int targetAspectID = _packet.ReadInt();
+            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
 
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
@@ -264,13 +264,13 @@ public class GeneviveAspect : IAspectBehaviour
             OnMarkFade += (_targetID) => { markIDs.Remove(_targetID); };
         }
 
-        public void Activate(ref NetworkPacket _packet)
+        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
         {
             if (!Caster.Active)
                 return;
 
             Debug.Log("Death Mark");
-            int targetAspectID = _packet.ReadInt();
+            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
             List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);
@@ -336,7 +336,7 @@ public class GeneviveAspect : IAspectBehaviour
             Caster = _caster;
         }
 
-        public void Activate(ref NetworkPacket _packet)
+        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
         {
             if (!Caster.Active)
                 return;

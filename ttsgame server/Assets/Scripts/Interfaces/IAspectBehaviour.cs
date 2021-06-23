@@ -55,7 +55,7 @@ public interface IAbilityBehaviour
     int ActionPointCost { get; }
     int CastRange { get; }
 
-    void Activate(ref NetworkPacket _packet);
+    void Activate(/*FIXME: NEW PACKET SHIT HERE*/);
 }
 //public interface IPassiveBehaviour
 //{

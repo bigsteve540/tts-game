@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        Client.ConnectToServer();
+        NetworkManager.Singleton.Connect();
     }
 
     public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _posXZ)
@@ -46,6 +46,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Client.Disconnect(); // Disconnect when the game is closed
+        //Client.Disconnect(); // Disconnect when the game is closed
     }
 }

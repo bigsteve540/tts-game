@@ -1,52 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
 
-public static class ServerHandle
+public class ServerHandle : MonoBehaviour
 {
-    public static void WelcomeReceived(int _fromClient, NetworkPacket _packet)
+    public static void TestPing(ServerClient fromClient, Message message)
     {
-        Debug.Log("Acknowledgement received, processing...");
-        if (Server.State != ServerState.Prep)
-            return;
-
-        int _clientIdCheck = _packet.ReadInt();
-        string _aspectList = _packet.ReadString();
-
-        Debug.Log($"{Server.Clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
-        if (_fromClient != _clientIdCheck)
-        {
-            Debug.Log($"Player ID: {_fromClient} has assumed the wrong client ID: {_clientIdCheck}!");
-        }
-        Server.CurrentPlayers++;
-
-        if (Server.IsFull)
-        {
-            Debug.Log("Starting Draft!");
-            Server.State = ServerState.BanPhase;
-            DraftManager.AssignNextActivePlayer();
-            ServerSend.LoadDraft();
-        }
+        //Player.Spawn(fromClient.Id, message.GetString());
     }
 
-    public static void TestPing(int _fromClient, NetworkPacket _packet)
+    public static void DraftInteract(ServerClient fromClient, Message message)
     {
-        ServerSend.TestPingReceived(_fromClient);
-    }
-
-    public static void DraftInteract(int _fromClient, NetworkPacket _packet)
-    {
-        if (_fromClient != DraftManager.ActivePlayerID || Server.State != ServerState.BanPhase && Server.State != ServerState.PickPhase)
-            return;
-
-        if (!SystemClockManager.ElapsedTimeWithinBounds())
-            //TODO: this is considered a dodge, but also should be replaced with a method that connects to the event inside SystemClockManager instead.
-            return;
-
-        DraftManager.AssignAspect(_packet.ReadString());
-
-        SystemClockManager.Restart();
-        DraftManager.AssignNextActivePlayer();
+        //Player.List[fromClient.Id].SetInput(message.GetBoolArray(5), message.GetVector3());
     }
 }
+

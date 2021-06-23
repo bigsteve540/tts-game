@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Server.Start(9009, GameMode.Standard);
+        //Server.Start(9009, GameMode.Standard);
 
         //IAspectBehaviour gen = new GeneviveAspect(new Vector2(0, 1));
         //IAspectBehaviour d = new DummyAspect();

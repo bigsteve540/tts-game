@@ -22,7 +22,7 @@ public class BasicAbility : IAbilityBehaviour
         Damage = _damage;
     }
 
-    public void Activate(ref NetworkPacket _packet)
+    public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
     {
         if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
             return;

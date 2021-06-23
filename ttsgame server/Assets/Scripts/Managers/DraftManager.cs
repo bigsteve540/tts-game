@@ -26,33 +26,33 @@ public static class DraftManager
 
     public static void AssignAspect(string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
     {
-        if (Server.State != ServerState.BanPhase && Server.State != ServerState.PickPhase)
-            return;
+        //if (Server.State != ServerState.BanPhase && Server.State != ServerState.PickPhase)
+        //    return;
 
-        switch (Server.State)
-        {
-            case ServerState.BanPhase:
-                ActiveBannedAspects[draftStepIterator] = _aspectCode;
-                draftStepIterator++;
-                Debug.Log($"Successfully banned {_aspectCode}");
-                ServerSend.AspectLocked(true, _aspectCode);
-                if (draftStepIterator >= GameSettings.TotalBans)
-                {
-                    Server.State = ServerState.PickPhase;
-                    draftStepIterator = 0;
-                }
-                break;
-            case ServerState.PickPhase:
-                ActivePickedAspects[draftStepIterator] = _aspectCode;
-                draftStepIterator++;
-                ServerSend.AspectLocked(false, _aspectCode);
-                if (draftStepIterator >= GameSettings.TotalAspects)
-                {
-                    Server.State = ServerState.Deployment;
-                    draftStepIterator = 0;
-                    Tilemap.Init(GameMaps.TestMap);
-                }
-                break;
-        }
+        //switch (Server.State)
+        //{
+        //    case ServerState.BanPhase:
+        //        ActiveBannedAspects[draftStepIterator] = _aspectCode;
+        //        draftStepIterator++;
+        //        Debug.Log($"Successfully banned {_aspectCode}");
+        //        ServerSend.AspectLocked(true, _aspectCode);
+        //        if (draftStepIterator >= GameSettings.TotalBans)
+        //        {
+        //            Server.State = ServerState.PickPhase;
+        //            draftStepIterator = 0;
+        //        }
+        //        break;
+        //    case ServerState.PickPhase:
+        //        ActivePickedAspects[draftStepIterator] = _aspectCode;
+        //        draftStepIterator++;
+        //        ServerSend.AspectLocked(false, _aspectCode);
+        //        if (draftStepIterator >= GameSettings.TotalAspects)
+        //        {
+        //            Server.State = ServerState.Deployment;
+        //            draftStepIterator = 0;
+        //            Tilemap.Init(GameMaps.TestMap);
+        //        }
+        //        break;
+        //}
     }
 }
