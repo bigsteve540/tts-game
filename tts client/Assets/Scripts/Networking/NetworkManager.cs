@@ -42,6 +42,9 @@ public class NetworkManager : MonoBehaviour
     public Client Client { get; private set; }
     private ActionQueue actionQueue;
 
+    public int Ping { get; private set; }
+    private DateTime timeofPingTest;
+
     /// <summary>Encapsulates a method that handles a message from the server.</summary>
     /// <param name="message">The message that was received.</param>
     public delegate void MessageHandler(Message message);
@@ -63,6 +66,11 @@ public class NetworkManager : MonoBehaviour
         Client.ClientDisconnected += ClientDisconnected;
         Client.Disconnected += LocalDisconnect;
     }
+    private void OnApplicationQuit()
+    {
+        LocalDisconnect(null, new EventArgs());
+        Client.Disconnect();
+    }
 
     public void Connect()
     {
@@ -76,9 +84,24 @@ public class NetworkManager : MonoBehaviour
         Client.Connect(ip, port, actionQueue);
     }
 
+    public void GetPing()
+    {
+        Ping = Mathf.RoundToInt((float)DateTime.Now.Subtract(timeofPingTest).TotalMilliseconds * 0.5f);
+    }
+
     private void SuccessfulConnection(object sender, EventArgs e)
     {
-        Debug.Log("IT WORKS IT FUCKING WORKS OMG HOLY SHIT");
+        StartCoroutine(TestPing());
+    }
+
+    private IEnumerator TestPing()
+    {
+        while (true)
+        {
+            Client.Send(Message.Create(MessageSendMode.unreliable, (ushort)ClientToServerRequest.TestPing));
+            timeofPingTest = DateTime.Now;
+            yield return new WaitForSecondsRealtime(0.25f);
+        }
     }
 
     private void FailedToConnect(object sender, EventArgs e)
@@ -98,6 +121,11 @@ public class NetworkManager : MonoBehaviour
 
     private void LocalDisconnect(object sender, EventArgs e)
     {
-        //UIManager.Singleton.BackToMain();
+        StopCoroutine(TestPing());
+        Client.Connected -= SuccessfulConnection;
+        Client.ConnectionFailed -= FailedToConnect;
+        Client.MessageReceived -= MessageReceived;
+        Client.ClientDisconnected -= ClientDisconnected;
+        Client.Disconnected -= LocalDisconnect;
     }
 }

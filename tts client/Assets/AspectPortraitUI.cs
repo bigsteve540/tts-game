@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AspectPortraitUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Image portraitImage;
+    private string aspectCode = string.Empty;
+
+    public void Init(AspectData _data)
     {
-        
+        gameObject.name = $"{_data.AspectName}Portrait";
+        portraitImage.sprite = _data.AspectSprite;
+        aspectCode = _data.AspectCode;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void ButtonInteract() { DraftUI.SelectedAspect = aspectCode; }
 }

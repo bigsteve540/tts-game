@@ -7,7 +7,7 @@ public class ServerHandle : MonoBehaviour
 {
     public static void TestPing(ServerClient fromClient, Message message)
     {
-        //Player.Spawn(fromClient.Id, message.GetString());
+        NetworkManager.Singleton.Server.Send(message, fromClient);
     }
 
     public static void DraftInteract(ServerClient fromClient, Message message)
