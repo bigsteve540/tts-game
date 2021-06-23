@@ -7,7 +7,7 @@ public static class ClientHandle
 {
     public static void TestPingReceived(Message _message)
     {
-        NetworkManager.Singleton.GetPing();
+        NetworkManager.Instance.GetPing();
     }
     public static void LoadDraft(Message _message)
     {
@@ -15,7 +15,7 @@ public static class ClientHandle
     }
     public static void AspectLocked(Message _message)
     {
-
+        DraftUI.Instance.LockAspect(_message.GetBool(), _message.GetInt(), _message.GetString());
     }
     public static void SpawnAspect(Message _message)
     {

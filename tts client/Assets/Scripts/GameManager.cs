@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        NetworkManager.Singleton.Connect();
+        NetworkManager.Instance.Connect();
     }
 
     public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _posXZ)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using RiptideNetworking;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,9 +16,10 @@ public static class DraftManager
     {
         ActiveBannedAspects = new string[GameSettings.TotalBans];
         ActivePickedAspects = new string[GameSettings.TotalAspects];
+        AssignNextActivePlayer();
     }
 
-    public static void AssignNextActivePlayer()
+    private static void AssignNextActivePlayer()
     {
         if (ActivePlayerID == 0 || ++ActivePlayerID > GameSettings.TotalPlayers)
             ActivePlayerID = 1;
@@ -26,33 +28,42 @@ public static class DraftManager
 
     public static void AssignAspect(string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
     {
-        //if (Server.State != ServerState.BanPhase && Server.State != ServerState.PickPhase)
-        //    return;
+        if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick)
+            return;
 
-        //switch (Server.State)
-        //{
-        //    case ServerState.BanPhase:
-        //        ActiveBannedAspects[draftStepIterator] = _aspectCode;
-        //        draftStepIterator++;
-        //        Debug.Log($"Successfully banned {_aspectCode}");
-        //        ServerSend.AspectLocked(true, _aspectCode);
-        //        if (draftStepIterator >= GameSettings.TotalBans)
-        //        {
-        //            Server.State = ServerState.PickPhase;
-        //            draftStepIterator = 0;
-        //        }
-        //        break;
-        //    case ServerState.PickPhase:
-        //        ActivePickedAspects[draftStepIterator] = _aspectCode;
-        //        draftStepIterator++;
-        //        ServerSend.AspectLocked(false, _aspectCode);
-        //        if (draftStepIterator >= GameSettings.TotalAspects)
-        //        {
-        //            Server.State = ServerState.Deployment;
-        //            draftStepIterator = 0;
-        //            Tilemap.Init(GameMaps.TestMap);
-        //        }
-        //        break;
-        //}
+        switch (GameManager.GameState)
+        {
+            case GameState.Ban:
+                ActiveBannedAspects[draftStepIterator++] = _aspectCode;
+                Debug.Log($"Successfully banned {_aspectCode}");
+                GenerateDraftMessage(_aspectCode);
+                if (draftStepIterator >= GameSettings.TotalBans)
+                {
+                    GameManager.GameState = GameState.Pick;
+                    draftStepIterator = 0;
+                }
+                break;
+            case GameState.Pick:
+                ActivePickedAspects[draftStepIterator++] = _aspectCode;
+                GenerateDraftMessage(_aspectCode);
+                if (draftStepIterator >= GameSettings.TotalAspects)
+                {
+                    GameManager.GameState = GameState.Deploy;
+                    draftStepIterator = 0;
+                    Tilemap.Init(GameMaps.TestMap);
+                }
+                break;
+        }
+        AssignNextActivePlayer();
+    }
+
+    private static void GenerateDraftMessage(string _aspectCode)
+    {
+        Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.AspectLocked);
+        msg.Add(GameManager.GameState == GameState.Ban ? true : false);
+        msg.Add(ActivePlayerID);
+        msg.Add(_aspectCode);
+        NetworkManager.Instance.Server.SendToAll(msg);
+
     }
 }

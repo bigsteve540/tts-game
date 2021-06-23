@@ -7,6 +7,8 @@ using UnityEngine;
 //FOR LATER: how to generate an aspect
 // Activator.CreateInstance(GameManager.AspectCodes[ASPECT_CODE], PLAYER_ID, MAP_LOCATION) as IAspectBehaviour;
 
+public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
+
 public class GameManager : MonoBehaviour
 {
     //SINGLETON CAN BE REMOVED POST REQUIREMENT OF VISUALISATION
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public static GameState GameState = GameState.Prep;
     public static Dictionary<int, IAspectBehaviour> Entities = new Dictionary<int, IAspectBehaviour>();
 
     public GameObject[] tileVisuals;

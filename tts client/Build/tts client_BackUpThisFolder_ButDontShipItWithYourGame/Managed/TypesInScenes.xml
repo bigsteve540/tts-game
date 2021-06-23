@@ -43,6 +43,9 @@
 		<type fullname="UnityEngine.RenderSettings" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Assembly-CSharp">
+		<type fullname="AspectData" preserve="nothing"/>
+		<type fullname="AspectPortraitUI" preserve="nothing"/>
+		<type fullname="DraftUI" preserve="nothing"/>
 		<type fullname="EntityController" preserve="nothing"/>
 		<type fullname="GameManager" preserve="nothing"/>
 		<type fullname="NetworkManager" preserve="nothing"/>
@@ -93,6 +96,7 @@
 		<type fullname="UnityEngine.UI.CanvasScaler" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.ContentSizeFitter" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.GraphicRaycaster" preserve="nothing"/>
+		<type fullname="UnityEngine.UI.GridLayoutGroup" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.HorizontalLayoutGroup" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.Image" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.LayoutElement" preserve="nothing"/>

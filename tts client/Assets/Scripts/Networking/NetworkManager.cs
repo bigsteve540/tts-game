@@ -20,15 +20,15 @@ public enum ClientToServerRequest : ushort
 
 public class NetworkManager : MonoBehaviour
 {
-    private static NetworkManager singleton;
-    public static NetworkManager Singleton
+    private static NetworkManager instance;
+    public static NetworkManager Instance
     {
-        get => singleton;
+        get => instance;
         private set
         {
-            if (singleton == null)
-                singleton = value;
-            else if (singleton != value)
+            if (instance == null)
+                instance = value;
+            else if (instance != value)
             {
                 Debug.Log($"{nameof(NetworkManager)} instance already exists, destroying object!");
                 Destroy(value);
@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviour
     public delegate void MessageHandler(Message message);
     private Dictionary<ushort, MessageHandler> messageHandlers;
 
-    private void Awake() { Singleton = this; }
+    private void Awake() { Instance = this; }
     private void FixedUpdate() { actionQueue.ExecuteAll(); }
 
     private void Start()
