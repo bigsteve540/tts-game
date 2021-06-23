@@ -5,10 +5,7 @@ using UnityEngine;
 
 public enum ServerPackets
 {
-    Welcome = 1,
-    TestPingReceived,
-    LoadDraft,
-    AspectLocked,
+    welcome = 1,
     SpawnAspects,
     ModifyAspectHealth
 }
@@ -16,9 +13,7 @@ public enum ServerPackets
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
 {
-    WelcomeReceived = 1,
-    TestPing,
-    DraftInteract
+    welcomeReceived = 1
 }
 
 public class NetworkPacket : IDisposable

@@ -7,35 +7,18 @@ public static class ClientHandle
 {
     public static void Welcome(NetworkPacket _packet)
     {
-        int height = _packet.ReadInt();
-        int width = _packet.ReadInt();
-
-        byte[] mapData = _packet.ReadBytes(height * width);
+        int yLength = _packet.ReadInt();
+        int xLength = _packet.ReadInt();
+        byte[] mapData = _packet.ReadBytes(yLength * xLength);
         int id = _packet.ReadInt();
 
-        Tilemap.BuildMapFromBytes(width, height, mapData);
+        Tilemap.BuildMapFromBytes(xLength, yLength, mapData);
 
         Client.ID = id;
         ClientSend.WelcomeReceived();
 
+        // Now that we have the client's id, connect UDP
         Client.udp.Connect(((IPEndPoint)Client.tcp.socket.Client.LocalEndPoint).Port);
-    }
-
-    public static void TestPingReceived(NetworkPacket _packet)
-    {
-        Client.PingTimer.Stop();
-        Client.CurrentPing = Client.PingTimer.ElapsedMilliseconds * 0.5f;
-        Client.PingTimer.Reset();
-    }
-
-    public static void LoadDraft(NetworkPacket _packet)
-    {
-        UIManager.Instance.OpenDraftUI();
-    }
-
-    public static void AspectLocked(NetworkPacket _packet)
-    {
-        DraftUI.LockAspect(_packet.ReadBool(), _packet.ReadInt(), _packet.ReadString());
     }
 
     public static void SpawnAspects(NetworkPacket _packet)

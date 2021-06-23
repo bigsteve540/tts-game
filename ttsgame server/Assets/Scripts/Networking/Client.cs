@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -11,13 +10,9 @@ public class Client
     public static int dataBufferSize = 4096;
 
     public int id;
+    public IAspectBehaviour[] Aspects = null;
     public TCP tcp;
     public UDP udp;
-    
-    public IAspectBehaviour[] Aspects = null;
-
-    private string[] pickedAspectCodes;
-    private int aspectCodesIterator = 0;
 
     public Client(int _clientId)
     {
@@ -55,7 +50,7 @@ public class Client
 
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
 
-            ServerSend.Welcome(id);
+            ServerSend.Welcome(id, Tilemap.Dimensions, Tilemap.ConvertMapToBytes());
         }
 
         /// <summary>Sends data to the client via TCP.</summary>
@@ -83,7 +78,7 @@ public class Client
                 int _byteLength = stream.EndRead(_result);
                 if (_byteLength <= 0)
                 {
-                    Server.Clients[id].Disconnect();
+                    Server.clients[id].Disconnect();
                     return;
                 }
 
@@ -96,7 +91,7 @@ public class Client
             catch (Exception _ex)
             {
                 SystemLog.Print($"Error receiving TCP data: {_ex}");
-                Server.Clients[id].Disconnect();
+                Server.clients[id].Disconnect();
             }
         }
 
@@ -127,7 +122,7 @@ public class Client
                 {
                     using (NetworkPacket _packet = new NetworkPacket(_packetBytes))
                     {
-                        int _packetId = _packet.ReadInt(); //TODO: convert this to box the int into the enum instead, looks cleaner overall.
+                        int _packetId = _packet.ReadInt();
                         Server.packetHandlers[_packetId](id, _packet); // Call appropriate method to handle the packet
                     }
                 });
@@ -213,49 +208,37 @@ public class Client
         }
     }
 
-    public void AddSelectedAspect(string _aspectCode)
-    {
-        if (pickedAspectCodes == null)
-            pickedAspectCodes = new string[GameSettings.AspectCountPerPlayer];
-
-        pickedAspectCodes[aspectCodesIterator] = _aspectCode;
-        aspectCodesIterator++;
-    }
-
     /// <summary>Sends the client into the game and informs other clients of the new player.</summary>
     /// <param name="_playerName">The username of the new player.</param>
     public void SendIntoGame(string _aspectList)
     {
         string[] aspectCodes = _aspectList.Split(',');
 
-        Aspects = new IAspectBehaviour[GameSettings.AspectCountPerPlayer];
+        Aspects = new IAspectBehaviour[GameSettings.PlayerAspectCount];
 
         //send all current entities to new player
-        ServerSend.SpawnAspects(GameManager.Entities.Values.ToArray(), id);
+        IAspectBehaviour[] entities = new IAspectBehaviour[GameManager.Entities.Count];
+        GameManager.Entities.Values.CopyTo(entities, 0);
+        ServerSend.SpawnAspects(entities, id);
 
         //Add new entities to entities dictionary
-        for (int i = 0; i < aspectCodes.Length; i++)
-            Aspects[i] = Activator.CreateInstance(GameManager.AspectCodes[aspectCodes[i]], id, new Vector2(0, 0)) as IAspectBehaviour;
+        int i = 0;
+        foreach (string code in aspectCodes)
+        {
+            Aspects[i] = Activator.CreateInstance(GameManager.AspectCodes[code], id, new Vector2(0, 0)) as IAspectBehaviour;
+            i++;
+        }
 
         // Send all new entities to all players
-        ServerSend.SpawnAspects(Aspects);
+        ServerSend.SpawnAspects(Aspects); //TODO: test if this format works, else loop over all clients
     }
 
     /// <summary>Disconnects the client and stops all network traffic.</summary>
     private void Disconnect()
-    { 
-        //TODO: if the game is in pick or ban, assume it's a dodge and disconnect all players.
-        Server.CurrentPlayers--;
-
-        if(Aspects != null)
-        {
-            foreach (IAspectBehaviour aspect in Aspects)
-                if(aspect != null)
-                    GameManager.Entities.Remove(aspect.AspectID);
-            Aspects = null;
-        }
-
+    {
         SystemLog.Print($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+
+        Aspects = null;
 
         tcp.Disconnect();
         udp.Disconnect();
