@@ -1,6 +1,7 @@
 ﻿using RiptideNetworking;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,10 @@ public class DraftUI : MonoBehaviour
     private void Awake() { Instance = this; }
 
     public static string SelectedAspect = string.Empty;
+
+    [SerializeField] private TextMeshProUGUI timerText;
+    private float timerValue = 30f;
+    private int previousPing = 0;
 
     [SerializeField] private GameObject aspectPortrait;
     [SerializeField] private Transform scrollviewContent;
@@ -67,6 +72,7 @@ public class DraftUI : MonoBehaviour
                 localPicks[pickIndexors.x++].sprite = aspectSprites[_aspectCode];
             }
         }
+        timerValue = 30f;
     }
 
     public void ButtonInteract()
@@ -88,6 +94,16 @@ public class DraftUI : MonoBehaviour
             aspectSprites.Add(data[i].AspectCode, data[i].AspectSprite);
             Instantiate(aspectPortrait, scrollviewContent).GetComponent<AspectPortraitUI>().Init(data[i]);
         }
+    }
+
+    private void Update() //TODO: replace this with christian's clock sync algo
+    {
+        float timerDelta = Time.unscaledDeltaTime + ((NetworkManager.Instance.Ping - previousPing) * 0.01f);
+
+        timerValue -= timerDelta;
+        timerText.text = Mathf.FloorToInt(timerValue).ToString();
+
+        previousPing = NetworkManager.Instance.Ping;
     }
 
 }

@@ -17,8 +17,10 @@ public static class DraftManager
         ActiveBannedAspects = new string[GameSettings.TotalBans];
         ActivePickedAspects = new string[GameSettings.TotalAspects];
 
+        ActivePlayerID = 1;
+
+        SystemClockManager.Begin(GameSettings.PlayerDraftSelectionTime);
         SystemClockManager.OnClockTimeout += OnUserFailsToSelectAspect;
-        AssignNextActivePlayer();
     }
 
     private static void AssignNextActivePlayer()
@@ -72,7 +74,7 @@ public static class DraftManager
 
     private static void OnUserFailsToSelectAspect()
     {
-        NetworkManager.Instance.Server.;
+        NetworkManager.Instance.Server.Stop();
         SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
     }
 }

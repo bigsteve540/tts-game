@@ -25,6 +25,10 @@ public class SystemClockManager : MonoBehaviour
     private static float elapsedTime = 0f;
     private static float targetTime = 0f;
 
+    //public static void AssignTargetTime(float _targetTime)
+    //{
+    //    targetTime = _targetTime;
+    //}
     public static void Begin(float _targetTime)
     {
         targetTime = _targetTime;
