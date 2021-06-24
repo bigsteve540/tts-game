@@ -14,19 +14,19 @@ public class GeneviveAspect : IAspectBehaviour
 
     public bool Active { get; set; }
 
-    public int BaseInitiative => 85; //dictates where on the timeline aspects will begin the game
+    public uint BaseInitiative => 85; //dictates where on the timeline aspects will begin the game
     public int InitiativeOffset => 15; //dictates the amount of skew added or subtracted from the turn initiative on turn end, signed int
 
-    public int TotalActionPoints => 100; //100 to begin with, aspects can be buffed or nerfed via this
-    public int CurrentActionPoints { get; private set; }
+    public uint TotalActionPoints => 100; //100 to begin with, aspects can be buffed or nerfed via this
+    public uint CurrentActionPoints { get; private set; }
 
     public Vector2 MapPosition { get; set; }
-    public int FacingDirection { get; set; }
+    public uint FacingDirection { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
-    public int MaxHP => 15000;
-    public int CurrentHP { get; private set; }
+    public uint MaxHP => 15000;
+    public uint CurrentHP { get; private set; }
 
     public int BaseArmor => 240;
     public int CurrentArmor { get; set; }
@@ -63,7 +63,7 @@ public class GeneviveAspect : IAspectBehaviour
     public void EndTurn()
     {
         Active = false;
-        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? 100 - InitiativeOffset : 50 - InitiativeOffset, false);
+        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset), false);
     }
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
@@ -96,7 +96,7 @@ public class GeneviveAspect : IAspectBehaviour
         if (_data.IsDamage())
             val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
 
-        CurrentHP = (int)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
+        CurrentHP = (uint)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
         Debug.Log($"Previous {prevHP} Current {CurrentHP}");
         //send updated hp and entity id to client
     }
@@ -152,10 +152,10 @@ public class GeneviveAspect : IAspectBehaviour
             private int CasterID { get; }
             private int TargetID { get; }
 
-            public int Initiative { get; set; }
+            public uint Initiative { get; set; }
             public bool PlaceInfront => false;
 
-            public PoisonTick(int _casterID, int _targetID, int _initiative)
+            public PoisonTick(int _casterID, int _targetID, uint _initiative)
             {
                 CasterID = _casterID;
                 TargetID = _targetID;
@@ -173,10 +173,10 @@ public class GeneviveAspect : IAspectBehaviour
             private int CasterID { get; }
             private int TargetID { get; }
 
-            public int Initiative { get; set; }
+            public uint Initiative { get; set; }
             public bool PlaceInfront { get; }
 
-            public TaintedEdgeDebuff(int _casterID, int _targetID, int _initiative)
+            public TaintedEdgeDebuff(int _casterID, int _targetID, uint _initiative)
             {
                 TargetID = _targetID;
                 Initiative = _initiative;
@@ -214,7 +214,7 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange)) //TODO: test if this is blocking progression in current test situation
                 return;
 
-            int counter = 15;
+            uint counter = 15;
             for (int i = 0; i < 3; i++)
             {
                 Timeline.AddTimelineEvent(new PoisonTick(Caster.AspectID, targetAspectID, counter));
@@ -281,12 +281,12 @@ public class GeneviveAspect : IAspectBehaviour
             public int CasterID { get; }
             public int TargetID { get; }
 
-            public int Initiative { get; set; }
+            public uint Initiative { get; set; }
             public bool PlaceInfront => false;
 
             DeathMarkFadeHandler handler;
             
-            public DeathMarkDebuff(int _casterID, int _targetID, int _initiative, DeathMarkFadeHandler _fadeHandler)
+            public DeathMarkDebuff(int _casterID, int _targetID, uint _initiative, DeathMarkFadeHandler _fadeHandler)
             {
                 CasterID = _casterID;
                 TargetID = _targetID;

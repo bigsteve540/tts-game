@@ -8,11 +8,11 @@ public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehavi
 {
     int ClientID { get; }
 
-    int BaseInitiative { get; }
+    uint BaseInitiative { get; }
     int InitiativeOffset { get; }
 
-    int TotalActionPoints { get; }
-    int CurrentActionPoints { get; } //private set
+    uint TotalActionPoints { get; }
+    uint CurrentActionPoints { get; } //private set
 
     ITimelineEvent Turn { get; set; }
 
@@ -31,14 +31,14 @@ public interface IAspectLabels
 public interface IMoveBehaviour
 {
     Vector2 MapPosition { get; set; }
-    int FacingDirection { get; set; }
+    uint FacingDirection { get; set; }
     void MoveToTile(int _x, int _y);
 }
 
 public interface ICombatBehaviour
 {
-    int MaxHP { get; }
-    int CurrentHP { get; }
+    uint MaxHP { get; }
+    uint CurrentHP { get; }
 
     int BaseArmor { get; }
     int CurrentArmor { get; set; }

@@ -7,7 +7,7 @@ public static class Timeline
 {
     public delegate void EventInterruptHandler(in TimelineEventInfo _eventInfo, ref bool _interrupted);
 
-    public static int TotalElapsedInitiative { get; private set; } = 0;
+    public static uint TotalElapsedInitiative { get; private set; } = 0;
 
     private static List<ITimelineEvent> timelineEvents = new List<ITimelineEvent>();
 
@@ -45,7 +45,7 @@ public static class Timeline
         {
             if (timelineEvents[0].Initiative != 0)
             {
-                int decrement = timelineEvents[0].Initiative;
+                uint decrement = timelineEvents[0].Initiative;
                 TotalElapsedInitiative += decrement;
 
                 foreach (ITimelineEvent action in timelineEvents)

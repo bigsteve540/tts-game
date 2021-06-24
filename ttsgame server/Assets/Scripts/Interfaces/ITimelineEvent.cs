@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ITimelineEvent
 {
-    int Initiative { get; set; }
+    uint Initiative { get; set; }
     bool PlaceInfront { get; }
 
     void Activate();

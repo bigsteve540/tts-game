@@ -12,19 +12,19 @@ public class DummyAspect : IAspectBehaviour
 
     public bool Active { get; set; }
 
-    public int BaseInitiative { get; } //dictates where on the timeline aspects will begin the game
+    public uint BaseInitiative { get; } //dictates where on the timeline aspects will begin the game
     public int InitiativeOffset { get; } //dictates the amount of skew added or subtracted from the turn initiative on turn end, signed int
 
-    public int TotalActionPoints { get; } //100 to begin with, aspects can be buffed or nerfed via this
-    public int CurrentActionPoints => TotalActionPoints;
+    public uint TotalActionPoints { get; } //100 to begin with, aspects can be buffed or nerfed via this
+    public uint CurrentActionPoints => TotalActionPoints;
 
     public Vector2 MapPosition { get; set; }
-    public int FacingDirection { get; set; }
+    public uint FacingDirection { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
-    public int MaxHP { get; }
-    public int CurrentHP { get; private set; }
+    public uint MaxHP { get; }
+    public uint CurrentHP { get; private set; }
 
     public int BaseArmor => 0;
     public int CurrentArmor { get; set; }
@@ -35,7 +35,7 @@ public class DummyAspect : IAspectBehaviour
     private TileType currentTileType;
 
     public DummyAspect(int _playerID, Vector2 _mapPos) : this(_playerID, 0, 0, 100, 5000, _mapPos) { }
-    public DummyAspect(int _playerID, int _baseInitiative, int _initiativeOffset, int _totalActionPoints, int _maxHP, Vector2 _mapPosition)
+    public DummyAspect(int _playerID, uint _baseInitiative, int _initiativeOffset, uint _totalActionPoints, uint _maxHP, Vector2 _mapPosition)
     {
         ClientID = _playerID;
 
@@ -63,7 +63,7 @@ public class DummyAspect : IAspectBehaviour
     {
         //do some extra stuff
         Active = false;
-        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? 100 - InitiativeOffset : 50 - InitiativeOffset, false);
+        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset), false);
     }
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
@@ -96,7 +96,7 @@ public class DummyAspect : IAspectBehaviour
         if (_data.IsDamage())
             val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
 
-        CurrentHP = (int)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
+        CurrentHP = (uint)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
         Debug.Log($"Previous {prevHP} Current {CurrentHP}");
         //send updated hp and entity id to client
     }
@@ -104,11 +104,11 @@ public class DummyAspect : IAspectBehaviour
 
 public class AspectTurn : ITimelineEvent
 {
-    public int Initiative { get; set; }
+    public uint Initiative { get; set; }
     public bool PlaceInfront { get; }
 
     private IAspectBehaviour caster;
-    public AspectTurn(IAspectBehaviour _caster, int _initiative, bool _placeInfront)
+    public AspectTurn(IAspectBehaviour _caster, uint _initiative, bool _placeInfront)
     {
         caster = _caster;
         Initiative = _initiative;

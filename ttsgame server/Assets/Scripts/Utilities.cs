@@ -32,9 +32,9 @@ public static class Utilities
         _usedPath = new List<Node>(pathCache);
         return true;
     }
-    public static int ConvertDegToCard(float _input)
+    public static uint ConvertDegToCard(float _input)
     {
-        return Mathf.RoundToInt(GRADIENT * _input);
+        return (uint)Mathf.RoundToInt(GRADIENT * _input);
     }
     public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)//TODO: need to calculate cost to move to desired tile
     {
