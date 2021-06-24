@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
+using System;
 
 public class ServerHandle : MonoBehaviour
 {
     public static void TestPing(ServerClient fromClient, Message message)
     {
+        message.Add(DateTime.Now.Ticks);
         NetworkManager.Instance.Server.Send(message, fromClient);
     }
 

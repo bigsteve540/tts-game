@@ -25,11 +25,15 @@ public class DraftUI : MonoBehaviour
 
     private void Awake() { Instance = this; }
 
+    private void OnEnable()
+    {
+        timerValue -= NetworkManager.Instance.Ping * 0.01f;
+    }
+
     public static string SelectedAspect = string.Empty;
 
     [SerializeField] private TextMeshProUGUI timerText;
     private float timerValue = 30f;
-    private int previousPing = 0;
 
     [SerializeField] private GameObject aspectPortrait;
     [SerializeField] private Transform scrollviewContent;
@@ -72,7 +76,7 @@ public class DraftUI : MonoBehaviour
                 localPicks[pickIndexors.x++].sprite = aspectSprites[_aspectCode];
             }
         }
-        timerValue = 30f;
+        timerValue = 30f - (NetworkManager.Instance.Ping * 0.1f);
     }
 
     public void ButtonInteract()
@@ -98,12 +102,8 @@ public class DraftUI : MonoBehaviour
 
     private void Update() //TODO: replace this with christian's clock sync algo
     {
-        float timerDelta = Time.unscaledDeltaTime + ((NetworkManager.Instance.Ping - previousPing) * 0.01f);
-
-        timerValue -= timerDelta;
-        timerText.text = Mathf.FloorToInt(timerValue).ToString();
-
-        previousPing = NetworkManager.Instance.Ping;
+        timerValue -= Time.unscaledDeltaTime;
+        timerText.text = Mathf.RoundToInt(timerValue).ToString();
     }
 
 }
