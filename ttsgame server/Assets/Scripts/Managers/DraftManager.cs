@@ -16,6 +16,8 @@ public static class DraftManager
     {
         ActiveBannedAspects = new string[GameSettings.TotalBans];
         ActivePickedAspects = new string[GameSettings.TotalAspects];
+
+        SystemClockManager.OnClockTimeout += OnUserFailsToSelectAspect;
         AssignNextActivePlayer();
     }
 
@@ -23,6 +25,7 @@ public static class DraftManager
     {
         if (ActivePlayerID == 0 || ++ActivePlayerID > GameSettings.TotalPlayers)
             ActivePlayerID = 1;
+        SystemClockManager.Restart();
         Debug.Log($"Active player is {ActivePlayerID}");
     }
 
@@ -65,5 +68,11 @@ public static class DraftManager
         msg.Add(_aspectCode);
         NetworkManager.Instance.Server.SendToAll(msg);
 
+    }
+
+    private static void OnUserFailsToSelectAspect()
+    {
+        NetworkManager.Instance.Server.;
+        SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
     }
 }

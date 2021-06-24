@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class SystemClockManager : MonoBehaviour
 {
-    //#region Singleton
-    //public static SystemClockManager Instance;
-    //void OnEnable()
-    //{
-    //    if (Instance != null)
-    //    {
-    //        Destroy(gameObject);
-    //        return;
-    //    }
-    //    Instance = this;
-    //}
-    //#endregion
+    #region Singleton
+    private static SystemClockManager Instance;
+    void OnEnable()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+    #endregion
 
     public delegate void ClockTimeoutHandler();
     public static ClockTimeoutHandler OnClockTimeout;
@@ -47,15 +47,18 @@ public class SystemClockManager : MonoBehaviour
     }
     public static bool ElapsedTimeWithinBounds() { return elapsedTime <= targetTime ? true : false; }
 
-    // Update is called once per frame
     void Update()
     {
         if (running)
         {
             elapsedTime += Time.unscaledDeltaTime;
-
+            
             if(elapsedTime > targetTime)
+            {
+                running = false;
+                elapsedTime = 0f;
                 OnClockTimeout?.Invoke();
+            }
         }
     }
 }
