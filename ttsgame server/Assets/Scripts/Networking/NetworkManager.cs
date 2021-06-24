@@ -99,6 +99,7 @@ public class NetworkManager : MonoBehaviour
             GameSettings.Init(GameMode.Standard);
             DraftManager.Init();
         }
+        new Player(e.Client.Id);
     }
 
     private void MessageReceived(object sender, ServerMessageReceivedEventArgs e)
