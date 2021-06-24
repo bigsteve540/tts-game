@@ -18,8 +18,8 @@ public class DummyAspect : IAspectBehaviour
     public int TotalActionPoints { get; } //100 to begin with, aspects can be buffed or nerfed via this
     public int CurrentActionPoints => TotalActionPoints;
 
-    public Vector2 MapPosition { get; private set; }
-    public List<Node> Path { get; set; }
+    public Vector2 MapPosition { get; set; }
+    public int FacingDirection { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
@@ -55,22 +55,9 @@ public class DummyAspect : IAspectBehaviour
 
         currentTileType = Tilemap.GetTile((int)MapPosition.x, (int)MapPosition.y);
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
-
-        Path = new List<Node>();
     }
 
-    public void MoveToTile(int _x, int _y)
-    {
-        if (GameEventSystem.CheckEventInterrupted(AspectID, new TimelineEventType[1] { TimelineEventType.Movement }))
-            return;
-
-        Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, currentTileType);
-
-        MapPosition = new Vector2(_x, _y);
-        currentTileType = Tilemap.GetTile((int)MapPosition.x, (int)MapPosition.y);
-
-        Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
-    }
+    public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
 
     public void EndTurn()
     {

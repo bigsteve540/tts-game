@@ -12,6 +12,7 @@ public static class Utilities
         { "A002", typeof(KrakAspect) }
     };
 
+    private static float GRADIENT = 8 / 360;
     private static List<Node> pathCache = new List<Node>();
     public static bool TargetWithinRange(Vector2 _origin, Vector2 _target, int _maxDist)
     {
@@ -30,5 +31,21 @@ public static class Utilities
         }
         _usedPath = new List<Node>(pathCache);
         return true;
+    }
+    public static int ConvertDegToCard(float _input)
+    {
+        return Mathf.RoundToInt(GRADIENT * _input);
+    }
+    public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)//TODO: need to calculate cost to move to desired tile
+    {
+        if (GameEventSystem.CheckEventInterrupted(_aspect.AspectID, new TimelineEventType[1] { TimelineEventType.Movement }))
+            return;
+
+        Tilemap.SetTileToDefault((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y);
+
+        ConvertDegToCard(Vector2.Angle(Vector2.up, _aspect.MapPosition - new Vector2(_newX, _newY)));
+        _aspect.MapPosition = new Vector2(_newX, _newY);
+
+        Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
     }
 }

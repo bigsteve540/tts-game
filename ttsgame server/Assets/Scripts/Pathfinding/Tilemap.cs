@@ -79,10 +79,10 @@ public static class Tilemap
         while (unvisited.Count > 0)
         {
             Node node = null;
-            foreach (Node u in unvisited)
+            foreach (Node uNode in unvisited)
             {
-                if (node == null || distances[u] < distances[node])
-                    node = u;
+                if (node == null || distances[uNode] < distances[node])
+                    node = uNode;
             }
 
             if (node == goal)
@@ -113,7 +113,7 @@ public static class Tilemap
 
         List<Node> goalPath = new List<Node>();
         Node current = goal;
-
+        //TODO: find a way to output the initiative cost of the final path
         while (current != null)
         {
             goalPath.Add(current);
@@ -124,7 +124,6 @@ public static class Tilemap
 
         if (GetTile((int)goal.Position.x, (int)goal.Position.y) == TileType.Impassable)
             goalPath.RemoveAt(goalPath.Count - 1);
-
         return goalPath;
     }
 

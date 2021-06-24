@@ -20,7 +20,8 @@ public class GeneviveAspect : IAspectBehaviour
     public int TotalActionPoints => 100; //100 to begin with, aspects can be buffed or nerfed via this
     public int CurrentActionPoints { get; private set; }
 
-    public Vector2 MapPosition { get; private set; }
+    public Vector2 MapPosition { get; set; }
+    public int FacingDirection { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
@@ -57,17 +58,7 @@ public class GeneviveAspect : IAspectBehaviour
         };
     }
 
-    public void MoveToTile(int _x, int _y)
-    {
-        if (GameEventSystem.CheckEventInterrupted(AspectID, new TimelineEventType[1] { TimelineEventType.Movement }))
-            return;
-
-        Tilemap.SetTileToDefault((int)MapPosition.x, (int)MapPosition.y);
-
-        MapPosition = new Vector2(_x, _y);
-
-        Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
-    }
+    public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
 
     public void EndTurn()
     {
@@ -133,9 +124,10 @@ public class GeneviveAspect : IAspectBehaviour
             if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange, out List<Node> path))
                 return;
 
-            //FIXME: will need testing. Pathing graph automatically backtracks 1 tile if the target destination is considered Impassable. -1'ing off the list may cause entity to backtrack too far
-            int x = (int)path[path.Count - 1].Position.x;
-            int y = (int)path[path.Count - 1].Position.y;
+            int x = (int)path[path.Count].Position.x;
+            int y = (int)path[path.Count].Position.y;
+;
+            Caster.FacingDirection = Utilities.ConvertDegToCard(Vector2.Angle(Vector2.up, path[path.Count - 2].Position - path[path.Count - 1].Position));
             Caster.MoveToTile(x, y);
 
             target.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, target.AspectID, this, StatModifierType.Flat, -1200));

@@ -30,7 +30,8 @@ public interface IAspectLabels
 
 public interface IMoveBehaviour
 {
-    Vector2 MapPosition { get; }
+    Vector2 MapPosition { get; set; }
+    int FacingDirection { get; set; }
     void MoveToTile(int _x, int _y);
 }
 
