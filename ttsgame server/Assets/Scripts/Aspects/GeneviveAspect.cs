@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RiptideNetworking;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 public class GeneviveAspect : IAspectBehaviour
 {
-    public int PlayerID { get; }
+    public int ClientID { get; }
 
     public string AspectName => "Genevive";
     public int AspectID { get; }
@@ -20,7 +21,6 @@ public class GeneviveAspect : IAspectBehaviour
     public int CurrentActionPoints { get; private set; }
 
     public Vector2 MapPosition { get; private set; }
-    public List<Node> Path { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
@@ -33,9 +33,9 @@ public class GeneviveAspect : IAspectBehaviour
     public IAbilityBehaviour[] Abilities { get; }
     public List<Func<int, TimelineEventType[], bool>> ActiveInterrupters { get; set; } = new List<Func<int, TimelineEventType[], bool>>();
 
-    public GeneviveAspect(int _playerID, Vector2 _mapPosition)
+    public GeneviveAspect(int _clientID, Vector2 _mapPosition)
     {
-        PlayerID = _playerID;
+        ClientID = _clientID;
         Active = false;
         AspectID = GameManager.RegisterEntity(this);
 
@@ -46,8 +46,6 @@ public class GeneviveAspect : IAspectBehaviour
         MapPosition = _mapPosition;
 
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
-
-        Path = new List<Node>();
 
         Abilities = new IAbilityBehaviour[]
         {
@@ -64,7 +62,7 @@ public class GeneviveAspect : IAspectBehaviour
         if (GameEventSystem.CheckEventInterrupted(AspectID, new TimelineEventType[1] { TimelineEventType.Movement }))
             return;
 
-        Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, Tilemap.GetDefaultTile((int)MapPosition.x, (int)MapPosition.y));
+        Tilemap.SetTileToDefault((int)MapPosition.x, (int)MapPosition.y);
 
         MapPosition = new Vector2(_x, _y);
 
@@ -121,25 +119,21 @@ public class GeneviveAspect : IAspectBehaviour
         public int ActionPointCost => 35;
         public int CastRange => 5;
 
-        public IonicShatter(IAspectBehaviour _caster)
-        {
-            Caster = _caster;
-        }
+        public IonicShatter(IAspectBehaviour _caster) { Caster = _caster; }
 
-        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
+        public void Activate(Message _message)
         {
-            if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[2] { TimelineEventType.Movement, TimelineEventType.Damage }))
+            if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[2] { TimelineEventType.Movement, TimelineEventType.Damage }))
                 return;
 
             Debug.Log("Ionic Shatter");
-            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
+            int targetAspectID = _message.GetInt();
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
-            List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);
-
-            if (path == null || path.Count > CastRange)
+            if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange, out List<Node> path))
                 return;
 
+            //FIXME: will need testing. Pathing graph automatically backtracks 1 tile if the target destination is considered Impassable. -1'ing off the list may cause entity to backtrack too far
             int x = (int)path[path.Count - 1].Position.x;
             int y = (int)path[path.Count - 1].Position.y;
             Caster.MoveToTile(x, y);
@@ -159,11 +153,7 @@ public class GeneviveAspect : IAspectBehaviour
 
         private TimelineEventType[] types = new TimelineEventType[1] { TimelineEventType.Damage };
 
-
-        public TaintedEdge(IAspectBehaviour _caster)
-        {
-            Caster = _caster;
-        }
+        public TaintedEdge(IAspectBehaviour _caster) { Caster = _caster; }
 
         class PoisonTick : ITimelineEvent
         {
@@ -219,22 +209,18 @@ public class GeneviveAspect : IAspectBehaviour
             }
         }
 
-        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
+        public void Activate(Message _message)
         {
-            if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
+            if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
                 return;
 
             Debug.Log("Tainted Edge");
-            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
+            int targetAspectID = _message.GetInt();
 
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
-            List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);
-
-            if (path == null || path.Count > CastRange) //TODO: test if this is blocking progression in current test situation
+            if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange)) //TODO: test if this is blocking progression in current test situation
                 return;
-
-            Debug.Log("Target in Range");
 
             int counter = 15;
             for (int i = 0; i < 3; i++)
@@ -264,17 +250,16 @@ public class GeneviveAspect : IAspectBehaviour
             OnMarkFade += (_targetID) => { markIDs.Remove(_targetID); };
         }
 
-        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
+        public void Activate(Message _message)
         {
-            if (!Caster.Active)
+            if (GameManager.ActiveAspect != Caster)
                 return;
 
             Debug.Log("Death Mark");
-            int targetAspectID = /*FIXME: NEW PACKET SHIT HERE*/0;
+            int targetAspectID = _message.GetInt();
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
-            List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);
-            if (path == null || path.Count > CastRange)
+            if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange))
                 return;
 
             if (markIDs.Count == 0 || !markIDs.ContainsKey(targetAspectID))
@@ -331,14 +316,11 @@ public class GeneviveAspect : IAspectBehaviour
         public int ActionPointCost => 0;
         public int CastRange => 7;
 
-        public Kneecapper(IAspectBehaviour _caster)
-        {
-            Caster = _caster;
-        }
+        public Kneecapper(IAspectBehaviour _caster) { Caster = _caster; }
 
-        public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
+        public void Activate(Message _message)
         {
-            if (!Caster.Active)
+            if (GameManager.ActiveAspect != Caster)
                 return;
 
             Debug.Log("Kneecapper");
@@ -347,11 +329,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             bool interrupt(int _targetID, TimelineEventType[] _types)
             {
-                if (!_types.Contains(TimelineEventType.Movement))
-                    return false;
-
-                List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, GameManager.Entities[_targetID].MapPosition);
-                if (path == null || path.Count > CastRange)
+                if (!_types.Contains(TimelineEventType.Movement) || !Utilities.TargetWithinRange(Caster.MapPosition, GameManager.Entities[_targetID].MapPosition, CastRange))
                     return false;
 
                 Debug.Log("Interrupted using Kneecapper");

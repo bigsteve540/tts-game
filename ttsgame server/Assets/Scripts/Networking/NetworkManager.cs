@@ -108,6 +108,7 @@ public class NetworkManager : MonoBehaviour
 
     private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
     {
-        //Destroy(Player.List[e.Id].gameObject);
+        Player.AllActive[e.Id].Wipe();
+        Player.AllActive.Remove(e.Id);
     }
 }

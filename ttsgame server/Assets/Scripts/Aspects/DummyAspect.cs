@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DummyAspect : IAspectBehaviour
 {
-    public int PlayerID { get; }
+    public int ClientID { get; }
 
     public string AspectName => "Dummy";
     public int AspectID { get; }
@@ -37,7 +37,7 @@ public class DummyAspect : IAspectBehaviour
     public DummyAspect(int _playerID, Vector2 _mapPos) : this(_playerID, 0, 0, 100, 5000, _mapPos) { }
     public DummyAspect(int _playerID, int _baseInitiative, int _initiativeOffset, int _totalActionPoints, int _maxHP, Vector2 _mapPosition)
     {
-        PlayerID = _playerID;
+        ClientID = _playerID;
 
         AspectID = GameManager.RegisterEntity(this);
 
@@ -136,7 +136,8 @@ public class AspectTurn : ITimelineEvent
             GameEventSystem.UnsubInterrupt(interrupter);
         }
         //how would you wait for user input using this method tho?
-        caster.Active = true;
+
+        GameManager.ActiveAspect = caster;
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity
         Debug.Log($"this is {caster.AspectName}'s turn");
 

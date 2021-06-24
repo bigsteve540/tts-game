@@ -1,14 +1,12 @@
-﻿using System;
+﻿using RiptideNetworking;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehaviour
 {
-    int PlayerID { get; }
-
-
-    bool Active { get; set; }
+    int ClientID { get; }
 
     int BaseInitiative { get; }
     int InitiativeOffset { get; }
@@ -33,7 +31,6 @@ public interface IAspectLabels
 public interface IMoveBehaviour
 {
     Vector2 MapPosition { get; }
-    List<Node> Path { get; set; }
     void MoveToTile(int _x, int _y);
 }
 
@@ -55,15 +52,9 @@ public interface IAbilityBehaviour
     int ActionPointCost { get; }
     int CastRange { get; }
 
-    void Activate(/*FIXME: NEW PACKET SHIT HERE*/);
+    void Activate(Message _message);
 }
 //public interface IPassiveBehaviour
 //{
 //    
 //}
-
-
-
-//how to do client input entity grouping?
-// > have client object contain list/array of entities (datatype maybe based on gamemode, likely better to use list incase of Aspect summoning adds)
-// > ping client when their entity triggers

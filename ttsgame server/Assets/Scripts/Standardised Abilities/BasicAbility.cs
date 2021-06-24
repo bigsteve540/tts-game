@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using RiptideNetworking;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,13 +23,13 @@ public class BasicAbility : IAbilityBehaviour
         Damage = _damage;
     }
 
-    public void Activate(/*FIXME: NEW PACKET SHIT HERE*/)
+    public void Activate(Message _message)
     {
-        if (!Caster.Active || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
+        if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
             return;
 
         Debug.Log("Melee Slash");
-        int targetAspectID = 1; //would retrieve this from packet
+        int targetAspectID = _message.GetInt(); //TODO: inline this with the line below
         IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
         List<Node> path = Tilemap.GeneratePathToTile(Caster.MapPosition, target.MapPosition);

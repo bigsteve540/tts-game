@@ -48,81 +48,11 @@ public static class Tilemap
     {
         tiles[_indexX, _indexY] = _newType;
     }
-
-    public static void GeneratePathToTile(IMoveBehaviour _origin, Vector2 _goal)
+    public static void SetTileToDefault(int _indexX, int _indexY)
     {
-        Dictionary<Node, float> distances = new Dictionary<Node, float>();
-        Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
-
-        List<Node> unvisited = new List<Node>();
-
-        Node source = graph[(int)_origin.MapPosition.x, (int)_origin.MapPosition.y];
-        Node goal = graph[(int)_goal.x, (int)_goal.y];
-
-        distances.Add(source, 0f);
-        previous.Add(source, null);
-
-        foreach (Node node in graph)
-        {
-            if (node != source)
-            {
-                distances[node] = Mathf.Infinity;
-                previous[node] = null;
-            }
-            unvisited.Add(node);
-        }
-
-        while (unvisited.Count > 0)
-        {
-            Node node = null;
-            foreach (Node u in unvisited)
-            {
-                if (node == null || distances[u] < distances[node])
-                    node = u;
-            }
-
-            if (node == goal)
-                break;
-
-            unvisited.Remove(node);
-
-            for (int i = 0; i < node.Edges.Length; i++)
-            {
-                if (node.Edges[i] != null)
-                {
-                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tileCostMultiplier[tiles[(int)node.Edges[i].Position.x, (int)node.Edges[i].Position.y]]);
-
-                    if (moveCost < distances[node.Edges[i]])
-                    {
-                        distances[node.Edges[i]] = moveCost;
-                        previous[node.Edges[i]] = node;
-                    }
-                }
-            }
-        }
-
-        if (previous[goal] == null)
-        {
-            Debug.Log("no valid path, illegal movement");
-            return;
-        }
-
-        List<Node> goalPath = new List<Node>();
-        Node current = goal;
-
-        while(current != null)
-        {
-            goalPath.Add(current);
-            current = previous[current];
-        }
-
-        goalPath.Reverse();
-
-        if (GetTile((int)goal.Position.x, (int)goal.Position.y) == TileType.Impassable)
-            goalPath.RemoveAt(goalPath.Count - 1);
-
-        _origin.Path = goalPath;
+        tiles[_indexX, _indexY] = GetDefaultTile(_indexX, _indexY);
     }
+
     public static List<Node> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
     {
         Dictionary<Node, float> distances = new Dictionary<Node, float>();

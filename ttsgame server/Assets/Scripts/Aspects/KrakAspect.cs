@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class KrakAspect : IAspectBehaviour
 {
-    public int PlayerID { get; }
+    public int ClientID { get; }
 
     public bool Active { get; set; }
 

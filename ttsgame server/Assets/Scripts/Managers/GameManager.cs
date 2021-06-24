@@ -11,7 +11,7 @@ public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
 
 public class GameManager : MonoBehaviour
 {
-    //SINGLETON CAN BE REMOVED POST REQUIREMENT OF VISUALISATION
+    //FIXME: SINGLETON CAN BE REMOVED POST REQUIREMENT OF VISUALISATION
     #region Singleton 
     public static GameManager Instance;
     void OnEnable()
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public static GameState GameState = GameState.Prep;
+    public static IAspectBehaviour ActiveAspect = null;
+
     public static Dictionary<int, IAspectBehaviour> Entities = new Dictionary<int, IAspectBehaviour>();
 
     public GameObject[] tileVisuals;
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //private bool TestInterrupt(int _IDofInteruppted, TimelineEventType[] _types)
+    //private bool TestInterrupt(int _IDofTarget, TimelineEventType[] _types)
     //{
     //    if (!_types.Contains(TimelineEventType.Damage))
     //        return false;
