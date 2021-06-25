@@ -211,7 +211,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             IAspectBehaviour target = GameManager.Entities[targetAspectID];
 
-            if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange)) //TODO: test if this is blocking progression in current test situation
+            if (!Utilities.TargetWithinRange(Caster.MapPosition, target.MapPosition, CastRange))
                 return;
 
             uint counter = 15;

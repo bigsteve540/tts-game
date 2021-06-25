@@ -146,7 +146,5 @@ public class AspectTurn : ITimelineEvent
         //    currentNode++;
         //}
         #endregion
-
-        caster.EndTurn(); //TODO: remove: won't actually do this from here in the networked version
     }
 }

@@ -115,7 +115,7 @@ public static class Tilemap
 
         List<Node> goalPath = new List<Node>();
         Node current = goal;
-        //TODO: find a way to output the initiative cost of the final path
+
         while (current != null)
         {
             goalPath.Add(current);

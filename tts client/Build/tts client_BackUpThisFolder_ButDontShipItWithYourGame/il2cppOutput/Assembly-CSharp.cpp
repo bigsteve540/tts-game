@@ -10750,6 +10750,8 @@ inline AspectPortraitUI_tDCC149EB87D887AA19DCC13470CADC7ADDDD8715 * GameObject_G
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AspectPortraitUI_Init_mC686B268BD591A14AB42C18B39880AC2BBB8EAC0 (AspectPortraitUI_tDCC149EB87D887AA19DCC13470CADC7ADDDD8715 * __this, AspectData_t4CE6959C5257A3D8367CE0AAA1003ACB2D78F1E4 * ____data0, const RuntimeMethod* method);
 // System.Single UnityEngine.Time::get_unscaledDeltaTime()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Time_get_unscaledDeltaTime_mA0AE7A144C88AE8AABB42DF17B0F3F0714BA06B2 (const RuntimeMethod* method);
+// System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Mathf_CeilToInt_m0230CCC7CC9266F18125D9425C38A25D1CA4275B (float ___f0, const RuntimeMethod* method);
 // System.String System.Int32::ToString()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Int32_ToString_m1863896DE712BF97C031D55B12E1583F1982DC02 (int32_t* __this, const RuntimeMethod* method);
 // System.Void System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Sprite>::.ctor()
@@ -11360,7 +11362,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void DraftUI_LockAspect_mF26D7FB045BAB156A335
 		Sprite_tCA09498D612D08DE668653AF1E9C12BF53434198 * L_15 = Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC(L_13, L_14, /*hidden argument*/Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC_RuntimeMethod_var);
 		NullCheck(L_12);
 		Image_set_sprite_m0D1DBEFD8E361B3967964C71F93EF47E2AC53A13(L_12, L_15, /*hidden argument*/NULL);
-		// }
 		goto IL_00e8;
 	}
 
@@ -11384,7 +11385,6 @@ IL_0048:
 		Sprite_tCA09498D612D08DE668653AF1E9C12BF53434198 * L_26 = Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC(L_24, L_25, /*hidden argument*/Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC_RuntimeMethod_var);
 		NullCheck(L_23);
 		Image_set_sprite_m0D1DBEFD8E361B3967964C71F93EF47E2AC53A13(L_23, L_26, /*hidden argument*/NULL);
-		// }
 		goto IL_00e8;
 	}
 
@@ -11421,7 +11421,6 @@ IL_0078:
 		Sprite_tCA09498D612D08DE668653AF1E9C12BF53434198 * L_41 = Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC(L_39, L_40, /*hidden argument*/Dictionary_2_get_Item_mBE9F8C8142DBD886CC96ADBC04AF6022F76284FC_RuntimeMethod_var);
 		NullCheck(L_38);
 		Image_set_sprite_m0D1DBEFD8E361B3967964C71F93EF47E2AC53A13(L_38, L_41, /*hidden argument*/NULL);
-		// }
 		goto IL_00e8;
 	}
 
@@ -11449,11 +11448,11 @@ IL_00ba:
 
 IL_00e8:
 	{
-		// timerValue = 30f - (NetworkManager.Instance.Ping * 0.1f);
+		// timerValue = 30f - (NetworkManager.Instance.Ping * 0.01f);
 		NetworkManager_t8C47AF687E3AE680C2E3CB815EA99DE9C944DE8C * L_53 = NetworkManager_get_Instance_mEA21C6C03B8F9B8B612A9B8B5BC82B455A563C84_inline(/*hidden argument*/NULL);
 		NullCheck(L_53);
 		int32_t L_54 = NetworkManager_get_Ping_m20BDC7D868914232CE62C453B634E26364669D98_inline(L_53, /*hidden argument*/NULL);
-		__this->set_timerValue_7(((float)il2cpp_codegen_subtract((float)(30.0f), (float)((float)il2cpp_codegen_multiply((float)(((float)((float)L_54))), (float)(0.1f))))));
+		__this->set_timerValue_7(((float)il2cpp_codegen_subtract((float)(30.0f), (float)((float)il2cpp_codegen_multiply((float)(((float)((float)L_54))), (float)(0.01f))))));
 		// }
 		return;
 	}
@@ -11599,11 +11598,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void DraftUI_Update_m21EE822BF5AAD2EBBF5785AE
 		float L_0 = __this->get_timerValue_7();
 		float L_1 = Time_get_unscaledDeltaTime_mA0AE7A144C88AE8AABB42DF17B0F3F0714BA06B2(/*hidden argument*/NULL);
 		__this->set_timerValue_7(((float)il2cpp_codegen_subtract((float)L_0, (float)L_1)));
-		// timerText.text = Mathf.RoundToInt(timerValue).ToString();
+		// timerText.text = Mathf.CeilToInt(timerValue).ToString();
 		TextMeshProUGUI_tBA60B913AB6151F8563F7078AD67EB6458129438 * L_2 = __this->get_timerText_6();
 		float L_3 = __this->get_timerValue_7();
 		IL2CPP_RUNTIME_CLASS_INIT(Mathf_tFBDE6467D269BFE410605C7D806FD9991D4A89CB_il2cpp_TypeInfo_var);
-		int32_t L_4 = Mathf_RoundToInt_m0EAD8BD38FCB72FA1D8A04E96337C820EC83F041(L_3, /*hidden argument*/NULL);
+		int32_t L_4 = Mathf_CeilToInt_m0230CCC7CC9266F18125D9425C38A25D1CA4275B(L_3, /*hidden argument*/NULL);
 		V_0 = L_4;
 		String_t* L_5 = Int32_ToString_m1863896DE712BF97C031D55B12E1583F1982DC02((int32_t*)(&V_0), /*hidden argument*/NULL);
 		NullCheck(L_2);

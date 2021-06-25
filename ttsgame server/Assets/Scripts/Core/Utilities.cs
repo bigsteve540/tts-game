@@ -43,11 +43,23 @@ public static class Utilities
         if (GameEventSystem.CheckEventInterrupted(_aspect.AspectID, new TimelineEventType[1] { TimelineEventType.Movement }))
             return;
 
+        if (GetInitiativeCostForPath(Tilemap.GeneratePathToTile(_aspect.MapPosition, new Vector2(_newX, _newY))) > _aspect.CurrentActionPoints)
+            return;
+
         Tilemap.SetTileToDefault((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y);
 
         ConvertDegToCard(Vector2.Angle(Vector2.up, _aspect.MapPosition - new Vector2(_newX, _newY)));
         _aspect.MapPosition = new Vector2(_newX, _newY);
 
         Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
+    }
+    public static int GetInitiativeCostForPath(List<Node> _path)
+    {
+        int total = 0;
+        for (int i = 0; i < _path.Count - 1; i++)
+            for (int j = 0; j < _path[i].Edges.Length; j++)
+                if (_path[i].Edges[j] == _path[i + 1])
+                    total += j % 2 == 0 ? 5 : 10;
+        return total;
     }
 }

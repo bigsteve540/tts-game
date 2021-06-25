@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AspectCode: A003
   AspectName: Jassepi
-  AspectSprite: {fileID: 21300000, guid: ceae929e5cd5b674ba75a79a3960a814, type: 3}
+  AspectSprite: {fileID: 21300000, guid: b1819e05c3857ed449d978d539020525, type: 3}
   AspectModel: {fileID: 3360359037910117355, guid: c91fb99dc8308144dbb5a31dae2a9082,
     type: 3}

@@ -36,7 +36,7 @@ public class NetworkManager : MonoBehaviour
     }
 
     private ushort port = 9009;
-    private ushort maxClientCount = 2; //TODO: set this using gamesettings values
+    private ushort maxClientCount;
 
     public Server Server { get; private set; }
     private ActionQueue actionQueue;
@@ -72,6 +72,9 @@ public class NetworkManager : MonoBehaviour
 
         actionQueue = new ActionQueue();
 
+        GameSettings.Init(GameMode.Standard);
+        maxClientCount = (ushort)GameSettings.TotalPlayers;
+
         Server = new Server();
         Server.ClientConnected += NewPlayerConnected;
         Server.MessageReceived += MessageReceived;
@@ -96,7 +99,6 @@ public class NetworkManager : MonoBehaviour
         {
             GameManager.GameState = GameState.Ban;
             Server.SendToAll(Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.LoadDraft));
-            GameSettings.Init(GameMode.Standard);
             DraftManager.Init();
         }
         new Player(e.Client.Id);
