@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum TileType { Normal, Difficult, Impassable }
+public enum TileType { Normal, Deployable, Difficult, Impassable }
 
 public static class Tilemap
 {
@@ -18,12 +18,14 @@ public static class Tilemap
     private static Dictionary<TileType, float> tileCostMultiplier = new Dictionary<TileType, float>
     {
         { TileType.Normal, 1f },
+        { TileType.Deployable, 1f },
         { TileType.Difficult, 1.5f },
         { TileType.Impassable, 999f }
     };
     private static Dictionary<char, TileType> mapdataMapper = new Dictionary<char, TileType>
     {
         {'.', TileType.Normal },
+        {'O', TileType.Deployable },
         {'/', TileType.Difficult },
         {'X', TileType.Impassable }
     };

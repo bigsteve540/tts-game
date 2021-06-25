@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType { Normal, Difficult, Impassable }
+public enum TileType { Normal, Deployable, Difficult, Impassable }
 public static class Tilemap
 {
     private static TileType[,] tiles;
