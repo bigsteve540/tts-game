@@ -7,7 +7,7 @@ public static class ClientHandle
 {
     public static void TestPingReceived(Message _message)
     {
-        NetworkManager.Instance.GetPing();
+        NetworkManager.Instance.GetPing(_message.GetLong());
     }
     public static void LoadDraft(Message _message)
     {

@@ -43,7 +43,7 @@ public class NetworkManager : MonoBehaviour
     private ActionQueue actionQueue;
 
     public int Ping { get; private set; }
-    private DateTime timeofPingTest;
+    private DateTime requestTime;
 
     /// <summary>Encapsulates a method that handles a message from the server.</summary>
     /// <param name="message">The message that was received.</param>
@@ -84,12 +84,20 @@ public class NetworkManager : MonoBehaviour
         Client.Connect(ip, port, actionQueue);
     }
 
-    public void GetPing()
+    public void GetPing(long _serverTicks)
     {
-        Ping = Mathf.RoundToInt((float)DateTime.Now.Subtract(timeofPingTest).TotalMilliseconds * 0.5f);
+        DateTime actualTime = DateTime.Now;
+        DateTime serverTime = new DateTime(_serverTicks);
+
+        float clientToServerRTT = (float)(actualTime.Subtract(requestTime).TotalMilliseconds * 0.5f);
+        float serverToClientTT = (float)actualTime.Subtract(serverTime).TotalMilliseconds;
+
+        float syncError = clientToServerRTT - serverToClientTT;
+
+        Ping = Mathf.RoundToInt(clientToServerRTT - syncError);
     }
 
-    private void SuccessfulConnection(object sender, EventArgs e)
+    private void SuccessfulConnection(object _sender, EventArgs _e)
     {
         StartCoroutine(TestPing());
     }
@@ -99,27 +107,27 @@ public class NetworkManager : MonoBehaviour
         while (true)
         {
             Client.Send(Message.Create(MessageSendMode.unreliable, (ushort)ClientToServerRequest.TestPing));
-            timeofPingTest = DateTime.Now;
+            requestTime = DateTime.Now;
             yield return new WaitForSecondsRealtime(0.25f);
         }
     }
 
-    private void FailedToConnect(object sender, EventArgs e)
+    private void FailedToConnect(object _sender, EventArgs _e)
     {
         //UIManager.Singleton.BackToMain();
     }
 
-    private void MessageReceived(object sender, ClientMessageReceivedEventArgs e)
+    private void MessageReceived(object _sender, ClientMessageReceivedEventArgs _e)
     {
-        messageHandlers[e.Message.GetUShort()](e.Message);
+        messageHandlers[_e.Message.GetUShort()](_e.Message);
     }
 
-    private void ClientDisconnected(object sender, ClientDisconnectedEventArgs e)
+    private void ClientDisconnected(object _sender, ClientDisconnectedEventArgs _e)
     {
         //Destroy(Player.list[e.Id].gameObject);
     }
 
-    private void LocalDisconnect(object sender, EventArgs e)
+    private void LocalDisconnect(object _sender, EventArgs _e)
     {
         StopCoroutine(TestPing());
         Client.Connected -= SuccessfulConnection;

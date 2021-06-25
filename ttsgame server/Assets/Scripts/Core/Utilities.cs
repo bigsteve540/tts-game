@@ -9,7 +9,9 @@ public static class Utilities
     {
         { "A000", typeof(DummyAspect) },
         { "A001", typeof(GeneviveAspect)},
-        { "A002", typeof(KrakAspect) }
+        { "A002", typeof(KrakAspect) },
+        { "A003", typeof(JassepiAspect) },
+        { "A004", typeof(ShiyoAspect) }
     };
 
     private static float GRADIENT = 8 / 360;

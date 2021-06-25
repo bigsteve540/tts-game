@@ -50,6 +50,7 @@ public static class DraftManager
                 break;
             case GameState.Pick:
                 ActivePickedAspects[draftStepIterator++] = _aspectCode;
+                Debug.Log($"Successfully picked {_aspectCode}");
                 GenerateDraftMessage(_aspectCode);
                 if (draftStepIterator >= GameSettings.TotalAspects)
                 {

@@ -55,28 +55,17 @@ public class DraftUI : MonoBehaviour
     public void LockAspect(bool _isBan, int _lockerID, string _aspectCode)
     {
         if (_isBan)
-        {
             if(_lockerID != NetworkManager.Instance.Client.Id)
-            {
                 networkBans[banIndexors.y++].sprite = aspectSprites[_aspectCode];
-            }
             else
-            {
                 localBans[banIndexors.x++].sprite = aspectSprites[_aspectCode];
-            }
-        }
         else
-        {
             if (_lockerID != NetworkManager.Instance.Client.Id)
-            {
                 networkPicks[pickIndexors.y++].sprite = aspectSprites[_aspectCode];
-            }
             else
-            {
                 localPicks[pickIndexors.x++].sprite = aspectSprites[_aspectCode];
-            }
-        }
-        timerValue = 30f - (NetworkManager.Instance.Ping * 0.1f);
+
+        timerValue = 30f - (NetworkManager.Instance.Ping * 0.01f);
     }
 
     public void ButtonInteract()
@@ -100,10 +89,10 @@ public class DraftUI : MonoBehaviour
         }
     }
 
-    private void Update() //TODO: replace this with christian's clock sync algo
+    private void Update()
     {
         timerValue -= Time.unscaledDeltaTime;
-        timerText.text = Mathf.RoundToInt(timerValue).ToString();
+        timerText.text = Mathf.CeilToInt(timerValue).ToString();
     }
 
 }

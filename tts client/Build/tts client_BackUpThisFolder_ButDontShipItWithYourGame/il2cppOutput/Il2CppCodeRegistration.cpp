@@ -58,9 +58,11 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_VRModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipelines_Core_RuntimeCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AudioModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_GridModuleCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_TextCoreModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_netstandardCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_RiptideNetworkingCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipeline_Universal_ShaderLibraryCodeGenModule;
+IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_TextMeshProCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AIModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AndroidJNIModuleCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngine_AssetBundleModuleCodeGenModule;
@@ -78,7 +80,7 @@ IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_Unity_RenderPipelines_Universal_Runt
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_UnityEngineCodeGenModule;
 IL2CPP_EXTERN_C_CONST Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule;
 extern const Il2CppCodeGenModule* g_CodeGenModules[];
-const Il2CppCodeGenModule* g_CodeGenModules[43] = 
+const Il2CppCodeGenModule* g_CodeGenModules[45] = 
 {
 	(&g_mscorlibCodeGenModule),
 	(&g_System_ConfigurationCodeGenModule),
@@ -104,9 +106,11 @@ const Il2CppCodeGenModule* g_CodeGenModules[43] =
 	(&g_Unity_RenderPipelines_Core_RuntimeCodeGenModule),
 	(&g_UnityEngine_AudioModuleCodeGenModule),
 	(&g_UnityEngine_GridModuleCodeGenModule),
+	(&g_UnityEngine_TextCoreModuleCodeGenModule),
 	(&g_netstandardCodeGenModule),
 	(&g_RiptideNetworkingCodeGenModule),
 	(&g_Unity_RenderPipeline_Universal_ShaderLibraryCodeGenModule),
+	(&g_Unity_TextMeshProCodeGenModule),
 	(&g_UnityEngine_AIModuleCodeGenModule),
 	(&g_UnityEngine_AndroidJNIModuleCodeGenModule),
 	(&g_UnityEngine_AssetBundleModuleCodeGenModule),
@@ -129,19 +133,19 @@ const Il2CppCodeRegistration g_CodeRegistration =
 {
 	2,
 	g_ReversePInvokeWrapperPointers,
-	13820,
+	15949,
 	g_Il2CppGenericMethodPointers,
-	3344,
+	3695,
 	g_Il2CppInvokerPointers,
-	5085,
+	5530,
 	g_AttributeGenerators,
-	631,
+	670,
 	g_UnresolvedVirtualMethodPointers,
-	244,
+	262,
 	g_Il2CppInteropData,
 	0,
 	NULL,
-	43,
+	45,
 	g_CodeGenModules,
 };
 IL2CPP_EXTERN_C_CONST Il2CppMetadataRegistration g_MetadataRegistration;

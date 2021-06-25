@@ -134,7 +134,7 @@ public static class Tilemap
 
         for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
             for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-                defaultMaptiles[x, y] = mapdataMapper[_layout.Mapdata[_layout.Width * y + x]];
+                defaultMaptiles[x, y] = mapdataMapper[_layout.MapData[_layout.Width * y + x]];
 
         Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
     }
