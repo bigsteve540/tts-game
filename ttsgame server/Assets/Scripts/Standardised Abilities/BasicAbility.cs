@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAbility : IAbilityBehaviour
+public class BasicAbility : IAbilityBehaviour, IInterruptable
 {
     public IAspectBehaviour Caster { get; }
 
@@ -11,7 +11,8 @@ public class BasicAbility : IAbilityBehaviour
     public int CastRange { get; }
     public float Damage { get; }
 
-    private InterruptEventType[] types = new InterruptEventType[1] { InterruptEventType.Damage };
+    public InterruptData InterruptData { get; }
+    public InterruptEventType[] AffectedTypes => new InterruptEventType[1] { InterruptEventType.Damage };
 
     public BasicAbility(IAspectBehaviour _caster, int _actionPointCost, int _castRange, float _damage)
     {
@@ -21,11 +22,13 @@ public class BasicAbility : IAbilityBehaviour
         CastRange = _castRange;
 
         Damage = _damage;
+
+        InterruptData = new InterruptData(Caster.AspectID, AffectedTypes);
     }
 
     public void Activate(Message _message)
     {
-        if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
+        if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(InterruptData))
             return;
 
         Debug.Log("Melee Slash");

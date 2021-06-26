@@ -319,7 +319,6 @@ public class GeneviveAspect : IAspectBehaviour
                     }
                 return false;
             }
-
             Caster.ActiveInterrupters.Add(interrupt);
             GameEventSystem.SubInterrupt(interrupt);
         }

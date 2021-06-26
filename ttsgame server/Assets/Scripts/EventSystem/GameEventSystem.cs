@@ -54,58 +54,39 @@ public static class GameEventSystem
 
         iterating = true;
         foreach (KeyValuePair<int, EventListener> listener in listeners[eventType])
-        {
             listener.Value(_info);
-        }
         iterating = false;
 
         if (hashesToAdd.Count != 0)
         {
             foreach (KeyValuePair<System.Type, Dictionary<int, EventListener>> entry in hashesToAdd)
-            {
                 foreach (KeyValuePair<int, EventListener> item in hashesToAdd[entry.Key])
-                {
                     listeners[entry.Key].Add(item.Key, item.Value);
-                }
-            }
             hashesToAdd.Clear();
         }
 
         if(hashesToRemove.Count != 0)
         {
             foreach (KeyValuePair<System.Type, int> hash in hashesToRemove)
-            {
                 listeners[hash.Key].Remove(hash.Value);
-            }
             hashesToRemove.Clear();
         }
     }
 
-    public static void SubInterrupt(System.Func<int, InterruptData, bool> _interrupt)
-    {
-        interrupters.Add(_interrupt.GetHashCode(), _interrupt);
-    }
-    public static void UnsubInterrupt(System.Func<int, InterruptData, bool> _interrupt)
-    {
-        interrupters.Remove(_interrupt.GetHashCode());
-    }
+    public static void SubInterrupt(System.Func<int, InterruptData, bool> _interrupt) { interrupters.Add(_interrupt.GetHashCode(), _interrupt); }
+    public static void UnsubInterrupt(System.Func<int, InterruptData, bool> _interrupt) { interrupters.Remove(_interrupt.GetHashCode()); }
 
-    public static bool CheckEventInterrupted(InterruptData _data, bool _consumeInterrupt = true) //TODO: replace _types with a class of information to be more verbose
+    public static bool CheckEventInterrupted(InterruptData _data, bool _consumeInterrupt = true)
     {
         foreach (KeyValuePair<int, System.Func<int, InterruptData, bool>> interrupt in interrupters)
-        {
             if (interrupt.Value(_data.CasterID, _data))
             {
                 if(_consumeInterrupt)
                     interrupters.Remove(interrupt.Key);
                 return true;
             }
-        }
-
         //may wanna send the interrupt info to the clients for animations? might require something more verbose than just a boolean
         return false;
     }
-
-
 }
 

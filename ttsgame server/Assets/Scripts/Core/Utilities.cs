@@ -84,8 +84,8 @@ public static class Utilities
 
         Tilemap.SetTileToDefault((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y);
 
-        ConvertDegToCard(Vector2.Angle(Vector2.up, _aspect.MapPosition - new Vector2(_newX, _newY)));
-        _aspect.MapPosition = new Vector2(_newX, _newY);
+        ConvertDegToCard(Vector2.Angle(Vector2.up, _aspect.MapPosition - newPos));
+        _aspect.MapPosition = newPos;
 
         Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
     }
