@@ -11,7 +11,7 @@ public static class GameEventSystem
     static Dictionary<System.Type, Dictionary<int, EventListener>> hashesToAdd = new Dictionary<System.Type, Dictionary<int, EventListener>>();
 
     static Dictionary<System.Type, Dictionary<int, EventListener>> listeners = new Dictionary<System.Type, Dictionary<int, EventListener>>();
-    static Dictionary<int, System.Func<int, TimelineEventType[], bool>> interrupters = new Dictionary<int, System.Func<int, TimelineEventType[], bool>>();
+    static Dictionary<int, System.Func<int, InterruptData, bool>> interrupters = new Dictionary<int, System.Func<int, InterruptData, bool>>();
 
     public static void SubListener<T>(System.Action<T> _listener) where T : GameEventInfo
     {
@@ -81,20 +81,20 @@ public static class GameEventSystem
         }
     }
 
-    public static void SubInterrupt(System.Func<int, TimelineEventType[], bool> _interrupt)
+    public static void SubInterrupt(System.Func<int, InterruptData, bool> _interrupt)
     {
         interrupters.Add(_interrupt.GetHashCode(), _interrupt);
     }
-    public static void UnsubInterrupt(System.Func<int, TimelineEventType[], bool> _interrupt)
+    public static void UnsubInterrupt(System.Func<int, InterruptData, bool> _interrupt)
     {
         interrupters.Remove(_interrupt.GetHashCode());
     }
 
-    public static bool CheckEventInterrupted(int _casterID, TimelineEventType[] _types, bool _consumeInterrupt = true) //TODO: replace _types with a class of information to be more verbose
+    public static bool CheckEventInterrupted(InterruptData _data, bool _consumeInterrupt = true) //TODO: replace _types with a class of information to be more verbose
     {
-        foreach (KeyValuePair<int, System.Func<int, TimelineEventType[], bool>> interrupt in interrupters)
+        foreach (KeyValuePair<int, System.Func<int, InterruptData, bool>> interrupt in interrupters)
         {
-            if (interrupt.Value(_casterID, _types))
+            if (interrupt.Value(_data.CasterID, _data))
             {
                 if(_consumeInterrupt)
                     interrupters.Remove(interrupt.Key);
@@ -105,4 +105,7 @@ public static class GameEventSystem
         //may wanna send the interrupt info to the clients for animations? might require something more verbose than just a boolean
         return false;
     }
+
+
 }
+

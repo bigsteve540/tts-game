@@ -12,7 +12,7 @@ public class ShiyoAspect : IAspectBehaviour
     public uint CurrentActionPoints { get; }
     public ITimelineEvent Turn { get; set; }
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, TimelineEventType[], bool>> ActiveInterrupters { get; set; }
+    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; }
     public string AspectName { get; }
     public int AspectID { get; }
     public Vector2 MapPosition { get; set; }

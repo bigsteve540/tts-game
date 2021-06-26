@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TimelineEventType { Any, Movement, Damage, Heal, Interrupt }
+public enum InterruptEventType { Any, Movement_Start, Movement_Passby, Damage, Heal, Interrupt, Enemy_targeted }
+
 public static class Timeline
 {
     public delegate void EventInterruptHandler(in TimelineEventInfo _eventInfo, ref bool _interrupted);
@@ -48,13 +49,11 @@ public static class Timeline
                 uint decrement = timelineEvents[0].Initiative;
                 TotalElapsedInitiative += decrement;
 
-                foreach (ITimelineEvent action in timelineEvents)
-                {    
+                foreach (ITimelineEvent action in timelineEvents)  
                     action.Initiative -= decrement;
-                }
             }
 
-            //tell client to update ui or smth
+            //TODO: tell client to update ui or smth
             timelineEvents[0].Activate();
             timelineEvents.RemoveAt(0);
         }

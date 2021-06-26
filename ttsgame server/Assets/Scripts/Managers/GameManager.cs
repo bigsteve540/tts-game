@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
 
     private static int IDCounter = 0;
 
-    // Start is called before the first frame update
     public static int RegisterEntity(IAspectBehaviour _entity)
     {
         Entities.Add(IDCounter, _entity);
@@ -44,8 +43,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //Server.Start(9009, GameMode.Standard);
-
         //IAspectBehaviour gen = new GeneviveAspect(new Vector2(0, 1));
         //IAspectBehaviour d = new DummyAspect();
 

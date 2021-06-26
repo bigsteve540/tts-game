@@ -11,7 +11,7 @@ public class BasicAbility : IAbilityBehaviour
     public int CastRange { get; }
     public float Damage { get; }
 
-    private TimelineEventType[] types = new TimelineEventType[1] { TimelineEventType.Damage };
+    private InterruptEventType[] types = new InterruptEventType[1] { InterruptEventType.Damage };
 
     public BasicAbility(IAspectBehaviour _caster, int _actionPointCost, int _castRange, float _damage)
     {

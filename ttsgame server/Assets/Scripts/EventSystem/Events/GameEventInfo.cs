@@ -10,9 +10,9 @@ public abstract class GameEventInfo
 public class TimelineEventInfo : GameEventInfo
 {
     public int AspectID { get; }
-    public TimelineEventType[] Types { get; }
+    public InterruptEventType[] Types { get; }
 
-    public TimelineEventInfo(int _id, TimelineEventType[] _types)
+    public TimelineEventInfo(int _id, InterruptEventType[] _types)
     {
         AspectID = _id;
         Types = _types;

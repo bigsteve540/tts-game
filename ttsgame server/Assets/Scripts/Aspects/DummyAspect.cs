@@ -30,9 +30,7 @@ public class DummyAspect : IAspectBehaviour
     public int CurrentArmor { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, TimelineEventType[], bool>> ActiveInterrupters { get; set; } = new List<Func<int, TimelineEventType[], bool>>();
-
-    private TileType currentTileType;
+    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<int, InterruptData, bool>>();
 
     public DummyAspect(int _playerID, Vector2 _mapPos) : this(_playerID, 0, 0, 100, 5000, _mapPos) { }
     public DummyAspect(int _playerID, uint _baseInitiative, int _initiativeOffset, uint _totalActionPoints, uint _maxHP, Vector2 _mapPosition)
@@ -53,7 +51,6 @@ public class DummyAspect : IAspectBehaviour
 
         MapPosition = _mapPosition;
 
-        currentTileType = Tilemap.GetTile((int)MapPosition.x, (int)MapPosition.y);
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
     }
 
@@ -68,37 +65,7 @@ public class DummyAspect : IAspectBehaviour
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
     {
-        if (GameEventSystem.CheckEventInterrupted(AspectID, new TimelineEventType[1] { Mathf.Sign(_data.Value) == -1 ? TimelineEventType.Damage : TimelineEventType.Heal }))
-            return;
-
-        if (!_ignoreEffectors)
-            GameEventSystem.CallEvent(_data);
-
-        float prevHP = CurrentHP;
-        float val = 0f;
-
-        switch (_data.Type)
-        {
-            case StatModifierType.Flat:
-                val = (int)_data.Value;
-                break;
-            case StatModifierType.Max:
-                val = (int)(MaxHP * _data.Value);
-                break;
-            case StatModifierType.Missing:
-                val = (int)((MaxHP - CurrentHP) * _data.Value);
-                break;
-            case StatModifierType.Current:
-                val = (int)(CurrentHP * _data.Value);
-                break;
-        }
-
-        if (_data.IsDamage())
-            val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
-
-        CurrentHP = (uint)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
-        Debug.Log($"Previous {prevHP} Current {CurrentHP}");
-        //send updated hp and entity id to client
+        CurrentHP = Utilities.GenericAspectModifyHealth(this, _data, _ignoreEffectors);
     }
 }
 
@@ -118,14 +85,14 @@ public class AspectTurn : ITimelineEvent
 
     public void Activate()
     {
-        foreach (Func<int, TimelineEventType[], bool> interrupter in caster.ActiveInterrupters)
+        foreach (Func<int, InterruptData, bool> interrupter in caster.ActiveInterrupters)
         {
             GameEventSystem.UnsubInterrupt(interrupter);
         }
         //how would you wait for user input using this method tho?
 
         GameManager.ActiveAspect = caster;
-        //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity
+        //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
         Debug.Log($"this is {caster.AspectName}'s turn");
 
         #region ability trigger example

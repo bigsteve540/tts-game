@@ -32,7 +32,7 @@ public class GeneviveAspect : IAspectBehaviour
     public int CurrentArmor { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, TimelineEventType[], bool>> ActiveInterrupters { get; set; } = new List<Func<int, TimelineEventType[], bool>>();
+    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<int, InterruptData, bool>>();
 
     public GeneviveAspect(int _clientID, Vector2 _mapPosition)
     {
@@ -68,41 +68,12 @@ public class GeneviveAspect : IAspectBehaviour
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
     {
-        if (GameEventSystem.CheckEventInterrupted(AspectID, new TimelineEventType[1] { Mathf.Sign(_data.Value) == -1 ? TimelineEventType.Damage : TimelineEventType.Heal }))
-            return;
-
-        if(!_ignoreEffectors)
-            GameEventSystem.CallEvent(_data);
-
-        float prevHP = CurrentHP;
-        float val = 0f;
-
-        switch (_data.Type)
-        {
-            case StatModifierType.Flat:
-                val = (int)_data.Value;
-                break;
-            case StatModifierType.Max:
-                val = (int)(MaxHP * _data.Value);
-                break;
-            case StatModifierType.Missing:
-                val = (int)((MaxHP - CurrentHP) * _data.Value);
-                break;
-            case StatModifierType.Current:
-                val = (int)(CurrentHP * _data.Value);
-                break;
-        }
-
-        if (_data.IsDamage())
-            val = Mathf.Clamp((val * -1) - CurrentArmor, 0f, val * -1) * -1;
-
-        CurrentHP = (uint)Mathf.Clamp(CurrentHP + val, 0f, MaxHP);
-        Debug.Log($"Previous {prevHP} Current {CurrentHP}");
+        CurrentHP = Utilities.GenericAspectModifyHealth(this, _data, _ignoreEffectors);
         //send updated hp and entity id to client
     }
 
     #region Abilities
-    class IonicShatter : IAbilityBehaviour
+    class IonicShatter : IAbilityBehaviour, IInterruptable
     {
         public IAspectBehaviour Caster { get; }
 
@@ -110,11 +81,18 @@ public class GeneviveAspect : IAspectBehaviour
         public int ActionPointCost => 35;
         public int CastRange => 5;
 
-        public IonicShatter(IAspectBehaviour _caster) { Caster = _caster; }
+        public InterruptData InterruptData { get; }
+        public InterruptEventType[] AffectedTypes => new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Damage };
+
+        public IonicShatter(IAspectBehaviour _caster)
+        {
+            Caster = _caster;
+            InterruptData = new InterruptData(Caster.AspectID, AffectedTypes);
+        }
 
         public void Activate(Message _message)
         {
-            if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[2] { TimelineEventType.Movement, TimelineEventType.Damage }))
+            if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(InterruptData))
                 return;
 
             Debug.Log("Ionic Shatter");
@@ -143,7 +121,7 @@ public class GeneviveAspect : IAspectBehaviour
         public int ActionPointCost => 50;
         public int CastRange => 1;
 
-        private TimelineEventType[] types = new TimelineEventType[1] { TimelineEventType.Damage };
+        private InterruptEventType[] types = new InterruptEventType[1] { InterruptEventType.Damage };
 
         public TaintedEdge(IAspectBehaviour _caster) { Caster = _caster; }
 
@@ -203,9 +181,6 @@ public class GeneviveAspect : IAspectBehaviour
 
         public void Activate(Message _message)
         {
-            if (GameManager.ActiveAspect != Caster || GameEventSystem.CheckEventInterrupted(Caster.AspectID, types))
-                return;
-
             Debug.Log("Tainted Edge");
             int targetAspectID = _message.GetInt();
 
@@ -225,11 +200,14 @@ public class GeneviveAspect : IAspectBehaviour
         }
     }
 
-    class DeathMark : IAbilityBehaviour
+    class DeathMark : IAbilityBehaviour, IInterruptable
     {
         public IAspectBehaviour Caster { get; }
         public int ActionPointCost => 75;
         public int CastRange => 5;
+
+        public InterruptData InterruptData { get; }
+        public InterruptEventType[] AffectedTypes => new InterruptEventType[1] { InterruptEventType.Enemy_targeted };
 
         private Dictionary<int, DeathMarkDebuff> markIDs = new Dictionary<int, DeathMarkDebuff>();
 
@@ -239,6 +217,7 @@ public class GeneviveAspect : IAspectBehaviour
         public DeathMark(IAspectBehaviour _caster)
         {
             Caster = _caster;
+            InterruptData = new InterruptData(Caster.AspectID, AffectedTypes);
             OnMarkFade += (_targetID) => { markIDs.Remove(_targetID); };
         }
 
@@ -256,7 +235,7 @@ public class GeneviveAspect : IAspectBehaviour
 
             if (markIDs.Count == 0 || !markIDs.ContainsKey(targetAspectID))
             {
-                if (GameEventSystem.CheckEventInterrupted(Caster.AspectID, new TimelineEventType[1] { TimelineEventType.Any }))
+                if (GameEventSystem.CheckEventInterrupted(InterruptData))
                     return;
 
                 Debug.Log("Marking");
@@ -319,17 +298,26 @@ public class GeneviveAspect : IAspectBehaviour
 
             Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, -0.1f), true);
 
-            bool interrupt(int _targetID, TimelineEventType[] _types)
+            bool interrupt(int _targetID, InterruptData _data)
             {
-                if (!_types.Contains(TimelineEventType.Movement) || !Utilities.TargetWithinRange(Caster.MapPosition, GameManager.Entities[_targetID].MapPosition, CastRange))
+
+                if (!_data.SearchTypesFor(InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby) || 
+                    !Utilities.TargetWithinRange(Caster.MapPosition, GameManager.Entities[_targetID].MapPosition, CastRange))
                     return false;
 
-                Debug.Log("Interrupted using Kneecapper");
+                Tuple<List<Node>, int> pathdata = (Tuple<List<Node>, int>)_data.ExtraInterruptData[0];
+                for (int i = 0; i < pathdata.Item1.Count; i++)
+                    if(Utilities.TargetWithinRange(Caster.MapPosition, pathdata.Item1[i].Position, CastRange))
+                    {
+                        Debug.Log("Interrupted using Kneecapper");
+                        GameManager.Entities[_targetID].MapPosition = pathdata.Item1[i].Position;
 
-                Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
-                GameManager.Entities[_targetID].ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, _targetID, this, StatModifierType.Flat, -400));
+                        Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
+                        GameManager.Entities[_targetID].ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, _targetID, this, StatModifierType.Flat, -400));
 
-                return true;
+                        return true;
+                    }
+                return false;
             }
 
             Caster.ActiveInterrupters.Add(interrupt);

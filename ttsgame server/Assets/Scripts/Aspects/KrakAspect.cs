@@ -22,7 +22,7 @@ public class KrakAspect : IAspectBehaviour
 
     public IAbilityBehaviour[] Abilities { get; }
 
-    public List<Func<int, TimelineEventType[], bool>> ActiveInterrupters { get; set; }
+    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; }
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }

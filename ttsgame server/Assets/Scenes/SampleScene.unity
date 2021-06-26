@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileVisuals:
   - {fileID: 2594384324901930032, guid: 2ecce39be6fe5c74cbb0c247213462c2, type: 3}
+  - {fileID: 2594384324901930032, guid: 2ecce39be6fe5c74cbb0c247213462c2, type: 3}
   - {fileID: 9029930141734368481, guid: b18e6b486f1f52749b4c9b449d64d513, type: 3}
   - {fileID: 1237414048366703489, guid: f1388ecd3a33d59458fb8e2f340f4035, type: 3}
 --- !u!4 &1298799685
