@@ -61,7 +61,3 @@ public interface IInterruptable
     InterruptData InterruptData { get; }
     InterruptEventType[] AffectedTypes { get; }
 }
-//public interface IPassiveBehaviour
-//{
-//    
-//}
