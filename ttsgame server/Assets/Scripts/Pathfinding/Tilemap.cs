@@ -25,7 +25,7 @@ public static class Tilemap
         {'/', TileType.Difficult },
         {'X', TileType.Impassable }
     };
-    private static Dictionary<int, List<Tuple<int, int>>> deploymentZones = new Dictionary<int, List<Tuple<int, int>>>();
+    private static Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
 
     public static void Init(GameMapLayout _layout)
     {
@@ -41,6 +41,13 @@ public static class Tilemap
         msg.Add(map.Length);
         msg.Add(map);
 
+        msg.Add(GameSettings.TotalPlayers);
+        for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
+        {
+            msg.Add(deploymentZones[i].Count);
+            for (int j = 0; j < deploymentZones[i].Count; j++)
+                msg.Add(deploymentZones[i][j]);
+        }
         NetworkManager.Instance.Server.SendToAll(msg);
 
         GameManager.Instance.DrawMap(_layout.Width, _layout.Height); //remove this after testing
@@ -49,11 +56,8 @@ public static class Tilemap
     public static bool TileDeployableForID(int _clientID, Vector2 _targetTile)
     {
         for (int i = 0; i < deploymentZones[_clientID].Count; i++)
-        {
-            Vector2 tile = new Vector2(deploymentZones[_clientID][i].Item1, deploymentZones[_clientID][i].Item2);
-            if (tile == _targetTile)
+            if (deploymentZones[_clientID][i] == _targetTile)
                 return true;
-        }
         return false;
     }
 
@@ -95,9 +99,9 @@ public static class Tilemap
                 if (int.TryParse(_layout.MapData[_layout.Width * y + x].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
                 {
                     if (!deploymentZones.ContainsKey(zoneID))
-                        deploymentZones.Add(zoneID, new List<Tuple<int, int>>());
+                        deploymentZones.Add(zoneID, new List<Vector2>());
 
-                    deploymentZones[zoneID].Add(new Tuple<int,int>(x, y));
+                    deploymentZones[zoneID].Add(new Vector2(x,y));
                 }
             }
         }

@@ -15,6 +15,7 @@ public class GameSettings
     public static int TotalAspects {  get{ return TotalPlayers * AspectCountPerPlayer; }  }
 
     public static int PlayerDraftSelectionTime { get; private set; }
+    public static int PlayerDeploymentTime { get; private set; }
     public static int PlayerTurnTimeLimit { get; private set; }
 
     public static void Init(GameMode _mode)
@@ -29,6 +30,7 @@ public class GameSettings
                 BanCountPerPlayer = 3;
 
                 PlayerDraftSelectionTime = 30;
+                PlayerDeploymentTime = 60;
                 PlayerTurnTimeLimit = 90;
                 break;
         }

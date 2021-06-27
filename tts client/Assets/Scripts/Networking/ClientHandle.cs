@@ -26,6 +26,14 @@ public static class ClientHandle
         int arrLen = _message.GetInt();
         byte[] map = _message.GetByteArray(arrLen);
         Tilemap.BuildMapFromBytes(width, height, map);
+
+        for (int i = 0; i < _message.GetInt(); i++)
+        {
+            for (int j = 0; j < _message.GetInt(); j++)
+            {
+                Vector2 pos = _message.GetVector2();
+            }
+        }
     }
     public static void SpawnAspect(Message _message)
     {
