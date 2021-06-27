@@ -8,6 +8,7 @@ public enum ServerToClientRequest : ushort
     TestPingReceived = 1,
     LoadDraft,
     AspectLocked,
+    GenerateTilemap,
     SpawnAspect,
     ModifyAspectHealth
 }

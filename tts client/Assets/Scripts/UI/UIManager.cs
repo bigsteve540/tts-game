@@ -17,8 +17,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject draftUI;
 
-    public void OpenDraftUI()
+    public void OpenDraftUI(bool _open)
     {
-        draftUI.SetActive(true);
+        draftUI.SetActive(_open);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
+using System;
 
 public static class MessageExtensions
 {

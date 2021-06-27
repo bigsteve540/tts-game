@@ -5,10 +5,15 @@ using UnityEngine;
 public static class GameMaps
 {
     public static GameMapLayout TestMap = new GameMapLayout(20, 20,
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO" +
+        "22222222222222222222" +
+        "22222222222222222222" +
+        "22222222222222222222" +
+        "22222222222222222222" +
+        "...................." +
+        "XXXX.X..X.XX.XX..X.." +
+        "X....X..X.X.X.X..X.." +
+        "X....X..X.X...X....." +
+        "XXXX.XXXX.X...X..X.." +
         "...................." +
         "...................." +
         "...................." +
@@ -16,15 +21,10 @@ public static class GameMaps
         "...................." +
         "...................." +
         "...................." +
-        "...................." +
-        "...................." +
-        "...................." +
-        "...................." +
-        "...................." +
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO" +
-        "OOOOOOOOOOOOOOOOOOOO");
+        "11111111111111111111" +
+        "11111111111111111111" +
+        "11111111111111111111" +
+        "11111111111111111111");
 }
 public struct GameMapLayout
 {

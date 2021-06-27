@@ -69,7 +69,7 @@ public static class Utilities
         return (uint)Mathf.RoundToInt(gradient * _input);
     }
 
-    public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)//TODO: need to calculate cost to move to desired tile
+    public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)
     {
         Vector2 newPos = new Vector2(_newX, _newY);
 

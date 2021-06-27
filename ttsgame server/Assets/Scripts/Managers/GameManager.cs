@@ -55,9 +55,9 @@ public class GameManager : MonoBehaviour
 
     public void DrawMap(int _sizeX, int _sizeY) //TODO: remove this bit post testing
     {
-        for (int x = 0; x < _sizeX; x++)
+        for (int y = 0; y < _sizeY; y++)
         {
-            for (int y = 0; y < _sizeY; y++)
+            for (int x = 0; x < _sizeX; x++)
             {
                 Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, 0, y), Quaternion.identity);
             }

@@ -9,6 +9,7 @@ public enum ServerToClientRequest : ushort
     TestPingReceived = 1,
     LoadDraft,
     AspectLocked,
+    GenerateTilemap,
     SpawnAspect,
     ModifyAspectHealth
 }
@@ -79,6 +80,7 @@ public class NetworkManager : MonoBehaviour
             { (ushort)ServerToClientRequest.TestPingReceived, ClientHandle.TestPingReceived },
             { (ushort)ServerToClientRequest.LoadDraft, ClientHandle.LoadDraft },
             { (ushort)ServerToClientRequest.AspectLocked, ClientHandle.AspectLocked },
+            { (ushort)ServerToClientRequest.GenerateTilemap, ClientHandle.GenerateTilemap },
             { (ushort)ServerToClientRequest.SpawnAspect, ClientHandle.SpawnAspect }
         };
         Client.Connect(ip, port, actionQueue);

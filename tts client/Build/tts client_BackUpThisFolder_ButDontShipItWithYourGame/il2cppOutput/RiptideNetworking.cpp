@@ -407,6 +407,7 @@ IL2CPP_EXTERN_C String_t* _stringLiteral41479E1A1CEA3CB58FB676D7C2290C97B37582D6
 IL2CPP_EXTERN_C String_t* _stringLiteral54F2B2BA10EF93AB812B746A34A8EC4F37E17623;
 IL2CPP_EXTERN_C String_t* _stringLiteral6ED2C097B14E36F1DF01A1C368A93BDBE301D888;
 IL2CPP_EXTERN_C String_t* _stringLiteral78CED1D5B177E16E82CF2480EF9DDA2FBF3F1F46;
+IL2CPP_EXTERN_C String_t* _stringLiteral8E0BCD421CBCC11C9973F72E207AF3FEEF81122A;
 IL2CPP_EXTERN_C String_t* _stringLiteral9019DCF5ABE38C201C229FD02AA5E68715517C7D;
 IL2CPP_EXTERN_C String_t* _stringLiteral91A186CE4E75AD8EB2E40F5B459674B07DF03215;
 IL2CPP_EXTERN_C String_t* _stringLiteral96403D980575E88E2C9A359422873B0AB82A5199;
@@ -504,6 +505,7 @@ IL2CPP_EXTERN_C const uint32_t Message_CreateInternal_m737D416F0544AB67D92DA69DA
 IL2CPP_EXTERN_C const uint32_t Message_Create_m083B35E722F738A7D2334534FF28214651246C3B_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Message_Create_m6A381F4C069CD1A6471CDD59A66BC4EBBFAF2F73_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Message_GetBool_mBFBEB8EA13DF2A7B51D036E680A104544D964E82_MetadataUsageId;
+IL2CPP_EXTERN_C const uint32_t Message_GetByteArray_mC5EDC6B08C917B066150E44164B7915628F25B1B_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Message_GetByte_m2A6D169E054EBD908D825277AAD08EFF874C98DF_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Message_GetFloat_m2E2D3C22349CC333A30959B89311890DE9E8949D_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2_MetadataUsageId;
@@ -8331,6 +8333,51 @@ IL_0026:
 		NullCheck(L_12);
 		__this->set_writePos_13((uint16_t)(((int32_t)((uint16_t)((int32_t)il2cpp_codegen_add((int32_t)L_11, (int32_t)(((int32_t)((uint16_t)(((int32_t)((int32_t)(((RuntimeArray*)L_12)->max_length)))))))))))));
 		return __this;
+	}
+}
+// System.Byte[] RiptideNetworking.Message::GetByteArray(System.Int32)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* Message_GetByteArray_mC5EDC6B08C917B066150E44164B7915628F25B1B (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * __this, int32_t ___length0, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_method (Message_GetByteArray_mC5EDC6B08C917B066150E44164B7915628F25B1B_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* V_0 = NULL;
+	{
+		int32_t L_0 = ___length0;
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_1 = (ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821*)(ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821*)SZArrayNew(ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821_il2cpp_TypeInfo_var, (uint32_t)L_0);
+		V_0 = L_1;
+		int32_t L_2 = Message_get_UnreadLength_mD1D16125E204749E33F5A3EEC42132FAB43E387A(__this, /*hidden argument*/NULL);
+		int32_t L_3 = ___length0;
+		if ((((int32_t)L_2) >= ((int32_t)L_3)))
+		{
+			goto IL_0037;
+		}
+	}
+	{
+		int32_t L_4 = Message_get_UnreadLength_mD1D16125E204749E33F5A3EEC42132FAB43E387A(__this, /*hidden argument*/NULL);
+		int32_t L_5 = L_4;
+		RuntimeObject * L_6 = Box(Int32_t585191389E07734F19F3156FF88FB3EF4800D102_il2cpp_TypeInfo_var, &L_5);
+		String_t* L_7 = String_Format_m0ACDD8B34764E4040AED0B3EEB753567E4576BFA(_stringLiteral8E0BCD421CBCC11C9973F72E207AF3FEEF81122A, L_6, /*hidden argument*/NULL);
+		RiptideLogger_Log_mAB654BE8367E23EC36F00327A4A389B3B6369A2E(_stringLiteral0B99CEBE565822C64AC5D84AECB00FE40E59CBD3, L_7, /*hidden argument*/NULL);
+		int32_t L_8 = Message_get_UnreadLength_mD1D16125E204749E33F5A3EEC42132FAB43E387A(__this, /*hidden argument*/NULL);
+		___length0 = L_8;
+	}
+
+IL_0037:
+	{
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_9 = Message_get_Bytes_m738D80A324833069F034C03F9AA0AFEC8B999844_inline(__this, /*hidden argument*/NULL);
+		uint16_t L_10 = __this->get_readPos_14();
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_11 = V_0;
+		int32_t L_12 = ___length0;
+		Array_Copy_mA10D079DD8D9700CA44721A219A934A2397653F6((RuntimeArray *)(RuntimeArray *)L_9, L_10, (RuntimeArray *)(RuntimeArray *)L_11, 0, L_12, /*hidden argument*/NULL);
+		uint16_t L_13 = __this->get_readPos_14();
+		int32_t L_14 = ___length0;
+		__this->set_readPos_14((uint16_t)(((int32_t)((uint16_t)((int32_t)il2cpp_codegen_add((int32_t)L_13, (int32_t)(((int32_t)((uint16_t)L_14)))))))));
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_15 = V_0;
+		return L_15;
 	}
 }
 // System.Boolean RiptideNetworking.Message::GetBool()
