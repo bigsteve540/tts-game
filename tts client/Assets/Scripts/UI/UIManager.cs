@@ -15,10 +15,12 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] private GameObject draftUI;
+    [SerializeField] private GameObject[] uiPanels;
 
-    public void OpenDraftUI(bool _open)
+    public void SetUIPanelActive(int _id)
     {
-        draftUI.SetActive(_open);
+        for (int i = 0; i < uiPanels.Length; i++)
+            uiPanels[_id].SetActive(i == _id ? true : false);
     }
+
 }

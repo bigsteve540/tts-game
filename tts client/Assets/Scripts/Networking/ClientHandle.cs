@@ -11,7 +11,7 @@ public static class ClientHandle
     }
     public static void LoadDraft(Message _message)
     {
-        UIManager.Instance.OpenDraftUI(true);
+        UIManager.Instance.SetUIPanelActive(0);
     }
     public static void AspectLocked(Message _message)
     {
@@ -19,14 +19,11 @@ public static class ClientHandle
     }
     public static void GenerateTilemap(Message _message)
     {
-        UIManager.Instance.OpenDraftUI(false);
-
         int width = _message.GetInt();
         int height = _message.GetInt();
         int arrLen = _message.GetInt();
         byte[] map = _message.GetByteArray(arrLen);
         Tilemap.BuildMapFromBytes(width, height, map);
-
     }
     public static void GenerateDeploymentZones(Message _message)
     {
@@ -37,6 +34,8 @@ public static class ClientHandle
             Vector2 pos = _message.GetVector2();
             GameManager.Instance.DrawDeployTile(playerID, (int)pos.x, (int)pos.y);
         }
+
+        UIManager.Instance.SetUIPanelActive(1);
     }
     public static void SpawnAspect(Message _message)
     {
