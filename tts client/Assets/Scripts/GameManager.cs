@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
-    public GameObject[] tileVisuals;
+    [SerializeField] private GameObject[] tileVisuals;
+    [SerializeField] private GameObject deployZoneVisual; 
 
     public static GameManager Instance;
     public void Awake()
@@ -42,6 +43,25 @@ public class GameManager : MonoBehaviour
                 Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, 0, y), Quaternion.identity);
             }
         }
+    }
+    public void DrawDeployTile(int _playerID, int _x, int _y)
+    {
+        GameObject go = Instantiate(deployZoneVisual, new Vector3(_x, 1f, _y), Quaternion.identity);
+
+        Color color;
+        switch (_playerID)
+        {
+            case 1:
+                color = new Color(1f, 0f, 0f, 0.5f);
+                break;
+            case 2:
+                color = new Color(0f, 1f, 0f, 0.5f);
+                break;
+            default:
+                color = new Color(1f, 1f, 1f, 0.5f);
+                break;
+        }
+        go.GetComponent<MeshRenderer>().material.color = color;
     }
 
     private void OnApplicationQuit()

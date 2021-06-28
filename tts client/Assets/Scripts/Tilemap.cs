@@ -17,11 +17,11 @@ public static class Tilemap
     {
         tiles = new TileType[_width, _height];
 
-        for (int x = 0; x < _width - 1; x++)
+        for (int y = 0; y < _height; y++)
         {
-            for (int y = 0; y < _height - 1; y++)
+            for (int x = 0; x < _width; x++)
             {
-                tiles[x, y] = (TileType)Convert.ToInt32(_bytes[(x * _width) + y]);
+                tiles[x, y] = (TileType)Convert.ToInt32(_bytes[ _width * x + y]);
             }
         }
         GameManager.Instance.DrawMap(_width, _height);

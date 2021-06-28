@@ -25,7 +25,7 @@ public static class DraftManager
 
     private static void AssignNextActivePlayer()
     {
-        if (ActivePlayerID == 0 || ++ActivePlayerID > GameSettings.TotalPlayers)
+        if (++ActivePlayerID > GameSettings.TotalPlayers)
             ActivePlayerID = 1;
         SystemClockManager.Restart();
         Debug.Log($"Active player is {ActivePlayerID}");
@@ -57,6 +57,7 @@ public static class DraftManager
                     GameManager.GameState = GameState.Deploy;
                     draftStepIterator = 0;
                     Tilemap.Init(GameMaps.TestMap);
+                    return;
                 }
                 break;
         }

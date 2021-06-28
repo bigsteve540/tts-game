@@ -10,6 +10,7 @@ public enum ServerToClientRequest : ushort
     LoadDraft,
     AspectLocked,
     GenerateTilemap,
+    GenerateDeploymentZones,
     SpawnAspect,
     ModifyAspectHealth
 }
@@ -81,6 +82,7 @@ public class NetworkManager : MonoBehaviour
             { (ushort)ServerToClientRequest.LoadDraft, ClientHandle.LoadDraft },
             { (ushort)ServerToClientRequest.AspectLocked, ClientHandle.AspectLocked },
             { (ushort)ServerToClientRequest.GenerateTilemap, ClientHandle.GenerateTilemap },
+            { (ushort)ServerToClientRequest.GenerateDeploymentZones, ClientHandle.GenerateDeploymentZones },
             { (ushort)ServerToClientRequest.SpawnAspect, ClientHandle.SpawnAspect }
         };
         Client.Connect(ip, port, actionQueue);

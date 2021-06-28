@@ -27,12 +27,15 @@ public static class ClientHandle
         byte[] map = _message.GetByteArray(arrLen);
         Tilemap.BuildMapFromBytes(width, height, map);
 
-        for (int i = 0; i < _message.GetInt(); i++)
+    }
+    public static void GenerateDeploymentZones(Message _message)
+    {
+        int playerID = _message.GetInt();
+        int cellCount = _message.GetInt();
+        for (int j = 0; j < cellCount; j++)
         {
-            for (int j = 0; j < _message.GetInt(); j++)
-            {
-                Vector2 pos = _message.GetVector2();
-            }
+            Vector2 pos = _message.GetVector2();
+            GameManager.Instance.DrawDeployTile(playerID, (int)pos.x, (int)pos.y);
         }
     }
     public static void SpawnAspect(Message _message)

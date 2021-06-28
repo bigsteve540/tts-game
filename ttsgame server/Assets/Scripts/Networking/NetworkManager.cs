@@ -9,6 +9,7 @@ public enum ServerToClientRequest : ushort
     LoadDraft,
     AspectLocked,
     GenerateTilemap,
+    GenerateDeploymentZones,
     SpawnAspect,
     ModifyAspectHealth
 }

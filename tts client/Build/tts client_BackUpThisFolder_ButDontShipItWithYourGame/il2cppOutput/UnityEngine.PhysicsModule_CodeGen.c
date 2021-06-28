@@ -203,7 +203,6 @@ static const int32_t s_InvokerIndices[56] =
 	14,
 	10,
 	9,
-	1528,
 	1529,
 	1530,
 	1531,
@@ -217,8 +216,8 @@ static const int32_t s_InvokerIndices[56] =
 	1539,
 	1540,
 	1541,
-	1278,
 	1542,
+	1280,
 	1543,
 	1544,
 	1545,
@@ -247,8 +246,9 @@ static const int32_t s_InvokerIndices[56] =
 	1568,
 	1569,
 	1570,
-	17,
 	1571,
+	17,
+	1572,
 };
 extern const Il2CppCodeGenModule g_UnityEngine_PhysicsModuleCodeGenModule;
 const Il2CppCodeGenModule g_UnityEngine_PhysicsModuleCodeGenModule = 

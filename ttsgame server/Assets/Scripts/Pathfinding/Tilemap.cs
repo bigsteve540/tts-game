@@ -41,14 +41,17 @@ public static class Tilemap
         msg.Add(map.Length);
         msg.Add(map);
 
-        msg.Add(GameSettings.TotalPlayers);
+        NetworkManager.Instance.Server.SendToAll(msg);
+
         for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
         {
+            msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateDeploymentZones);
+            msg.Add(i);
             msg.Add(deploymentZones[i].Count);
             for (int j = 0; j < deploymentZones[i].Count; j++)
                 msg.Add(deploymentZones[i][j]);
+            NetworkManager.Instance.Server.SendToAll(msg);
         }
-        NetworkManager.Instance.Server.SendToAll(msg);
 
         GameManager.Instance.DrawMap(_layout.Width, _layout.Height); //remove this after testing
     }
@@ -96,12 +99,13 @@ public static class Tilemap
         {
             for (int y = 0; y < _layout.Height; y++)
             {
-                if (int.TryParse(_layout.MapData[_layout.Width * y + x].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
+                if (int.TryParse(_layout.MapData[_layout.Width * x + y].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
                 {
                     if (!deploymentZones.ContainsKey(zoneID))
                         deploymentZones.Add(zoneID, new List<Vector2>());
 
                     deploymentZones[zoneID].Add(new Vector2(x,y));
+                    GameManager.Instance.DrawDeployTile(zoneID, x, y);
                 }
             }
         }

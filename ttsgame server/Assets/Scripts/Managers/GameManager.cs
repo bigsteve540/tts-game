@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public static Dictionary<int, IAspectBehaviour> Entities = new Dictionary<int, IAspectBehaviour>();
 
     public GameObject[] tileVisuals;
+    public GameObject deployVisuals;
 
     private static int IDCounter = 0;
 
@@ -62,6 +63,10 @@ public class GameManager : MonoBehaviour
                 Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, 0, y), Quaternion.identity);
             }
         }
+    }
+    public void DrawDeployTile(int _playerID, int _x, int _y)
+    {
+        Instantiate(deployVisuals, new Vector3(_x, 1f, _y), Quaternion.identity);
     }
 
     //private bool TestInterrupt(int _IDofTarget, TimelineEventType[] _types)
