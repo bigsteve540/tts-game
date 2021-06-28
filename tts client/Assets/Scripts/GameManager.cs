@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
+    [HideInInspector] public string[] pickedAspects = new string[5];
+
     [SerializeField] private GameObject[] tileVisuals;
     [SerializeField] private GameObject deployZoneVisual; 
 

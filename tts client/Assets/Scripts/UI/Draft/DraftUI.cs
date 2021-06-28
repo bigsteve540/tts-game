@@ -61,9 +61,14 @@ public class DraftUI : MonoBehaviour
                 localBans[banIndexors.x++].sprite = aspectSprites[_aspectCode];
         else
             if (_lockerID != NetworkManager.Instance.Client.Id)
+            {
                 networkPicks[pickIndexors.y++].sprite = aspectSprites[_aspectCode];
+            }
             else
-                localPicks[pickIndexors.x++].sprite = aspectSprites[_aspectCode];
+            {
+                localPicks[pickIndexors.x].sprite = aspectSprites[_aspectCode];
+                GameManager.Instance.pickedAspects[pickIndexors.x++] = _aspectCode;
+            }
 
         timerValue = 30f - (NetworkManager.Instance.Ping * 0.01f);
     }
