@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     public void SetUIPanelActive(int _id)
     {
         for (int i = 0; i < uiPanels.Length; i++)
-            uiPanels[_id].SetActive(i == _id ? true : false);
+            uiPanels[i].SetActive(i == _id ? true : false);
     }
 
 }

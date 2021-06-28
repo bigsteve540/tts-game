@@ -34,7 +34,6 @@ public static class ClientHandle
             Vector2 pos = _message.GetVector2();
             GameManager.Instance.DrawDeployTile(playerID, (int)pos.x, (int)pos.y);
         }
-
         UIManager.Instance.SetUIPanelActive(1);
     }
     public static void SpawnAspect(Message _message)

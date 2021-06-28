@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
-    [HideInInspector] public string[] pickedAspects = new string[5];
+    public static string SelectedAspect = string.Empty;
+    [HideInInspector] public string[] PickedAspects = new string[5];
+
+    public static Dictionary<string, AspectData> AspectData = new Dictionary<string, AspectData>();
 
     [SerializeField] private GameObject[] tileVisuals;
     [SerializeField] private GameObject deployZoneVisual; 
@@ -25,6 +29,10 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         NetworkManager.Instance.Connect();
+
+        AspectData[] data = Resources.LoadAll<AspectData>("Aspects/Data");
+        for (int i = 0; i < data.Length; i++)
+            AspectData.Add(data[i].AspectCode, data[i]);
     }
 
     public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _posXZ)

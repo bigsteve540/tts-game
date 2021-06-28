@@ -17,7 +17,7 @@ public class DraftUI : MonoBehaviour
                 instance = value;
             else if (instance != value)
             {
-                Debug.Log($"{nameof(NetworkManager)} instance already exists, destroying object!");
+                Debug.Log($"{nameof(DraftUI)} instance already exists, destroying object!");
                 Destroy(value);
             }
         }
@@ -28,9 +28,10 @@ public class DraftUI : MonoBehaviour
     private void OnEnable()
     {
         timerValue -= NetworkManager.Instance.Ping * 0.01f;
-    }
 
-    public static string SelectedAspect = string.Empty;
+        foreach (AspectData data in GameManager.AspectData.Values)
+            GeneratePortrait(data);
+    }
 
     [SerializeField] private TextMeshProUGUI timerText;
     private float timerValue = 30f;
@@ -48,26 +49,22 @@ public class DraftUI : MonoBehaviour
     [SerializeField] private Image[] localPicks;
     [SerializeField] private Image[] networkPicks;
 
-    private AspectData[] data;
-
-    private Dictionary<string, Sprite> aspectSprites = new Dictionary<string, Sprite>();
-
     public void LockAspect(bool _isBan, int _lockerID, string _aspectCode)
     {
         if (_isBan)
-            if(_lockerID != NetworkManager.Instance.Client.Id)
-                networkBans[banIndexors.y++].sprite = aspectSprites[_aspectCode];
+            if (_lockerID != NetworkManager.Instance.Client.Id)
+                networkBans[banIndexors.y++].sprite = GameManager.AspectData[_aspectCode].AspectSprite;
             else
-                localBans[banIndexors.x++].sprite = aspectSprites[_aspectCode];
+                localBans[banIndexors.x++].sprite = GameManager.AspectData[_aspectCode].AspectSprite;
         else
             if (_lockerID != NetworkManager.Instance.Client.Id)
             {
-                networkPicks[pickIndexors.y++].sprite = aspectSprites[_aspectCode];
+                networkPicks[pickIndexors.y++].sprite = GameManager.AspectData[_aspectCode].AspectSprite;
             }
             else
             {
-                localPicks[pickIndexors.x].sprite = aspectSprites[_aspectCode];
-                GameManager.Instance.pickedAspects[pickIndexors.x++] = _aspectCode;
+                localPicks[pickIndexors.x].sprite = GameManager.AspectData[_aspectCode].AspectSprite;
+                GameManager.Instance.PickedAspects[pickIndexors.x++] = _aspectCode;
             }
 
         timerValue = 30f - (NetworkManager.Instance.Ping * 0.01f);
@@ -75,25 +72,24 @@ public class DraftUI : MonoBehaviour
 
     public void ButtonInteract()
     {
-        if (SelectedAspect == string.Empty)
+        if (GameManager.SelectedAspect == string.Empty)
             return;
 
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerRequest.DraftInteract);
-        msg.Add(SelectedAspect);
+        msg.Add(GameManager.SelectedAspect);
         NetworkManager.Instance.Client.Send(msg);
-        SelectedAspect = string.Empty;
+        GameManager.SelectedAspect = string.Empty;
+    }
+
+    public void GeneratePortrait(AspectData _data)
+    {
+        Instantiate(aspectPortrait, scrollviewContent).GetComponent<AspectPortraitUI>().Init(_data);
     }
 
     private void Start()
     {
-        data = Resources.LoadAll<AspectData>("Aspects/Data");
-        for (int i = 0; i < data.Length; i++)
-        {
-            aspectSprites.Add(data[i].AspectCode, data[i].AspectSprite);
-            Instantiate(aspectPortrait, scrollviewContent).GetComponent<AspectPortraitUI>().Init(data[i]);
-        }
-    }
 
+    }
     private void Update()
     {
         timerValue -= Time.unscaledDeltaTime;

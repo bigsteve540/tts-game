@@ -15,5 +15,5 @@ public class AspectPortraitUI : MonoBehaviour
         aspectCode = _data.AspectCode;
     }
 
-    public void ButtonInteract() { DraftUI.SelectedAspect = aspectCode; }
+    public void ButtonInteract() { GameManager.SelectedAspect = aspectCode; }
 }
