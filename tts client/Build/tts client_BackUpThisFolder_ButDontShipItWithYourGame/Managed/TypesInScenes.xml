@@ -46,6 +46,7 @@
 		<type fullname="AspectData" preserve="nothing"/>
 		<type fullname="AspectPortraitUI" preserve="nothing"/>
 		<type fullname="DebugUI" preserve="nothing"/>
+		<type fullname="DeploymentUI" preserve="nothing"/>
 		<type fullname="DraftUI" preserve="nothing"/>
 		<type fullname="EntityController" preserve="nothing"/>
 		<type fullname="GameManager" preserve="nothing"/>

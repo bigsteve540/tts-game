@@ -114,59 +114,69 @@ extern void Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32 
 extern void DebugUI_Update_mEF33F81EB1CF9FEC0FBD4F7B73E3A90E64E8092C ();
 // 0x0000002F System.Void DebugUI::.ctor()
 extern void DebugUI__ctor_m35DF3B4206957047E136BF5C26460C4183E70B8F ();
-// 0x00000030 System.Void AspectPortraitUI::Init(AspectData)
+// 0x00000030 DeploymentUI DeploymentUI::get_Instance()
+extern void DeploymentUI_get_Instance_m26C5BB0B538AE4235CEEFD4F00EFB42557F25ED2 ();
+// 0x00000031 System.Void DeploymentUI::set_Instance(DeploymentUI)
+extern void DeploymentUI_set_Instance_mABA854654F4C574C0F2925E61D05E75B890BDC75 ();
+// 0x00000032 System.Void DeploymentUI::Awake()
+extern void DeploymentUI_Awake_mBE6ED882BA2E8A41CD27A27C592640BB1E5DA076 ();
+// 0x00000033 System.Void DeploymentUI::Start()
+extern void DeploymentUI_Start_m19E1C0A246AD33753F8D7479E8F864DDCEF2D31E ();
+// 0x00000034 System.Void DeploymentUI::.ctor()
+extern void DeploymentUI__ctor_m6D187257D03B099481C4544A67D4FD81324A529A ();
+// 0x00000035 System.Void AspectPortraitUI::Init(AspectData)
 extern void AspectPortraitUI_Init_mC686B268BD591A14AB42C18B39880AC2BBB8EAC0 ();
-// 0x00000031 System.Void AspectPortraitUI::ButtonInteract()
+// 0x00000036 System.Void AspectPortraitUI::ButtonInteract()
 extern void AspectPortraitUI_ButtonInteract_m3D140FA3CF9352B6A0C22A3DF5F6F8388C106F95 ();
-// 0x00000032 System.Void AspectPortraitUI::.ctor()
+// 0x00000037 System.Void AspectPortraitUI::.ctor()
 extern void AspectPortraitUI__ctor_mCDD10D702F98480D140F49AD190E955638F4CBE5 ();
-// 0x00000033 DraftUI DraftUI::get_Instance()
+// 0x00000038 DraftUI DraftUI::get_Instance()
 extern void DraftUI_get_Instance_m2D0C71E6F06AF634922D64B8BB9C224B4365F126 ();
-// 0x00000034 System.Void DraftUI::set_Instance(DraftUI)
+// 0x00000039 System.Void DraftUI::set_Instance(DraftUI)
 extern void DraftUI_set_Instance_m2401D515DA6F5411D6E413541686B1B457383D07 ();
-// 0x00000035 System.Void DraftUI::Awake()
+// 0x0000003A System.Void DraftUI::Awake()
 extern void DraftUI_Awake_mF2D1DB6FA765D397153E79870C008C1C81B5A433 ();
-// 0x00000036 System.Void DraftUI::OnEnable()
+// 0x0000003B System.Void DraftUI::OnEnable()
 extern void DraftUI_OnEnable_m88400133C7C452EEF856E3C155CB58B27464EE94 ();
-// 0x00000037 System.Void DraftUI::LockAspect(System.Boolean,System.Int32,System.String)
+// 0x0000003C System.Void DraftUI::LockAspect(System.Boolean,System.Int32,System.String)
 extern void DraftUI_LockAspect_mF26D7FB045BAB156A335926016EB2192C34F38A3 ();
-// 0x00000038 System.Void DraftUI::ButtonInteract()
+// 0x0000003D System.Void DraftUI::ButtonInteract()
 extern void DraftUI_ButtonInteract_m96C48DD416C6DBE3FEB9014B613113233DD6A32B ();
-// 0x00000039 System.Void DraftUI::Start()
+// 0x0000003E System.Void DraftUI::GeneratePortrait(AspectData)
+extern void DraftUI_GeneratePortrait_m2F37C40B0D20E5B78735889566653701BA8B471B ();
+// 0x0000003F System.Void DraftUI::Start()
 extern void DraftUI_Start_m1051E48F9DBD0ACBBBBD5DC266C1A9AEE47F9BB2 ();
-// 0x0000003A System.Void DraftUI::Update()
+// 0x00000040 System.Void DraftUI::Update()
 extern void DraftUI_Update_m21EE822BF5AAD2EBBF5785AE6DCCFC6E7FD87970 ();
-// 0x0000003B System.Void DraftUI::.ctor()
+// 0x00000041 System.Void DraftUI::.ctor()
 extern void DraftUI__ctor_mEAAC11F5E586FF3381BFA1EBD1B5D6F967E6FFB7 ();
-// 0x0000003C System.Void DraftUI::.cctor()
-extern void DraftUI__cctor_m83F05D5A8A7B81FA0BE3C35CC8FB064BFD9CE593 ();
-// 0x0000003D System.Void UIManager::Awake()
+// 0x00000042 System.Void UIManager::Awake()
 extern void UIManager_Awake_mD9EFB03744D897F8A0784A58CB31CE9B0BC5D651 ();
-// 0x0000003E System.Void UIManager::SetUIPanelActive(System.Int32)
+// 0x00000043 System.Void UIManager::SetUIPanelActive(System.Int32)
 extern void UIManager_SetUIPanelActive_m5A2E0D27F74773DBB6A7AACB7BA4E71E378327DE ();
-// 0x0000003F System.Void UIManager::.ctor()
+// 0x00000044 System.Void UIManager::.ctor()
 extern void UIManager__ctor_m5E5065654115BEE5B00F84AC64469D5D642351A3 ();
-// 0x00000040 System.Void NetworkManager_MessageHandler::.ctor(System.Object,System.IntPtr)
+// 0x00000045 System.Void NetworkManager_MessageHandler::.ctor(System.Object,System.IntPtr)
 extern void MessageHandler__ctor_mF32DD0B39314427EA11238C418B90921AF242FA2 ();
-// 0x00000041 System.Void NetworkManager_MessageHandler::Invoke(RiptideNetworking.Message)
+// 0x00000046 System.Void NetworkManager_MessageHandler::Invoke(RiptideNetworking.Message)
 extern void MessageHandler_Invoke_m8AD0C695723924E4DCFE59133537F8B820F67A1F ();
-// 0x00000042 System.IAsyncResult NetworkManager_MessageHandler::BeginInvoke(RiptideNetworking.Message,System.AsyncCallback,System.Object)
+// 0x00000047 System.IAsyncResult NetworkManager_MessageHandler::BeginInvoke(RiptideNetworking.Message,System.AsyncCallback,System.Object)
 extern void MessageHandler_BeginInvoke_m26D5B5C59259AF67DE3908C324202DA0B95ED850 ();
-// 0x00000043 System.Void NetworkManager_MessageHandler::EndInvoke(System.IAsyncResult)
+// 0x00000048 System.Void NetworkManager_MessageHandler::EndInvoke(System.IAsyncResult)
 extern void MessageHandler_EndInvoke_m78EE9D60A431AAD9777A016415C4F2A07BEE29D1 ();
-// 0x00000044 System.Void NetworkManager_<TestPing>d__25::.ctor(System.Int32)
+// 0x00000049 System.Void NetworkManager_<TestPing>d__25::.ctor(System.Int32)
 extern void U3CTestPingU3Ed__25__ctor_mCF7BD9C30FF229872F885125C2AB8197268FD2BF ();
-// 0x00000045 System.Void NetworkManager_<TestPing>d__25::System.IDisposable.Dispose()
+// 0x0000004A System.Void NetworkManager_<TestPing>d__25::System.IDisposable.Dispose()
 extern void U3CTestPingU3Ed__25_System_IDisposable_Dispose_m67ED4F525F7F63A736AE7452160C04E4242D0E6B ();
-// 0x00000046 System.Boolean NetworkManager_<TestPing>d__25::MoveNext()
+// 0x0000004B System.Boolean NetworkManager_<TestPing>d__25::MoveNext()
 extern void U3CTestPingU3Ed__25_MoveNext_mE42074ABA47140A0A87E5D8F60D73837215A370B ();
-// 0x00000047 System.Object NetworkManager_<TestPing>d__25::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+// 0x0000004C System.Object NetworkManager_<TestPing>d__25::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
 extern void U3CTestPingU3Ed__25_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mF9CBFF1E7DC75840B1B8E4054DE62CD086EAC176 ();
-// 0x00000048 System.Void NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.Reset()
+// 0x0000004D System.Void NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.Reset()
 extern void U3CTestPingU3Ed__25_System_Collections_IEnumerator_Reset_m5C63789EAAD28AE14A90093D9889784EDE11339B ();
-// 0x00000049 System.Object NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.get_Current()
+// 0x0000004E System.Object NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.get_Current()
 extern void U3CTestPingU3Ed__25_System_Collections_IEnumerator_get_Current_mE3E5A0744F249259C72A03696156D6EC86FBEDCB ();
-static Il2CppMethodPointer s_methodPointers[73] = 
+static Il2CppMethodPointer s_methodPointers[78] = 
 {
 	AspectData__ctor_mA167D15DDB75408AFF41F824C9A172C0A0E0A943,
 	EntityController_SetHP_m50F064E829B815DCA06689100DEB22F2BB343EE8,
@@ -215,6 +225,11 @@ static Il2CppMethodPointer s_methodPointers[73] =
 	Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32,
 	DebugUI_Update_mEF33F81EB1CF9FEC0FBD4F7B73E3A90E64E8092C,
 	DebugUI__ctor_m35DF3B4206957047E136BF5C26460C4183E70B8F,
+	DeploymentUI_get_Instance_m26C5BB0B538AE4235CEEFD4F00EFB42557F25ED2,
+	DeploymentUI_set_Instance_mABA854654F4C574C0F2925E61D05E75B890BDC75,
+	DeploymentUI_Awake_mBE6ED882BA2E8A41CD27A27C592640BB1E5DA076,
+	DeploymentUI_Start_m19E1C0A246AD33753F8D7479E8F864DDCEF2D31E,
+	DeploymentUI__ctor_m6D187257D03B099481C4544A67D4FD81324A529A,
 	AspectPortraitUI_Init_mC686B268BD591A14AB42C18B39880AC2BBB8EAC0,
 	AspectPortraitUI_ButtonInteract_m3D140FA3CF9352B6A0C22A3DF5F6F8388C106F95,
 	AspectPortraitUI__ctor_mCDD10D702F98480D140F49AD190E955638F4CBE5,
@@ -224,10 +239,10 @@ static Il2CppMethodPointer s_methodPointers[73] =
 	DraftUI_OnEnable_m88400133C7C452EEF856E3C155CB58B27464EE94,
 	DraftUI_LockAspect_mF26D7FB045BAB156A335926016EB2192C34F38A3,
 	DraftUI_ButtonInteract_m96C48DD416C6DBE3FEB9014B613113233DD6A32B,
+	DraftUI_GeneratePortrait_m2F37C40B0D20E5B78735889566653701BA8B471B,
 	DraftUI_Start_m1051E48F9DBD0ACBBBBD5DC266C1A9AEE47F9BB2,
 	DraftUI_Update_m21EE822BF5AAD2EBBF5785AE6DCCFC6E7FD87970,
 	DraftUI__ctor_mEAAC11F5E586FF3381BFA1EBD1B5D6F967E6FFB7,
-	DraftUI__cctor_m83F05D5A8A7B81FA0BE3C35CC8FB064BFD9CE593,
 	UIManager_Awake_mD9EFB03744D897F8A0784A58CB31CE9B0BC5D651,
 	UIManager_SetUIPanelActive_m5A2E0D27F74773DBB6A7AACB7BA4E71E378327DE,
 	UIManager__ctor_m5E5065654115BEE5B00F84AC64469D5D642351A3,
@@ -242,7 +257,7 @@ static Il2CppMethodPointer s_methodPointers[73] =
 	U3CTestPingU3Ed__25_System_Collections_IEnumerator_Reset_m5C63789EAAD28AE14A90093D9889784EDE11339B,
 	U3CTestPingU3Ed__25_System_Collections_IEnumerator_get_Current_mE3E5A0744F249259C72A03696156D6EC86FBEDCB,
 };
-static const int32_t s_InvokerIndices[73] = 
+static const int32_t s_InvokerIndices[78] = 
 {
 	23,
 	32,
@@ -291,6 +306,11 @@ static const int32_t s_InvokerIndices[73] =
 	2274,
 	23,
 	23,
+	4,
+	122,
+	23,
+	23,
+	23,
 	26,
 	23,
 	23,
@@ -300,10 +320,10 @@ static const int32_t s_InvokerIndices[73] =
 	23,
 	778,
 	23,
+	26,
 	23,
 	23,
 	23,
-	3,
 	23,
 	32,
 	23,
@@ -322,7 +342,7 @@ extern const Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	73,
+	78,
 	s_methodPointers,
 	s_InvokerIndices,
 	0,

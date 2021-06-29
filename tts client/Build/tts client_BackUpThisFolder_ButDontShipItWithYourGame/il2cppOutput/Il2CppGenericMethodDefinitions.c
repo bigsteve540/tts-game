@@ -21,7 +21,7 @@ IL2CPP_EXTERN_C_END
 
 
 extern const Il2CppMethodSpec g_Il2CppMethodSpecTable[];
-const Il2CppMethodSpec g_Il2CppMethodSpecTable[19774] = 
+const Il2CppMethodSpec g_Il2CppMethodSpecTable[19779] = 
 {
 	{ 0, 0, -1 } /* System.Void <>f__AnonymousType0`1<System.Object>::.ctor(<message>j__TPar) */,
 	{ 1, 0, -1 } /* System.Boolean <>f__AnonymousType0`1<System.Object>::Equals(System.Object) */,
@@ -3917,11 +3917,15 @@ const Il2CppMethodSpec g_Il2CppMethodSpecTable[19774] =
 	{ 8979, 753, -1 } /* System.Void System.Collections.Generic.List`1<UnityEngine.XR.XRDisplaySubsystem>::.ctor() */,
 	{ 3079, 16, -1 } /* System.Void System.Nullable`1<System.Int32>::.ctor(!0) */,
 	{ 3085, 16, -1 } /* !0 System.Nullable`1<System.Int32>::GetValueOrDefault() */,
-	{ 8791, 1506, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Sprite>::get_Item(!0) */,
-	{ 12084, -1, 1505 } /* !!0[] UnityEngine.Resources::LoadAll<AspectData>(System.String) */,
-	{ 8793, 1506, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Sprite>::Add(!0,!1) */,
+	{ 8791, 1500, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.String,AspectData>::get_Item(!0) */,
+	{ 8790, 1500, -1 } /* System.Collections.Generic.Dictionary`2/ValueCollection<!0,!1> System.Collections.Generic.Dictionary`2<System.String,AspectData>::get_Values() */,
+	{ 8849, 1500, -1 } /* System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2/ValueCollection<System.String,AspectData>::GetEnumerator() */,
+	{ 8863, 1500, -1 } /* !1 System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<System.String,AspectData>::get_Current() */,
+	{ 8862, 1500, -1 } /* System.Boolean System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<System.String,AspectData>::MoveNext() */,
+	{ 8861, 1500, -1 } /* System.Void System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<System.String,AspectData>::Dispose() */,
 	{ 12147, -1, 2040 } /* !!0 UnityEngine.GameObject::GetComponent<AspectPortraitUI>() */,
-	{ 8781, 1506, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.String,UnityEngine.Sprite>::.ctor() */,
+	{ 12084, -1, 1502 } /* !!0[] UnityEngine.Resources::LoadAll<AspectData>(System.String) */,
+	{ 8793, 1500, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.String,AspectData>::Add(!0,!1) */,
 	{ 12081, -1, 839 } /* !!0 UnityEngine.Resources::Load<UnityEngine.GameObject>(System.String) */,
 	{ 12255, -1, 839 } /* !!0 UnityEngine.Object::Instantiate<UnityEngine.GameObject>(!!0,UnityEngine.Vector3,UnityEngine.Quaternion) */,
 	{ 12147, -1, 1498 } /* !!0 UnityEngine.GameObject::GetComponent<EntityController>() */,
@@ -3929,11 +3933,12 @@ const Il2CppMethodSpec g_Il2CppMethodSpecTable[19774] =
 	{ 8791, 1496, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.Int32,EntityController>::get_Item(!0) */,
 	{ 12147, -1, 2041 } /* !!0 UnityEngine.GameObject::GetComponent<UnityEngine.MeshRenderer>() */,
 	{ 8781, 1496, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.Int32,EntityController>::.ctor() */,
+	{ 8781, 1500, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.String,AspectData>::.ctor() */,
 	{ 1535, 1071, -1 } /* System.Void System.EventHandler`1<RiptideNetworking.ClientMessageReceivedEventArgs>::.ctor(System.Object,System.IntPtr) */,
 	{ 1535, 1073, -1 } /* System.Void System.EventHandler`1<RiptideNetworking.ClientDisconnectedEventArgs>::.ctor(System.Object,System.IntPtr) */,
-	{ 8781, 1500, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::.ctor() */,
-	{ 8793, 1500, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::Add(!0,!1) */,
-	{ 8791, 1500, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::get_Item(!0) */,
+	{ 8781, 1504, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::.ctor() */,
+	{ 8793, 1504, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::Add(!0,!1) */,
+	{ 8791, 1504, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::get_Item(!0) */,
 	{ 19172, -1, 44 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Boolean>(System.IntPtr) */,
 	{ 19172, -1, 7 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Char>(System.IntPtr) */,
 	{ 19172, -1, 78 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Double>(System.IntPtr) */,
