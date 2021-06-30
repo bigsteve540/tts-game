@@ -35,7 +35,8 @@ public class DeploymentUI : MonoBehaviour
     private void Update()
     {
         if (previousAspectCode != GameManager.SelectedAspect && previousAspectCode == string.Empty) //spawn an entityController
-            Instantiate(GameManager.Instance.EntityBody, Vector3.down, Quaternion.identity);
+            Instantiate(GameManager.Instance.EntityBody, Vector3.down, Quaternion.identity)
+                .GetComponent<EntityController>().Init(GameManager.AspectData[GameManager.SelectedAspect]);
         previousAspectCode = GameManager.SelectedAspect;
     }
 }

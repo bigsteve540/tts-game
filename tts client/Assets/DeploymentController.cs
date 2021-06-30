@@ -23,7 +23,7 @@ public class DeploymentController : MonoBehaviour
         if (InputManager.TestKey(InputKeys.Select, KeyState.Down)) //placed state, feedback to buttons and tings
         {
             gameObject.SetActive(false);
-
+            GameManager.SelectedAspect = string.Empty;
         }
     }
 }

@@ -20,6 +20,10 @@ public class EntityController : MonoBehaviour
     {
         hp = _newHP;
     }
+    public void Init(AspectData _data)
+    {
+        data = _data;
+    }
 
     private void Update()
     {
