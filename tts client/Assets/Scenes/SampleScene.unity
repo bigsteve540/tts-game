@@ -1480,7 +1480,7 @@ GameObject:
   - component: {fileID: 893570457}
   - component: {fileID: 893570456}
   - component: {fileID: 893570455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DefaultGroundPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

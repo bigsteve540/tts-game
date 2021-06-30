@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
+    public static int GroundRaycastMask = 1 << 8;
     public static string SelectedAspect = string.Empty;
     [HideInInspector] public string[] PickedAspects = new string[5];
 
