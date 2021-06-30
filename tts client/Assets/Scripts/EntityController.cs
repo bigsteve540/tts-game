@@ -5,21 +5,27 @@ using UnityEngine.UI;
 
 public class EntityController : MonoBehaviour
 {
-    public GameObject EntityUI;
+    [SerializeField] private GameObject EntityUI;
 
-    public GameObject Model;
-    public GameObject VFXAnchors;
+    [SerializeField] private GameObject Model;
+    [SerializeField] private GameObject VFXAnchors;
 
-    [SerializeField]
-    private Slider Health;
+    [SerializeField] private Slider Health;
+    [SerializeField] private Slider ActionPoints;
+
     private int hp;
-    [SerializeField]
-    private Slider ActionPoints;
+    private AspectData data;
 
     public void SetHP(int _newHP)
     {
         hp = _newHP;
     }
+
+    private void Update()
+    {
+
+    }
+
 
     private void OnGUI()
     {
@@ -27,8 +33,6 @@ public class EntityController : MonoBehaviour
 
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(modifiedPos);
         GUI.Box(new Rect(screenPoint.x - 30f, Screen.height - screenPoint.y, 60f, 20f), hp.ToString());
-
-
     }
 
 }

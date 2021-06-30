@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
 
     public static Dictionary<string, AspectData> AspectData = new Dictionary<string, AspectData>();
 
+    public GameObject EntityBody;
+
     [SerializeField] private GameObject[] tileVisuals;
-    [SerializeField] private GameObject deployZoneVisual; 
+    [SerializeField] private GameObject deployZoneVisual;
 
     public static GameManager Instance;
     public void Awake()
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             for (int y = 0; y < _sizeY; y++)
             {
-                Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, 0, y), Quaternion.identity);
+                Instantiate(tileVisuals[(int)Tilemap.GetTile(x, y)], new Vector3(x, -0.5f, y), Quaternion.identity);
             }
         }
     }

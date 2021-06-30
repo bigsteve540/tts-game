@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
         {
             return hit[0].point;
         }
-        return Vector3.zero;
+        return Vector3.one * -1f;
     }
     
 }

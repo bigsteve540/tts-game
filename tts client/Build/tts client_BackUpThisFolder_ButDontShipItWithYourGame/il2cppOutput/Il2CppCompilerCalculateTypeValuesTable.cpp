@@ -2329,20 +2329,25 @@ IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3559[2];
 IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3561[1];
 IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3565[4];
 IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3566[6];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3567[7];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3570[8];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3571[3];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3572[8];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3574[3];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3575[5];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3576[1];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3577[5];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3578[2];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3579[2];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3580[11];
-IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3581[2];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3567[1];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3568[4];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3569[4];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3570[6];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3571[6];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3572[10];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3575[8];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3576[3];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3577[8];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3579[3];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3580[5];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3581[1];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3582[5];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3583[3];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3584[2];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3585[11];
+IL2CPP_EXTERN_C_CONST int32_t g_FieldOffsetTable3586[2];
 
-IL2CPP_EXTERN_C_CONST int32_t* g_FieldOffsetTable[3582] = 
+IL2CPP_EXTERN_C_CONST int32_t* g_FieldOffsetTable[3587] = 
 {
 	NULL,
 	g_FieldOffsetTable1,
@@ -5912,20 +5917,25 @@ IL2CPP_EXTERN_C_CONST int32_t* g_FieldOffsetTable[3582] =
 	g_FieldOffsetTable3565,
 	g_FieldOffsetTable3566,
 	g_FieldOffsetTable3567,
-	NULL,
-	NULL,
+	g_FieldOffsetTable3568,
+	g_FieldOffsetTable3569,
 	g_FieldOffsetTable3570,
 	g_FieldOffsetTable3571,
 	g_FieldOffsetTable3572,
 	NULL,
-	g_FieldOffsetTable3574,
+	NULL,
 	g_FieldOffsetTable3575,
 	g_FieldOffsetTable3576,
 	g_FieldOffsetTable3577,
-	g_FieldOffsetTable3578,
+	NULL,
 	g_FieldOffsetTable3579,
 	g_FieldOffsetTable3580,
 	g_FieldOffsetTable3581,
+	g_FieldOffsetTable3582,
+	g_FieldOffsetTable3583,
+	g_FieldOffsetTable3584,
+	g_FieldOffsetTable3585,
+	g_FieldOffsetTable3586,
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize0;
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1;
@@ -9509,7 +9519,12 @@ extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3578;
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3579;
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3580;
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3581;
-IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes* g_Il2CppTypeDefinitionSizesTable[3582] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3582;
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3583;
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3584;
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3585;
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize3586;
+IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes* g_Il2CppTypeDefinitionSizesTable[3587] = 
 {
 	(&g_typeDefinitionSize0),
 	(&g_typeDefinitionSize1),
@@ -13093,4 +13108,9 @@ IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes* g_Il2CppTypeDefinitionSizesTabl
 	(&g_typeDefinitionSize3579),
 	(&g_typeDefinitionSize3580),
 	(&g_typeDefinitionSize3581),
+	(&g_typeDefinitionSize3582),
+	(&g_typeDefinitionSize3583),
+	(&g_typeDefinitionSize3584),
+	(&g_typeDefinitionSize3585),
+	(&g_typeDefinitionSize3586),
 };

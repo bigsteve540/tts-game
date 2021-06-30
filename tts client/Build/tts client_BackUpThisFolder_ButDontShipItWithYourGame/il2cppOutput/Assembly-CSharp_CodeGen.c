@@ -20,165 +20,194 @@ IL2CPP_EXTERN_C_END
 
 
 
-// 0x00000001 System.Void AspectData::.ctor()
+// 0x00000001 System.Void InputManager::Start()
+extern void InputManager_Start_m9EAB4933E74781D59CB95E9FCD6580F9A1EDA14E ();
+// 0x00000002 System.Boolean InputManager::TestKey(InputKeys,KeyState)
+extern void InputManager_TestKey_m2690DE1EF1695FB560791328AF01462776C2BB51 ();
+// 0x00000003 System.Void InputManager::.ctor()
+extern void InputManager__ctor_m92E656DB5CA317F9006F3CD8CE443B7D15EE2A47 ();
+// 0x00000004 System.Void InputManager::.cctor()
+extern void InputManager__cctor_mDEC1EE4010E5C39761BE5A900FDCD5CF2C7CB9D9 ();
+// 0x00000005 System.Void AspectData::.ctor()
 extern void AspectData__ctor_mA167D15DDB75408AFF41F824C9A172C0A0E0A943 ();
-// 0x00000002 System.Void EntityController::SetHP(System.Int32)
+// 0x00000006 System.Void CameraController::Start()
+extern void CameraController_Start_m92C8EBBE34DA314CE0C730E07400A96E968264BB ();
+// 0x00000007 System.Void CameraController::Update()
+extern void CameraController_Update_mEFEBBAC80E781E93A04E53B8A6F10601CFDBC199 ();
+// 0x00000008 System.Void CameraController::GetMovement()
+extern void CameraController_GetMovement_m815E317F24DAE9209807E9C0587D74A5AA3A26F0 ();
+// 0x00000009 UnityEngine.Vector3 CameraController::RaycastGroundPointFromCamera(UnityEngine.Camera)
+extern void CameraController_RaycastGroundPointFromCamera_mF3B1B7AA0CE841182CE3D7BD01BED2D77BF0B28D ();
+// 0x0000000A System.Void CameraController::.ctor()
+extern void CameraController__ctor_m6E88C7769B5C6E7CC68A3670C07050374E05F902 ();
+// 0x0000000B System.Void EntityController::SetHP(System.Int32)
 extern void EntityController_SetHP_m50F064E829B815DCA06689100DEB22F2BB343EE8 ();
-// 0x00000003 System.Void EntityController::OnGUI()
+// 0x0000000C System.Void EntityController::OnGUI()
 extern void EntityController_OnGUI_mBF8208880DB1C2187C491153BB34E74DDF4607AA ();
-// 0x00000004 System.Void EntityController::.ctor()
+// 0x0000000D System.Void EntityController::.ctor()
 extern void EntityController__ctor_mBE66148D6D1C5E9E7828AEC18ECC278DB05A4090 ();
-// 0x00000005 System.Void GameManager::Awake()
+// 0x0000000E System.Void GameManager::Awake()
 extern void GameManager_Awake_m12E1357322F99B1544DAD9C099CBFA6E63529A49 ();
-// 0x00000006 System.Void GameManager::Start()
+// 0x0000000F System.Void GameManager::Start()
 extern void GameManager_Start_m4B67F69CF18652603C29FC1C5B7C6482C77B69DB ();
-// 0x00000007 System.Void GameManager::SpawnAspect(System.Int32,System.String,System.Int32,UnityEngine.Vector2)
+// 0x00000010 System.Void GameManager::SpawnAspect(System.Int32,System.String,System.Int32,UnityEngine.Vector2)
 extern void GameManager_SpawnAspect_m3D9E0AAC7BA47C4CE13A07139E9A00C377AAF314 ();
-// 0x00000008 System.Void GameManager::DrawMap(System.Int32,System.Int32)
+// 0x00000011 System.Void GameManager::DrawMap(System.Int32,System.Int32)
 extern void GameManager_DrawMap_m0C073A48A48063B6098207A70B8EA873EC2FC04A ();
-// 0x00000009 System.Void GameManager::DrawDeployTile(System.Int32,System.Int32,System.Int32)
+// 0x00000012 System.Void GameManager::DrawDeployTile(System.Int32,System.Int32,System.Int32)
 extern void GameManager_DrawDeployTile_mCA12CE1D7B5B7CE9BF8A346C50312529751A8F4F ();
-// 0x0000000A System.Void GameManager::OnApplicationQuit()
+// 0x00000013 System.Void GameManager::OnApplicationQuit()
 extern void GameManager_OnApplicationQuit_m995A9BA1A947614D90FAFF27DDEA66555DCCD5EF ();
-// 0x0000000B System.Void GameManager::.ctor()
+// 0x00000014 System.Void GameManager::.ctor()
 extern void GameManager__ctor_mFBEDEFD70BE58F3D3BE07FA8F9D97DE156D5C358 ();
-// 0x0000000C System.Void GameManager::.cctor()
+// 0x00000015 System.Void GameManager::.cctor()
 extern void GameManager__cctor_m31E0C44003795D330970BAA2A0F420D3B71341B3 ();
-// 0x0000000D System.Void ClientHandle::TestPingReceived(RiptideNetworking.Message)
+// 0x00000016 System.Void ClientHandle::TestPingReceived(RiptideNetworking.Message)
 extern void ClientHandle_TestPingReceived_m5AC473FF011BFCBE6744C470A3BB24CA9FB91572 ();
-// 0x0000000E System.Void ClientHandle::LoadDraft(RiptideNetworking.Message)
+// 0x00000017 System.Void ClientHandle::LoadDraft(RiptideNetworking.Message)
 extern void ClientHandle_LoadDraft_mC0AC54FA8B1EC75AC09085C6E62B22374194FC75 ();
-// 0x0000000F System.Void ClientHandle::AspectLocked(RiptideNetworking.Message)
+// 0x00000018 System.Void ClientHandle::AspectLocked(RiptideNetworking.Message)
 extern void ClientHandle_AspectLocked_mE723ADBD6C703B525524791E26DE7DC717EE8DFF ();
-// 0x00000010 System.Void ClientHandle::GenerateTilemap(RiptideNetworking.Message)
+// 0x00000019 System.Void ClientHandle::GenerateTilemap(RiptideNetworking.Message)
 extern void ClientHandle_GenerateTilemap_m62D6811851B4BB7A2CC99D5D281EA187A25EBBF8 ();
-// 0x00000011 System.Void ClientHandle::GenerateDeploymentZones(RiptideNetworking.Message)
+// 0x0000001A System.Void ClientHandle::GenerateDeploymentZones(RiptideNetworking.Message)
 extern void ClientHandle_GenerateDeploymentZones_mE3A28A333B2D861E562AFBA8AEC6767C70E5C99C ();
-// 0x00000012 System.Void ClientHandle::SpawnAspect(RiptideNetworking.Message)
+// 0x0000001B System.Void ClientHandle::SpawnAspect(RiptideNetworking.Message)
 extern void ClientHandle_SpawnAspect_m2FA37F80383542434539BC2D3578673BFA748C59 ();
-// 0x00000013 System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Vector2)
+// 0x0000001C System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Vector2)
 extern void MessageExtensions_Add_m1B76C96509DF42604DF483B8E90D5BAB199B55CC ();
-// 0x00000014 System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Vector3)
+// 0x0000001D System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Vector3)
 extern void MessageExtensions_Add_m88BEE6E4208F458A76E117C805870EE360E33422 ();
-// 0x00000015 System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Quaternion)
+// 0x0000001E System.Void MessageExtensions::Add(RiptideNetworking.Message,UnityEngine.Quaternion)
 extern void MessageExtensions_Add_m83A31A02756AC4076993E9BE1FEECF93C5E93321 ();
-// 0x00000016 UnityEngine.Vector2 MessageExtensions::GetVector2(RiptideNetworking.Message)
+// 0x0000001F UnityEngine.Vector2 MessageExtensions::GetVector2(RiptideNetworking.Message)
 extern void MessageExtensions_GetVector2_mE147A1A00411BF12F93E2369659FCE5E061ACF50 ();
-// 0x00000017 UnityEngine.Vector3 MessageExtensions::GetVector3(RiptideNetworking.Message)
+// 0x00000020 UnityEngine.Vector3 MessageExtensions::GetVector3(RiptideNetworking.Message)
 extern void MessageExtensions_GetVector3_m28C33434B0874AD59F9F83C4D7863E05C193452C ();
-// 0x00000018 UnityEngine.Quaternion MessageExtensions::GetQuaternion(RiptideNetworking.Message)
+// 0x00000021 UnityEngine.Quaternion MessageExtensions::GetQuaternion(RiptideNetworking.Message)
 extern void MessageExtensions_GetQuaternion_m51D2CB85353B550EF2DCAB47B2BAA351E33B0938 ();
-// 0x00000019 NetworkManager NetworkManager::get_Instance()
+// 0x00000022 NetworkManager NetworkManager::get_Instance()
 extern void NetworkManager_get_Instance_mEA21C6C03B8F9B8B612A9B8B5BC82B455A563C84 ();
-// 0x0000001A System.Void NetworkManager::set_Instance(NetworkManager)
+// 0x00000023 System.Void NetworkManager::set_Instance(NetworkManager)
 extern void NetworkManager_set_Instance_mB3D50185087E37847ED6932BFD87244BE50E59FC ();
-// 0x0000001B RiptideNetworking.Client NetworkManager::get_Client()
+// 0x00000024 RiptideNetworking.Client NetworkManager::get_Client()
 extern void NetworkManager_get_Client_m40E309571A2654EC9DE9F50B8E523D73475236D1 ();
-// 0x0000001C System.Void NetworkManager::set_Client(RiptideNetworking.Client)
+// 0x00000025 System.Void NetworkManager::set_Client(RiptideNetworking.Client)
 extern void NetworkManager_set_Client_mD3137169EC314F4A4D6519E09937469BC1930023 ();
-// 0x0000001D System.Int32 NetworkManager::get_Ping()
+// 0x00000026 System.Int32 NetworkManager::get_Ping()
 extern void NetworkManager_get_Ping_m20BDC7D868914232CE62C453B634E26364669D98 ();
-// 0x0000001E System.Void NetworkManager::set_Ping(System.Int32)
+// 0x00000027 System.Void NetworkManager::set_Ping(System.Int32)
 extern void NetworkManager_set_Ping_m009FF771086164AC68103D4E11B26C04CA4C7EF1 ();
-// 0x0000001F System.Void NetworkManager::Awake()
+// 0x00000028 System.Void NetworkManager::Awake()
 extern void NetworkManager_Awake_m8BDFCA065BD9CDBC35321EEA652685B9B31384B7 ();
-// 0x00000020 System.Void NetworkManager::FixedUpdate()
+// 0x00000029 System.Void NetworkManager::FixedUpdate()
 extern void NetworkManager_FixedUpdate_m458F9B067AB6303E98138D1D4EDFD8813CF053C8 ();
-// 0x00000021 System.Void NetworkManager::Start()
+// 0x0000002A System.Void NetworkManager::Start()
 extern void NetworkManager_Start_m6533F49FA8842AB15F5C8EBDDC92E6DC50002B91 ();
-// 0x00000022 System.Void NetworkManager::OnApplicationQuit()
+// 0x0000002B System.Void NetworkManager::OnApplicationQuit()
 extern void NetworkManager_OnApplicationQuit_m06A58A94A5E11A1D897BB19956B656098E417DFB ();
-// 0x00000023 System.Void NetworkManager::Connect()
+// 0x0000002C System.Void NetworkManager::Connect()
 extern void NetworkManager_Connect_m5DF96B11941118AF39C98987904E60CD6946F9A2 ();
-// 0x00000024 System.Void NetworkManager::GetPing(System.Int64)
+// 0x0000002D System.Void NetworkManager::GetPing(System.Int64)
 extern void NetworkManager_GetPing_mF7AA394532845C4828B09256032C3D7A396EDBBF ();
-// 0x00000025 System.Void NetworkManager::SuccessfulConnection(System.Object,System.EventArgs)
+// 0x0000002E System.Void NetworkManager::SuccessfulConnection(System.Object,System.EventArgs)
 extern void NetworkManager_SuccessfulConnection_m0D4A2FBCFFF7A1C51E41568A27E848D7B20A6968 ();
-// 0x00000026 System.Collections.IEnumerator NetworkManager::TestPing()
+// 0x0000002F System.Collections.IEnumerator NetworkManager::TestPing()
 extern void NetworkManager_TestPing_mDAD05FCBAECA49DD35ED93A8247FDD556633324D ();
-// 0x00000027 System.Void NetworkManager::FailedToConnect(System.Object,System.EventArgs)
+// 0x00000030 System.Void NetworkManager::FailedToConnect(System.Object,System.EventArgs)
 extern void NetworkManager_FailedToConnect_m8C0A36DC725DB684D42B82E1083BDF868550E35C ();
-// 0x00000028 System.Void NetworkManager::MessageReceived(System.Object,RiptideNetworking.ClientMessageReceivedEventArgs)
+// 0x00000031 System.Void NetworkManager::MessageReceived(System.Object,RiptideNetworking.ClientMessageReceivedEventArgs)
 extern void NetworkManager_MessageReceived_m519A0D70110E4FEB5337B67B87E9FBC1AECA91FB ();
-// 0x00000029 System.Void NetworkManager::ClientDisconnected(System.Object,RiptideNetworking.ClientDisconnectedEventArgs)
+// 0x00000032 System.Void NetworkManager::ClientDisconnected(System.Object,RiptideNetworking.ClientDisconnectedEventArgs)
 extern void NetworkManager_ClientDisconnected_m7322C9A24903D70AEE9E9FE3E787115C9A8EDD9F ();
-// 0x0000002A System.Void NetworkManager::LocalDisconnect(System.Object,System.EventArgs)
+// 0x00000033 System.Void NetworkManager::LocalDisconnect(System.Object,System.EventArgs)
 extern void NetworkManager_LocalDisconnect_mD8D293C7BC25DA4D91EE4C2E3CBBCD179CCA3849 ();
-// 0x0000002B System.Void NetworkManager::.ctor()
+// 0x00000034 System.Void NetworkManager::.ctor()
 extern void NetworkManager__ctor_mF87DB7AEE8B70869E378CD2AF907AC1BA1419970 ();
-// 0x0000002C TileType Tilemap::GetTile(System.Int32,System.Int32)
+// 0x00000035 TileType Tilemap::GetTile(System.Int32,System.Int32)
 extern void Tilemap_GetTile_m2737FCA638C64B80A9032C5D140EF02ED9FAFCB8 ();
-// 0x0000002D System.Void Tilemap::BuildMapFromBytes(System.Int32,System.Int32,System.Byte[])
+// 0x00000036 System.Void Tilemap::BuildMapFromBytes(System.Int32,System.Int32,System.Byte[])
 extern void Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32 ();
-// 0x0000002E System.Void DebugUI::Update()
+// 0x00000037 System.Void DebugUI::Update()
 extern void DebugUI_Update_mEF33F81EB1CF9FEC0FBD4F7B73E3A90E64E8092C ();
-// 0x0000002F System.Void DebugUI::.ctor()
+// 0x00000038 System.Void DebugUI::.ctor()
 extern void DebugUI__ctor_m35DF3B4206957047E136BF5C26460C4183E70B8F ();
-// 0x00000030 DeploymentUI DeploymentUI::get_Instance()
+// 0x00000039 DeploymentUI DeploymentUI::get_Instance()
 extern void DeploymentUI_get_Instance_m26C5BB0B538AE4235CEEFD4F00EFB42557F25ED2 ();
-// 0x00000031 System.Void DeploymentUI::set_Instance(DeploymentUI)
+// 0x0000003A System.Void DeploymentUI::set_Instance(DeploymentUI)
 extern void DeploymentUI_set_Instance_mABA854654F4C574C0F2925E61D05E75B890BDC75 ();
-// 0x00000032 System.Void DeploymentUI::Awake()
+// 0x0000003B System.Void DeploymentUI::Awake()
 extern void DeploymentUI_Awake_mBE6ED882BA2E8A41CD27A27C592640BB1E5DA076 ();
-// 0x00000033 System.Void DeploymentUI::Start()
+// 0x0000003C System.Void DeploymentUI::Start()
 extern void DeploymentUI_Start_m19E1C0A246AD33753F8D7479E8F864DDCEF2D31E ();
-// 0x00000034 System.Void DeploymentUI::.ctor()
+// 0x0000003D System.Void DeploymentUI::Update()
+extern void DeploymentUI_Update_m45F95AA9644150F6625D08F6126FFE0E1FAA928D ();
+// 0x0000003E System.Void DeploymentUI::.ctor()
 extern void DeploymentUI__ctor_m6D187257D03B099481C4544A67D4FD81324A529A ();
-// 0x00000035 System.Void AspectPortraitUI::Init(AspectData)
+// 0x0000003F System.Void AspectPortraitUI::Init(AspectData)
 extern void AspectPortraitUI_Init_mC686B268BD591A14AB42C18B39880AC2BBB8EAC0 ();
-// 0x00000036 System.Void AspectPortraitUI::ButtonInteract()
+// 0x00000040 System.Void AspectPortraitUI::ButtonInteract()
 extern void AspectPortraitUI_ButtonInteract_m3D140FA3CF9352B6A0C22A3DF5F6F8388C106F95 ();
-// 0x00000037 System.Void AspectPortraitUI::.ctor()
+// 0x00000041 System.Void AspectPortraitUI::.ctor()
 extern void AspectPortraitUI__ctor_mCDD10D702F98480D140F49AD190E955638F4CBE5 ();
-// 0x00000038 DraftUI DraftUI::get_Instance()
+// 0x00000042 DraftUI DraftUI::get_Instance()
 extern void DraftUI_get_Instance_m2D0C71E6F06AF634922D64B8BB9C224B4365F126 ();
-// 0x00000039 System.Void DraftUI::set_Instance(DraftUI)
+// 0x00000043 System.Void DraftUI::set_Instance(DraftUI)
 extern void DraftUI_set_Instance_m2401D515DA6F5411D6E413541686B1B457383D07 ();
-// 0x0000003A System.Void DraftUI::Awake()
+// 0x00000044 System.Void DraftUI::Awake()
 extern void DraftUI_Awake_mF2D1DB6FA765D397153E79870C008C1C81B5A433 ();
-// 0x0000003B System.Void DraftUI::OnEnable()
+// 0x00000045 System.Void DraftUI::OnEnable()
 extern void DraftUI_OnEnable_m88400133C7C452EEF856E3C155CB58B27464EE94 ();
-// 0x0000003C System.Void DraftUI::LockAspect(System.Boolean,System.Int32,System.String)
+// 0x00000046 System.Void DraftUI::LockAspect(System.Boolean,System.Int32,System.String)
 extern void DraftUI_LockAspect_mF26D7FB045BAB156A335926016EB2192C34F38A3 ();
-// 0x0000003D System.Void DraftUI::ButtonInteract()
+// 0x00000047 System.Void DraftUI::ButtonInteract()
 extern void DraftUI_ButtonInteract_m96C48DD416C6DBE3FEB9014B613113233DD6A32B ();
-// 0x0000003E System.Void DraftUI::GeneratePortrait(AspectData)
+// 0x00000048 System.Void DraftUI::GeneratePortrait(AspectData)
 extern void DraftUI_GeneratePortrait_m2F37C40B0D20E5B78735889566653701BA8B471B ();
-// 0x0000003F System.Void DraftUI::Start()
+// 0x00000049 System.Void DraftUI::Start()
 extern void DraftUI_Start_m1051E48F9DBD0ACBBBBD5DC266C1A9AEE47F9BB2 ();
-// 0x00000040 System.Void DraftUI::Update()
+// 0x0000004A System.Void DraftUI::Update()
 extern void DraftUI_Update_m21EE822BF5AAD2EBBF5785AE6DCCFC6E7FD87970 ();
-// 0x00000041 System.Void DraftUI::.ctor()
+// 0x0000004B System.Void DraftUI::.ctor()
 extern void DraftUI__ctor_mEAAC11F5E586FF3381BFA1EBD1B5D6F967E6FFB7 ();
-// 0x00000042 System.Void UIManager::Awake()
+// 0x0000004C System.Void UIManager::Awake()
 extern void UIManager_Awake_mD9EFB03744D897F8A0784A58CB31CE9B0BC5D651 ();
-// 0x00000043 System.Void UIManager::SetUIPanelActive(System.Int32)
+// 0x0000004D System.Void UIManager::SetUIPanelActive(System.Int32)
 extern void UIManager_SetUIPanelActive_m5A2E0D27F74773DBB6A7AACB7BA4E71E378327DE ();
-// 0x00000044 System.Void UIManager::.ctor()
+// 0x0000004E System.Void UIManager::.ctor()
 extern void UIManager__ctor_m5E5065654115BEE5B00F84AC64469D5D642351A3 ();
-// 0x00000045 System.Void NetworkManager_MessageHandler::.ctor(System.Object,System.IntPtr)
+// 0x0000004F System.Void NetworkManager_MessageHandler::.ctor(System.Object,System.IntPtr)
 extern void MessageHandler__ctor_mF32DD0B39314427EA11238C418B90921AF242FA2 ();
-// 0x00000046 System.Void NetworkManager_MessageHandler::Invoke(RiptideNetworking.Message)
+// 0x00000050 System.Void NetworkManager_MessageHandler::Invoke(RiptideNetworking.Message)
 extern void MessageHandler_Invoke_m8AD0C695723924E4DCFE59133537F8B820F67A1F ();
-// 0x00000047 System.IAsyncResult NetworkManager_MessageHandler::BeginInvoke(RiptideNetworking.Message,System.AsyncCallback,System.Object)
+// 0x00000051 System.IAsyncResult NetworkManager_MessageHandler::BeginInvoke(RiptideNetworking.Message,System.AsyncCallback,System.Object)
 extern void MessageHandler_BeginInvoke_m26D5B5C59259AF67DE3908C324202DA0B95ED850 ();
-// 0x00000048 System.Void NetworkManager_MessageHandler::EndInvoke(System.IAsyncResult)
+// 0x00000052 System.Void NetworkManager_MessageHandler::EndInvoke(System.IAsyncResult)
 extern void MessageHandler_EndInvoke_m78EE9D60A431AAD9777A016415C4F2A07BEE29D1 ();
-// 0x00000049 System.Void NetworkManager_<TestPing>d__25::.ctor(System.Int32)
+// 0x00000053 System.Void NetworkManager_<TestPing>d__25::.ctor(System.Int32)
 extern void U3CTestPingU3Ed__25__ctor_mCF7BD9C30FF229872F885125C2AB8197268FD2BF ();
-// 0x0000004A System.Void NetworkManager_<TestPing>d__25::System.IDisposable.Dispose()
+// 0x00000054 System.Void NetworkManager_<TestPing>d__25::System.IDisposable.Dispose()
 extern void U3CTestPingU3Ed__25_System_IDisposable_Dispose_m67ED4F525F7F63A736AE7452160C04E4242D0E6B ();
-// 0x0000004B System.Boolean NetworkManager_<TestPing>d__25::MoveNext()
+// 0x00000055 System.Boolean NetworkManager_<TestPing>d__25::MoveNext()
 extern void U3CTestPingU3Ed__25_MoveNext_mE42074ABA47140A0A87E5D8F60D73837215A370B ();
-// 0x0000004C System.Object NetworkManager_<TestPing>d__25::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+// 0x00000056 System.Object NetworkManager_<TestPing>d__25::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
 extern void U3CTestPingU3Ed__25_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mF9CBFF1E7DC75840B1B8E4054DE62CD086EAC176 ();
-// 0x0000004D System.Void NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.Reset()
+// 0x00000057 System.Void NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.Reset()
 extern void U3CTestPingU3Ed__25_System_Collections_IEnumerator_Reset_m5C63789EAAD28AE14A90093D9889784EDE11339B ();
-// 0x0000004E System.Object NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.get_Current()
+// 0x00000058 System.Object NetworkManager_<TestPing>d__25::System.Collections.IEnumerator.get_Current()
 extern void U3CTestPingU3Ed__25_System_Collections_IEnumerator_get_Current_mE3E5A0744F249259C72A03696156D6EC86FBEDCB ();
-static Il2CppMethodPointer s_methodPointers[78] = 
+static Il2CppMethodPointer s_methodPointers[88] = 
 {
+	InputManager_Start_m9EAB4933E74781D59CB95E9FCD6580F9A1EDA14E,
+	InputManager_TestKey_m2690DE1EF1695FB560791328AF01462776C2BB51,
+	InputManager__ctor_m92E656DB5CA317F9006F3CD8CE443B7D15EE2A47,
+	InputManager__cctor_mDEC1EE4010E5C39761BE5A900FDCD5CF2C7CB9D9,
 	AspectData__ctor_mA167D15DDB75408AFF41F824C9A172C0A0E0A943,
+	CameraController_Start_m92C8EBBE34DA314CE0C730E07400A96E968264BB,
+	CameraController_Update_mEFEBBAC80E781E93A04E53B8A6F10601CFDBC199,
+	CameraController_GetMovement_m815E317F24DAE9209807E9C0587D74A5AA3A26F0,
+	CameraController_RaycastGroundPointFromCamera_mF3B1B7AA0CE841182CE3D7BD01BED2D77BF0B28D,
+	CameraController__ctor_m6E88C7769B5C6E7CC68A3670C07050374E05F902,
 	EntityController_SetHP_m50F064E829B815DCA06689100DEB22F2BB343EE8,
 	EntityController_OnGUI_mBF8208880DB1C2187C491153BB34E74DDF4607AA,
 	EntityController__ctor_mBE66148D6D1C5E9E7828AEC18ECC278DB05A4090,
@@ -229,6 +258,7 @@ static Il2CppMethodPointer s_methodPointers[78] =
 	DeploymentUI_set_Instance_mABA854654F4C574C0F2925E61D05E75B890BDC75,
 	DeploymentUI_Awake_mBE6ED882BA2E8A41CD27A27C592640BB1E5DA076,
 	DeploymentUI_Start_m19E1C0A246AD33753F8D7479E8F864DDCEF2D31E,
+	DeploymentUI_Update_m45F95AA9644150F6625D08F6126FFE0E1FAA928D,
 	DeploymentUI__ctor_m6D187257D03B099481C4544A67D4FD81324A529A,
 	AspectPortraitUI_Init_mC686B268BD591A14AB42C18B39880AC2BBB8EAC0,
 	AspectPortraitUI_ButtonInteract_m3D140FA3CF9352B6A0C22A3DF5F6F8388C106F95,
@@ -257,15 +287,24 @@ static Il2CppMethodPointer s_methodPointers[78] =
 	U3CTestPingU3Ed__25_System_Collections_IEnumerator_Reset_m5C63789EAAD28AE14A90093D9889784EDE11339B,
 	U3CTestPingU3Ed__25_System_Collections_IEnumerator_get_Current_mE3E5A0744F249259C72A03696156D6EC86FBEDCB,
 };
-static const int32_t s_InvokerIndices[78] = 
+static const int32_t s_InvokerIndices[88] = 
 {
+	23,
+	53,
+	23,
+	3,
+	23,
+	23,
+	23,
+	23,
+	2268,
 	23,
 	32,
 	23,
 	23,
 	23,
 	23,
-	2268,
+	2269,
 	172,
 	38,
 	23,
@@ -277,11 +316,11 @@ static const int32_t s_InvokerIndices[78] =
 	122,
 	122,
 	122,
-	2269,
 	2270,
 	2271,
-	1355,
 	2272,
+	1355,
+	2268,
 	2273,
 	4,
 	122,
@@ -308,6 +347,7 @@ static const int32_t s_InvokerIndices[78] =
 	23,
 	4,
 	122,
+	23,
 	23,
 	23,
 	23,
@@ -342,7 +382,7 @@ extern const Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharpCodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	78,
+	88,
 	s_methodPointers,
 	s_InvokerIndices,
 	0,

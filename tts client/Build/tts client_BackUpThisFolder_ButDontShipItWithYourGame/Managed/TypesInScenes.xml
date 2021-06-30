@@ -30,7 +30,9 @@
 		<type fullname="UnityEngine.AudioBehaviour" preserve="nothing"/>
 		<type fullname="UnityEngine.AudioListener" preserve="nothing"/>
 		<type fullname="UnityEngine.Collider" preserve="nothing"/>
+		<type fullname="UnityEngine.CapsuleCollider" preserve="nothing"/>
 		<type fullname="UnityEngine.BoxCollider" preserve="nothing"/>
+		<type fullname="UnityEngine.SphereCollider" preserve="nothing"/>
 		<type fullname="UnityEngine.Canvas" preserve="nothing"/>
 		<type fullname="UnityEngine.RectTransform" preserve="nothing"/>
 		<type fullname="UnityEngine.GameObject" preserve="nothing"/>
@@ -45,11 +47,13 @@
 	<assembly fullname="Assembly-CSharp">
 		<type fullname="AspectData" preserve="nothing"/>
 		<type fullname="AspectPortraitUI" preserve="nothing"/>
+		<type fullname="CameraController" preserve="nothing"/>
 		<type fullname="DebugUI" preserve="nothing"/>
 		<type fullname="DeploymentUI" preserve="nothing"/>
 		<type fullname="DraftUI" preserve="nothing"/>
 		<type fullname="EntityController" preserve="nothing"/>
 		<type fullname="GameManager" preserve="nothing"/>
+		<type fullname="InputManager" preserve="nothing"/>
 		<type fullname="NetworkManager" preserve="nothing"/>
 		<type fullname="UIManager" preserve="nothing"/>
 	</assembly>
@@ -89,7 +93,6 @@
 		<type fullname="UnityEngine.Rendering.Universal.Tonemapping" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalCameraData" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset" preserve="nothing"/>
-		<type fullname="UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.Vignette" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.TextMeshPro">

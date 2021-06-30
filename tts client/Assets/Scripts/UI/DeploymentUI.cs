@@ -21,7 +21,7 @@ public class DeploymentUI : MonoBehaviour
         }
     }
 
-    [SerializeField] private Image[] portraits;
+    [SerializeField] private AspectPortraitUI[] portraits;
     private string previousAspectCode = string.Empty; 
 
     private void Awake() { Instance = this; }
@@ -29,18 +29,13 @@ public class DeploymentUI : MonoBehaviour
     public void Start()
     {
         for (int i = 0; i < GameManager.Instance.PickedAspects.Length; i++)
-            portraits[i].sprite = GameManager.AspectData[GameManager.Instance.PickedAspects[i]].AspectSprite;
+            portraits[i].Init(GameManager.AspectData[GameManager.Instance.PickedAspects[i]]);
     }
 
     private void Update()
     {
-        if(previousAspectCode != GameManager.SelectedAspect && previousAspectCode == string.Empty) //spawn an entityController
-        {
-
-        }
-        if (GameManager.GameState == GameState.Deploy && GameManager.SelectedAspect != string.Empty)
-        {
-            Vector3 groundPoint  = CameraController.RaycastGroundPointFromCamera(CameraController.ControllableCamera);
-        }
+        if (previousAspectCode != GameManager.SelectedAspect && previousAspectCode == string.Empty) //spawn an entityController
+            Instantiate(GameManager.Instance.EntityBody, Vector3.down, Quaternion.identity);
+        previousAspectCode = GameManager.SelectedAspect;
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: read in keybinds from file and use those from a dictionary reference
 public enum KeyState { Up, Down, Held }
 public enum InputKeys { Cam_Forward, Cam_Back, Cam_Left, Cam_Right, Select }
 
@@ -18,18 +17,7 @@ public class InputManager : MonoBehaviour
         {InputKeys.Select, KeyCode.Mouse0 }
     };
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Start() {/*TODO: read in keybinds from file and use those from a dictionary reference */}
 
     public static bool TestKey(InputKeys _key, KeyState _state)
     {
