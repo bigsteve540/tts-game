@@ -41,19 +41,15 @@ public class CameraController : MonoBehaviour
 
         Vector3 rightMovement = right * movespeed * Time.deltaTime * inputDir.x; 
         Vector3 upMovement = forward * movespeed * Time.deltaTime * inputDir.y; 
-        Vector3 heading = rightMovement + upMovement;
 
-        transform.position += heading;
+        transform.position += rightMovement + upMovement;
     }
 
     public static Vector3 RaycastGroundPointFromCamera(Camera _cam)
     {
         RaycastHit[] hit = new RaycastHit[1]; //should never hit more than a single ground plane
-        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.RaycastNonAlloc(ray, hit, 20f, GameManager.GroundRaycastMask, QueryTriggerInteraction.Collide) == 1)
-        {
+        if (Physics.RaycastNonAlloc(_cam.ScreenPointToRay(Input.mousePosition), hit, 20f, GameManager.GroundRaycastMask, QueryTriggerInteraction.Collide) == 1)
             return hit[0].point;
-        }
         return Vector3.one * -1f;
     }
     

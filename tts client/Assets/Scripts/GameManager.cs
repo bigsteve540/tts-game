@@ -45,9 +45,8 @@ public class GameManager : MonoBehaviour
     {
         Entities.Add(
             _entityID, 
-            Instantiate(Resources.Load<GameObject>($"Aspects/{_aspectCode}"), new Vector3(0, 0f, 0), Quaternion.identity).GetComponent<EntityController>()
+            Instantiate(EntityBody, _posXZ, Quaternion.identity).GetComponent<EntityController>().Init(AspectData[_aspectCode])
             );
-        Entities[_entityID].SetHP(_hp);
     }
 
     public void DrawMap(int _sizeX, int _sizeY) //TODO: remove this bit post testing

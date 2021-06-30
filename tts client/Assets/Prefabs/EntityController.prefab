@@ -232,11 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2f4fc30bd84314dbbd6a2c328a8de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EntityUI: {fileID: 0}
-  Model: {fileID: 0}
+  model: {fileID: 4982495567981722656}
   VFXAnchors: {fileID: 0}
-  Health: {fileID: 0}
-  ActionPoints: {fileID: 0}
 --- !u!1 &4910642808262253573
 GameObject:
   m_ObjectHideFlags: 0
