@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum GameState { Prep, Draft, Deploy, Game, Post }
 public class GameManager : MonoBehaviour
 {
+    public static GameState GameState = GameState.Prep;
+
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
 
     public static int GroundRaycastMask = 1 << 8;

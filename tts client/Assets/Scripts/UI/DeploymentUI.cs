@@ -22,6 +22,7 @@ public class DeploymentUI : MonoBehaviour
     }
 
     [SerializeField] private Image[] portraits;
+    private string previousAspectCode = string.Empty; 
 
     private void Awake() { Instance = this; }
 
@@ -29,5 +30,17 @@ public class DeploymentUI : MonoBehaviour
     {
         for (int i = 0; i < GameManager.Instance.PickedAspects.Length; i++)
             portraits[i].sprite = GameManager.AspectData[GameManager.Instance.PickedAspects[i]].AspectSprite;
+    }
+
+    private void Update()
+    {
+        if(previousAspectCode != GameManager.SelectedAspect && previousAspectCode == string.Empty) //spawn an entityController
+        {
+
+        }
+        if (GameManager.GameState == GameState.Deploy && GameManager.SelectedAspect != string.Empty)
+        {
+            Vector3 groundPoint  = CameraController.RaycastGroundPointFromCamera(CameraController.ControllableCamera);
+        }
     }
 }

@@ -12,6 +12,7 @@ public static class ClientHandle
     public static void LoadDraft(Message _message)
     {
         UIManager.Instance.SetUIPanelActive(0);
+        GameManager.GameState = GameState.Draft;
     }
     public static void AspectLocked(Message _message)
     {
@@ -35,6 +36,7 @@ public static class ClientHandle
             GameManager.Instance.DrawDeployTile(playerID, (int)pos.x, (int)pos.y);
         }
         UIManager.Instance.SetUIPanelActive(1);
+        GameManager.GameState = GameState.Deploy;
     }
     public static void SpawnAspect(Message _message)
     {
