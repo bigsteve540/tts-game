@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 4982495567981722656}
+  deploymentModel: {fileID: 4910642808262253573}
   VFXAnchors: {fileID: 0}
 --- !u!1 &4910642808262253573
 GameObject:

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameState GameState = GameState.Prep;
 
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
+    public static Dictionary<int, List<Vector2>> DeployableTiles = new Dictionary<int, List<Vector2>>();
 
     public static int GroundRaycastMask = 1 << 8;
     public static string SelectedAspect = string.Empty;
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
     }
     public void DrawDeployTile(int _playerID, int _x, int _y)
     {
-        GameObject go = Instantiate(deployZoneVisual, new Vector3(_x, 1f, _y), Quaternion.identity);
+        GameObject go = Instantiate(deployZoneVisual, new Vector3(_x, 0.5f, _y), Quaternion.identity);
 
         Color color;
         switch (_playerID)

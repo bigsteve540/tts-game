@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class DeploymentController : MonoBehaviour
 {
-    private EntityController ec;
-    public DeploymentController AssignEntityController(EntityController _ec)
+    bool mouseStick = true;
+
+    public void HaltMouseSticking()
     {
-        ec = _ec;
-        return this;
+        mouseStick = false;
     }
-
-    void Start() { }
-
     void Update()
     {
+        if (!mouseStick)
+            return;
+
         Vector3 placementPos = CameraController.RaycastGroundPointFromCamera(CameraController.ControllableCamera);
         if (placementPos == Vector3.one * -1f)
             return;
-
-        transform.root.position = new Vector3(Mathf.CeilToInt(placementPos.x) - 0.25f, placementPos.y, Mathf.CeilToInt(placementPos.z) - 0.25f);
-
-        if (InputManager.TestKey(InputKeys.Select, KeyState.Down))
-            ec.FinishedDeployment();
+        transform.root.position = new Vector3(Mathf.CeilToInt(placementPos.x), placementPos.y, Mathf.CeilToInt(placementPos.z));
     }
 }

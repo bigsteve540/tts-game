@@ -10,26 +10,16 @@ public class EntityController : MonoBehaviour
 
     private AspectData data;
 
-    private DeploymentController dc;
-
     public EntityController Init(AspectData _data)
     {
         data = _data;
-        dc = transform.GetChild(1).GetComponent<DeploymentController>().AssignEntityController(this);
-        Instantiate(_data.AspectModel, model.transform);
-
+        Instantiate(data.AspectModel, model.transform);
         return this;
     }
 
-    public void FinishedDeployment()
+    public void SpawnAspect()
     {
-        GameManager.SelectedAspect = string.Empty;
-        dc.gameObject.SetActive(false);
         model.SetActive(true);
     }
-
-    private void Update()
-    {
-
-    }
+    public void ChangeAspectData(AspectData _new) { data = _new; }
 }

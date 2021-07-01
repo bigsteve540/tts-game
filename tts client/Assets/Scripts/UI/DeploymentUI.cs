@@ -22,7 +22,11 @@ public class DeploymentUI : MonoBehaviour
     }
 
     [SerializeField] private AspectPortraitUI[] portraits;
-    private string previousAspectCode = string.Empty; 
+    [SerializeField] private GameObject deploymentPrefab;
+
+    private DeploymentController deployingBody = null;
+    private int counter = 0;
+    private int activeSelection = -1;
 
     private void Awake() { Instance = this; }
 
@@ -34,9 +38,39 @@ public class DeploymentUI : MonoBehaviour
 
     private void Update()
     {
-        if (previousAspectCode != GameManager.SelectedAspect && previousAspectCode == string.Empty) //spawn an entityController
-            Instantiate(GameManager.Instance.EntityBody, Vector3.down, Quaternion.identity)
-                .GetComponent<EntityController>().Init(GameManager.AspectData[GameManager.SelectedAspect]);
-        previousAspectCode = GameManager.SelectedAspect;
+        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null)
+        {
+            int id = NetworkManager.Instance.Client.Id;
+            Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
+            bool match = false; 
+            for (int i = 0; i < GameManager.DeployableTiles[id].Count; i++)
+            {
+                if (entityPos == GameManager.DeployableTiles[id][i])
+                {
+                    match = true;
+                    break;
+                }
+            }
+
+            if (match)
+            {
+                deployingBody.HaltMouseSticking();
+
+                portraits[activeSelection].GreyOut();
+                portraits[activeSelection].SetInteractivity(false);
+
+                activeSelection = -1;
+                deployingBody = null;
+                counter++;
+            }
+        }
+    }
+
+    public void ButtonInteract(int _buttonID)
+    {
+        activeSelection = _buttonID;
+
+        if(deployingBody == null)
+            deployingBody = Instantiate(deploymentPrefab, new Vector3(-99f,-99f,-99f), Quaternion.identity).GetComponent<DeploymentController>();
     }
 }

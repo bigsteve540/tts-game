@@ -49,6 +49,7 @@
 		<type fullname="AspectPortraitUI" preserve="nothing"/>
 		<type fullname="CameraController" preserve="nothing"/>
 		<type fullname="DebugUI" preserve="nothing"/>
+		<type fullname="DeploymentController" preserve="nothing"/>
 		<type fullname="DeploymentUI" preserve="nothing"/>
 		<type fullname="DraftUI" preserve="nothing"/>
 		<type fullname="EntityController" preserve="nothing"/>

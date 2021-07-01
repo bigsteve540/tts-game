@@ -30,9 +30,11 @@ public static class ClientHandle
     {
         int playerID = _message.GetInt();
         int cellCount = _message.GetInt();
+        GameManager.DeployableTiles[playerID] = new List<Vector2>();
         for (int j = 0; j < cellCount; j++)
         {
             Vector2 pos = _message.GetVector2();
+            GameManager.DeployableTiles[playerID].Add(pos);
             GameManager.Instance.DrawDeployTile(playerID, (int)pos.x, (int)pos.y);
         }
         UIManager.Instance.SetUIPanelActive(1);
