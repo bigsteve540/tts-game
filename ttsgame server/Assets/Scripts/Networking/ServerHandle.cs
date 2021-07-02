@@ -22,7 +22,7 @@ public static class ServerHandle
             Vector2 pos = _message.GetVector2();
             if (!Tilemap.TileDeployableForID(_fromClient.Id, pos))
                 throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
-            Player.AllActive[_fromClient.Id].AddAspect(DraftManager.ActivePickedAspects[_fromClient.Id][i], pos);
+            Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);
         }
     }
 }
