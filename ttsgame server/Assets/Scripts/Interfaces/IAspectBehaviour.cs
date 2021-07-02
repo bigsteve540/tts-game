@@ -17,7 +17,7 @@ public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehavi
     ITimelineEvent Turn { get; set; }
 
     IAbilityBehaviour[] Abilities { get; }
-    List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; }
+    List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
     void EndTurn();
 }

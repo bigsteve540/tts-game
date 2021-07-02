@@ -11,7 +11,7 @@ public static class GameEventSystem
     static Dictionary<System.Type, Dictionary<int, EventListener>> hashesToAdd = new Dictionary<System.Type, Dictionary<int, EventListener>>();
 
     static Dictionary<System.Type, Dictionary<int, EventListener>> listeners = new Dictionary<System.Type, Dictionary<int, EventListener>>();
-    static Dictionary<int, System.Func<int, InterruptData, bool>> interrupters = new Dictionary<int, System.Func<int, InterruptData, bool>>();
+    static Dictionary<int, System.Func<InterruptData, bool>> interrupters = new Dictionary<int, System.Func<InterruptData, bool>>();
 
     public static void SubListener<T>(System.Action<T> _listener) where T : GameEventInfo
     {
@@ -73,19 +73,19 @@ public static class GameEventSystem
         }
     }
 
-    public static void SubInterrupt(System.Func<int, InterruptData, bool> _interrupt) { interrupters.Add(_interrupt.GetHashCode(), _interrupt); }
-    public static void UnsubInterrupt(System.Func<int, InterruptData, bool> _interrupt) { interrupters.Remove(_interrupt.GetHashCode()); }
+    public static void SubInterrupt(System.Func<InterruptData, bool> _interrupt) { interrupters.Add(_interrupt.GetHashCode(), _interrupt); }
+    public static void UnsubInterrupt(System.Func<InterruptData, bool> _interrupt) { interrupters.Remove(_interrupt.GetHashCode()); }
 
     public static bool CheckEventInterrupted(InterruptData _data, bool _consumeInterrupt = true)
     {
-        foreach (KeyValuePair<int, System.Func<int, InterruptData, bool>> interrupt in interrupters)
-            if (interrupt.Value(_data.CasterID, _data))
+        foreach (KeyValuePair<int, System.Func<InterruptData, bool>> interrupt in interrupters)
+            if (interrupt.Value(_data))
             {
                 if(_consumeInterrupt)
                     interrupters.Remove(interrupt.Key);
                 return true;
             }
-        //may wanna send the interrupt info to the clients for animations? might require something more verbose than just a boolean
+        //TODO: may wanna send the interrupt info to the clients for animations? might require something more verbose than just a boolean
         return false;
     }
 }

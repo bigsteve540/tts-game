@@ -30,7 +30,7 @@ public class DummyAspect : IAspectBehaviour
     public int CurrentArmor { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<int, InterruptData, bool>>();
+    public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
     public DummyAspect(int _playerID, Vector2 _mapPos) : this(_playerID, 0, 0, 100, 5000, _mapPos) { }
     public DummyAspect(int _playerID, uint _baseInitiative, int _initiativeOffset, uint _totalActionPoints, uint _maxHP, Vector2 _mapPosition)
@@ -85,7 +85,7 @@ public class AspectTurn : ITimelineEvent
 
     public void Activate()
     {
-        foreach (Func<int, InterruptData, bool> interrupter in caster.ActiveInterrupters)
+        foreach (Func<InterruptData, bool> interrupter in caster.ActiveInterrupters)
         {
             GameEventSystem.UnsubInterrupt(interrupter);
         }

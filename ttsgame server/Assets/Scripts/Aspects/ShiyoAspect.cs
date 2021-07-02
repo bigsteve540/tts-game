@@ -16,7 +16,7 @@ public class ShiyoAspect : IAspectBehaviour
     public ITimelineEvent Turn { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; }
+    public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
     public string AspectName { get; }
     public int AspectID { get; }

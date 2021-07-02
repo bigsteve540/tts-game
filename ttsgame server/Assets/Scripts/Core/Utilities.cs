@@ -5,7 +5,7 @@ using UnityEngine;
 
 public struct InterruptData
 {
-    public int CasterID { get; }
+    public int TriggererID { get; }
     public InterruptEventType[] InterruptableTypes { get; }
 
     public object[] ExtraInterruptData { get; }
@@ -19,9 +19,9 @@ public struct InterruptData
         return false;
     }
 
-    public InterruptData(int _casterID, InterruptEventType[] _interruptTypes, params object[] _extraData)
+    public InterruptData(int _triggererID, InterruptEventType[] _interruptTypes, params object[] _extraData)
     {
-        CasterID = _casterID;
+        TriggererID = _triggererID;
         InterruptableTypes = _interruptTypes;
         ExtraInterruptData = _extraData.Length > 0 ? _extraData : null;
     }
@@ -39,32 +39,33 @@ public static class Utilities
     };
 
     private static float gradient = 8 / 360;
-    private static List<Node> pathCache = new List<Node>();
 
     private static InterruptEventType[] interruptEventCache = new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby };
 
     public static bool TargetWithinRange(Vector2 _origin, Vector2 _target, int _maxDist)
     {
-        pathCache.Clear();
-        pathCache = Tilemap.GeneratePathToTile(_origin, _target);
-        if (pathCache == null || pathCache.Count > _maxDist)
+        List<Node> path = new List<Node>();
+        path.Clear();
+        path = Tilemap.GeneratePathToTile(_origin, _target);
+        if (path == null || path.Count > _maxDist)
             return false;
         return true;
     }
     public static bool TargetWithinRange(Vector2 _origin, Vector2 _target, int _maxDist, out List<Node> _usedPath)
     {
-        pathCache.Clear();
-        pathCache = Tilemap.GeneratePathToTile(_origin, _target);
-        if (pathCache == null || pathCache.Count > _maxDist)
+        List<Node> path = new List<Node>();
+        path.Clear();
+        path = Tilemap.GeneratePathToTile(_origin, _target);
+        if (path == null || path.Count > _maxDist)
         {
             _usedPath = null;
             return false;
         }
-        _usedPath = new List<Node>(pathCache);
+        _usedPath = new List<Node>(path);
         return true;
     }
 
-    public static uint ConvertDegToCard(float _input)
+    public static uint ConvertDegToCardinal(float _input)
     {
         return (uint)Mathf.RoundToInt(gradient * _input);
     }
@@ -73,53 +74,52 @@ public static class Utilities
     {
         Vector2 newPos = new Vector2(_newX, _newY);
 
-        pathCache.Clear();
-        pathCache = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
-        Tuple<List<Node>, int> pathData = new Tuple<List<Node>, int>(pathCache, GetInitiativeCostForPath(pathCache));
+        List<Node> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
+        int pathCost = GetInitiativeCostForPath(path);
 
-        InterruptData data = new InterruptData(_aspect.AspectID, interruptEventCache, pathData);
+        InterruptData data = new InterruptData(_aspect.AspectID, interruptEventCache, pathCost, path);
 
-        if (GameEventSystem.CheckEventInterrupted(data) || pathData.Item2 > _aspect.CurrentActionPoints)
+        if (GameEventSystem.CheckEventInterrupted(data) || pathCost > _aspect.CurrentActionPoints)
             return;
 
         Tilemap.SetTileToDefault((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y);
 
-        ConvertDegToCard(Vector2.Angle(Vector2.up, _aspect.MapPosition - newPos));
+        _aspect.FacingDirection = ConvertDegToCardinal(Vector2.Angle(Vector2.up, _aspect.MapPosition - newPos));
         _aspect.MapPosition = newPos;
 
         Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
     }
 
-    public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
+    public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) 
     {
-        InterruptData data = new InterruptData(_target.AspectID, new InterruptEventType[1] { Mathf.Sign(_data.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal });
+        InterruptData interruptData = new InterruptData(_target.AspectID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
 
-        if (GameEventSystem.CheckEventInterrupted(data))
+        if (GameEventSystem.CheckEventInterrupted(interruptData)) //TODO: should probably make it so interruption can also effect _hpmoddata 
             return _target.CurrentHP;
 
         if (!_ignoreEffectors)
-            GameEventSystem.CallEvent(_data);
+            GameEventSystem.CallEvent(_hpModData); //instead of calling a separate method
 
         float prevHP = _target.CurrentHP;
         float val = 0f;
 
-        switch (_data.Type)
+        switch (_hpModData.Type)
         {
             case StatModifierType.Flat:
-                val = (int)_data.Value;
+                val = (int)_hpModData.Value;
                 break;
             case StatModifierType.Max:
-                val = (int)(_target.MaxHP * _data.Value);
+                val = (int)(_target.MaxHP * _hpModData.Value);
                 break;
             case StatModifierType.Missing:
-                val = (int)((_target.MaxHP - _target.CurrentHP) * _data.Value);
+                val = (int)((_target.MaxHP - _target.CurrentHP) * _hpModData.Value);
                 break;
             case StatModifierType.Current:
-                val = (int)(_target.CurrentHP * _data.Value);
+                val = (int)(_target.CurrentHP * _hpModData.Value);
                 break;
         }
 
-        if (_data.IsDamage())
+        if (_hpModData.IsDamage())
             val = Mathf.Clamp((val * -1) - _target.CurrentArmor, 0f, val * -1) * -1;
 
         return (uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP);

@@ -32,7 +32,7 @@ public class GeneviveAspect : IAspectBehaviour
     public int CurrentArmor { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
-    public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<int, InterruptData, bool>>();
+    public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
     public GeneviveAspect(int _clientID, Vector2 _mapPos)
     {
@@ -105,7 +105,7 @@ public class GeneviveAspect : IAspectBehaviour
             int x = (int)path[path.Count].Position.x;
             int y = (int)path[path.Count].Position.y;
 ;
-            Caster.FacingDirection = Utilities.ConvertDegToCard(Vector2.Angle(Vector2.up, path[path.Count - 2].Position - path[path.Count - 1].Position));
+            Caster.FacingDirection = Utilities.ConvertDegToCardinal(Vector2.Angle(Vector2.up, path[path.Count - 2].Position - path[path.Count - 1].Position));
             Caster.MoveToTile(x, y);
 
             target.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, target.AspectID, this, StatModifierType.Flat, -1200));
@@ -298,26 +298,36 @@ public class GeneviveAspect : IAspectBehaviour
 
             Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, -0.1f), true);
 
-            bool interrupt(int _targetID, InterruptData _data)
+            bool interrupt(InterruptData _data)
             {
 
-                if (!_data.SearchTypesFor(InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby) || 
-                    !Utilities.TargetWithinRange(Caster.MapPosition, GameManager.Entities[_targetID].MapPosition, CastRange))
+                if (!_data.SearchTypesFor(InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby))
                     return false;
 
-                Tuple<List<Node>, int> pathdata = (Tuple<List<Node>, int>)_data.ExtraInterruptData[0];
-                for (int i = 0; i < pathdata.Item1.Count; i++)
-                    if(Utilities.TargetWithinRange(Caster.MapPosition, pathdata.Item1[i].Position, CastRange))
-                    {
-                        Debug.Log("Interrupted using Kneecapper");
-                        GameManager.Entities[_targetID].MapPosition = pathdata.Item1[i].Position;
+                if(!Utilities.TargetWithinRange(Caster.MapPosition, GameManager.Entities[_data.TriggererID].MapPosition, CastRange))
+                {
+                    Tuple<List<Node>, int> pathdata = (Tuple<List<Node>, int>)_data.ExtraInterruptData[0];
+                    for (int i = 0; i < pathdata.Item1.Count; i++)
+                        if (Utilities.TargetWithinRange(Caster.MapPosition, pathdata.Item1[i].Position, CastRange))
+                        {
+                            Debug.Log("Interrupted using Kneecapper");
+                            GameManager.Entities[_data.TriggererID].MapPosition = pathdata.Item1[i].Position;
 
-                        Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
-                        GameManager.Entities[_targetID].ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, _targetID, this, StatModifierType.Flat, -400));
+                            Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
+                            GameManager.Entities[_data.TriggererID].ModifyHealth(
+                                new HealthModifiedEventInfo(Caster.AspectID, _data.TriggererID, this, StatModifierType.Flat, -400));
 
-                        return true;
-                    }
-                return false;
+                            return true;
+                        }
+                    return false;
+                }
+                Debug.Log("Interrupted using Kneecapper");
+                Caster.ModifyHealth(new HealthModifiedEventInfo(Caster.AspectID, Caster.AspectID, this, StatModifierType.Max, 0.12f));
+                GameManager.Entities[_data.TriggererID].ModifyHealth(
+                    new HealthModifiedEventInfo(Caster.AspectID, _data.TriggererID, this, StatModifierType.Flat, -400));
+
+                return true;
+
             }
             Caster.ActiveInterrupters.Add(interrupt);
             GameEventSystem.SubInterrupt(interrupt);
