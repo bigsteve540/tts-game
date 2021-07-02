@@ -6,8 +6,6 @@ public enum InterruptEventType { Any, Movement_Start, Movement_Passby, Damage, H
 
 public static class Timeline
 {
-    public delegate void EventInterruptHandler(in TimelineEventInfo _eventInfo, ref bool _interrupted);
-
     public static uint TotalElapsedInitiative { get; private set; } = 0;
 
     private static List<ITimelineEvent> timelineEvents = new List<ITimelineEvent>();
