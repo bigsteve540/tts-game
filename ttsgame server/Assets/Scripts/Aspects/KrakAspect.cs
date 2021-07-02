@@ -33,6 +33,11 @@ public class KrakAspect : IAspectBehaviour
     public int BaseArmor { get; }
     public int CurrentArmor { get; set; }
 
+    public KrakAspect(int _clientID, Vector2 _mapPos)
+    {
+
+    }
+
     public void EndTurn()
     {
         throw new NotImplementedException();

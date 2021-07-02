@@ -34,7 +34,7 @@ public class GeneviveAspect : IAspectBehaviour
     public IAbilityBehaviour[] Abilities { get; }
     public List<Func<int, InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<int, InterruptData, bool>>();
 
-    public GeneviveAspect(int _clientID, Vector2 _mapPosition)
+    public GeneviveAspect(int _clientID, Vector2 _mapPos)
     {
         ClientID = _clientID;
         Active = false;
@@ -44,7 +44,7 @@ public class GeneviveAspect : IAspectBehaviour
         CurrentArmor = BaseArmor;
         CurrentActionPoints = TotalActionPoints;
 
-        MapPosition = _mapPosition;
+        MapPosition = _mapPos;
 
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
 

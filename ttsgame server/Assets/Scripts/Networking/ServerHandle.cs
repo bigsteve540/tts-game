@@ -24,6 +24,11 @@ public static class ServerHandle
                 throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
             Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);
         }
+
+        if(++readyPlayers == NetworkManager.Instance.Server.ClientCount)
+        {
+
+        }
     }
 }
 
