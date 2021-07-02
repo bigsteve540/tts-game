@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-//FOR LATER: how to generate an aspect
-// Activator.CreateInstance(GameManager.AspectCodes[ASPECT_CODE], PLAYER_ID, MAP_LOCATION) as IAspectBehaviour;
-
 public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
 
 public class GameManager : MonoBehaviour

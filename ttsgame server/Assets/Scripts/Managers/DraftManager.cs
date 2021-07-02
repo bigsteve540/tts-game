@@ -7,15 +7,17 @@ public static class DraftManager
 {
     public static int ActivePlayerID { get; private set; } = 0; //0 indicates not set
 
-    private static string[] ActiveBannedAspects;
-    private static string[] ActivePickedAspects;
+    private static string[] activeBannedAspects;
+    public static Dictionary<int, string[]> ActivePickedAspects;
 
     private static int draftStepIterator = 0;
     
     public static void Init()
     {
-        ActiveBannedAspects = new string[GameSettings.TotalBans];
-        ActivePickedAspects = new string[GameSettings.TotalAspects];
+        activeBannedAspects = new string[GameSettings.TotalBans];
+        ActivePickedAspects = new Dictionary<int, string[]>();
+        for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
+            ActivePickedAspects.Add(i, new string[5]);
 
         ActivePlayerID = 1;
 
@@ -31,7 +33,7 @@ public static class DraftManager
         Debug.Log($"Active player is {ActivePlayerID}");
     }
 
-    public static void AssignAspect(string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
+    public static void AssignAspect(int _clientID, string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
     {
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick)
             return;
@@ -39,7 +41,7 @@ public static class DraftManager
         switch (GameManager.GameState)
         {
             case GameState.Ban:
-                ActiveBannedAspects[draftStepIterator++] = _aspectCode;
+                activeBannedAspects[draftStepIterator++] = _aspectCode;
                 Debug.Log($"Successfully banned {_aspectCode}");
                 GenerateDraftMessage(_aspectCode);
                 if (draftStepIterator >= GameSettings.TotalBans)
@@ -49,7 +51,16 @@ public static class DraftManager
                 }
                 break;
             case GameState.Pick:
-                ActivePickedAspects[draftStepIterator++] = _aspectCode;
+
+                for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
+                {
+                    if (ActivePickedAspects[_clientID][i] == null || ActivePickedAspects[_clientID][i] == string.Empty)
+                    {
+                        ActivePickedAspects[_clientID][i] = _aspectCode;
+                        draftStepIterator++;
+                        break;
+                    }
+                }
                 Debug.Log($"Successfully picked {_aspectCode}");
                 GenerateDraftMessage(_aspectCode);
                 if (draftStepIterator >= GameSettings.TotalAspects)

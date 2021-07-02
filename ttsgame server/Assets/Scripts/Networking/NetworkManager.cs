@@ -17,7 +17,8 @@ public enum ServerToClientRequest : ushort
 public enum ClientToServerRequest : ushort
 {
     TestPing = 1,
-    DraftInteract
+    DraftInteract,
+    DeploymentCompleted
 }
 
 public class NetworkManager : MonoBehaviour
@@ -71,6 +72,7 @@ public class NetworkManager : MonoBehaviour
         {
             { (ushort)ClientToServerRequest.TestPing, ServerHandle.TestPing },
             { (ushort)ClientToServerRequest.DraftInteract, ServerHandle.DraftInteract },
+            {(ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted }
         };
 
         actionQueue = new ActionQueue();

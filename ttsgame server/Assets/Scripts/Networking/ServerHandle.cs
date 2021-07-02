@@ -4,19 +4,32 @@ using UnityEngine;
 using RiptideNetworking;
 using System;
 
-public class ServerHandle : MonoBehaviour
+public static class ServerHandle
 {
-    public static void TestPing(ServerClient fromClient, Message message)
+    private static int readyPlayers = 0;
+
+    public static void TestPing(ServerClient _fromClient, Message _message)
     {
-        message.Add(DateTime.Now.Ticks);
-        NetworkManager.Instance.Server.Send(message, fromClient);
+        _message.Add(DateTime.Now.Ticks);
+        NetworkManager.Instance.Server.Send(_message, _fromClient);
     }
 
-    public static void DraftInteract(ServerClient fromClient, Message message)
+    public static void DraftInteract(ServerClient _fromClient, Message _message)
     {
-        if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick || fromClient.Id != DraftManager.ActivePlayerID)
+        if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick || _fromClient.Id != DraftManager.ActivePlayerID)
             return;
-        DraftManager.AssignAspect(message.GetString());
+        DraftManager.AssignAspect(_fromClient.Id, _message.GetString());
+    }
+
+    public static void DeploymentCompleted(ServerClient _fromClient, Message _message)
+    {
+        for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
+        {
+            Vector2 pos = _message.GetVector2();
+            if (!Tilemap.TileDeployableForID(_fromClient.Id, pos))
+                throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
+            Player.AllActive[_fromClient.Id].AddAspect(DraftManager.ActivePickedAspects[_fromClient.Id][i], pos);
+        }
     }
 }
 

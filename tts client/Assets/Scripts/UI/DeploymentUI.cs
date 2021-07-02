@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using RiptideNetworking;
 
 public class DeploymentUI : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class DeploymentUI : MonoBehaviour
     [SerializeField] private AspectPortraitUI[] portraits;
     [SerializeField] private GameObject deploymentPrefab;
 
+    private Dictionary<string, Vector2> entityPositions = new Dictionary<string, Vector2>();
     private DeploymentController deployingBody = null;
     private int counter = 0;
     private int activeSelection = -1;
@@ -44,17 +45,16 @@ public class DeploymentUI : MonoBehaviour
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
             bool match = false; 
             for (int i = 0; i < GameManager.DeployableTiles[id].Count; i++)
-            {
                 if (entityPos == GameManager.DeployableTiles[id][i])
                 {
                     match = true;
                     break;
                 }
-            }
 
             if (match)
             {
                 deployingBody.HaltMouseSticking();
+                entityPositions.Add(portraits[activeSelection].AspectCode, entityPos);
 
                 portraits[activeSelection].GreyOut();
                 portraits[activeSelection].SetInteractivity(false);
@@ -62,6 +62,14 @@ public class DeploymentUI : MonoBehaviour
                 activeSelection = -1;
                 deployingBody = null;
                 counter++;
+            }
+
+            if(counter == 5) //send current vector positions to client
+            {
+                Message msg = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerRequest.DeploymentCompleted);
+                foreach (Vector2 item in entityPositions.Values)
+                    msg.Add(item);
+                NetworkManager.Instance.Client.Send(msg);
             }
         }
     }

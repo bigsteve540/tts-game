@@ -17,7 +17,8 @@ public enum ServerToClientRequest : ushort
 public enum ClientToServerRequest : ushort
 {
     TestPing = 1,
-    DraftInteract
+    DraftInteract,
+    DeploymentCompleted
 }
 
 public class NetworkManager : MonoBehaviour
@@ -88,7 +89,7 @@ public class NetworkManager : MonoBehaviour
         Client.Connect(ip, port, actionQueue);
     }
 
-    public void GetPing(long _serverTicks)
+    public void GetPing(long _serverTicks) //TODO: replace with riptideRTT
     {
         DateTime actualTime = DateTime.Now;
         DateTime serverTime = new DateTime(_serverTicks);
@@ -99,6 +100,7 @@ public class NetworkManager : MonoBehaviour
         float syncError = clientToServerRTT - serverToClientTT;
 
         Ping = Mathf.RoundToInt(clientToServerRTT - syncError);
+
     }
 
     private void SuccessfulConnection(object _sender, EventArgs _e)
