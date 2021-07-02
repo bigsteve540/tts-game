@@ -25,6 +25,7 @@ public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehavi
 public interface IAspectLabels
 {
     string AspectName { get; }
+    string AspectCode { get; }
     int AspectID { get; }
 }
 

@@ -11,6 +11,7 @@ public class GeneviveAspect : IAspectBehaviour
 
     public string AspectName => "Genevive";
     public int AspectID { get; }
+    public string AspectCode => "A001";
 
     public bool Active { get; set; }
 

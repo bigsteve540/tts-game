@@ -557,6 +557,7 @@ IL2CPP_EXTERN_C const uint32_t CameraController_RaycastGroundPointFromCamera_mF3
 IL2CPP_EXTERN_C const uint32_t CameraController_Start_m92C8EBBE34DA314CE0C730E07400A96E968264BB_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t ClientHandle_GenerateDeploymentZones_mE3A28A333B2D861E562AFBA8AEC6767C70E5C99C_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t ClientHandle_LoadDraft_mC0AC54FA8B1EC75AC09085C6E62B22374194FC75_MetadataUsageId;
+IL2CPP_EXTERN_C const uint32_t ClientHandle_SpawnAspect_m2FA37F80383542434539BC2D3578673BFA748C59_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t DebugUI_Update_mEF33F81EB1CF9FEC0FBD4F7B73E3A90E64E8092C_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t DeploymentController_Update_m600655AFB224C2947A401593568E269DB28E81F9_MetadataUsageId;
 IL2CPP_EXTERN_C const uint32_t DeploymentUI_ButtonInteract_m3E6A3E38EEDD91DDEF60BAB519ADF1C4100D922F_MetadataUsageId;
@@ -12500,8 +12501,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Message_GetInt_m72404E688EF8BC7F68175
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Message_GetString_m33642D43A350BDB4DBEA73FCAF3E2786AA6F06EE (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * __this, const RuntimeMethod* method);
 // System.Void DraftUI::LockAspect(System.Boolean,System.Int32,System.String)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void DraftUI_LockAspect_mF26D7FB045BAB156A335926016EB2192C34F38A3 (DraftUI_tCC607DE22DE0836980AD1B03CEFE2DAE2D8EA1AC * __this, bool ____isBan0, int32_t ____lockerID1, String_t* ____aspectCode2, const RuntimeMethod* method);
-// System.Byte[] RiptideNetworking.Message::GetByteArray(System.Int32)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* Message_GetByteArray_mC5EDC6B08C917B066150E44164B7915628F25B1B (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * __this, int32_t ___length0, const RuntimeMethod* method);
+// System.Byte[] RiptideNetworking.Message::GetBytes(System.Boolean)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* Message_GetBytes_mD5C41290E9C53B0B52BF5EB492C88F803631B374 (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * __this, bool ___isBigArray0, const RuntimeMethod* method);
 // System.Void Tilemap::BuildMapFromBytes(System.Int32,System.Int32,System.Byte[])
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32 (int32_t ____width0, int32_t ____height1, ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* ____bytes2, const RuntimeMethod* method);
 // System.Void System.Collections.Generic.List`1<UnityEngine.Vector2>::.ctor()
@@ -12528,6 +12529,8 @@ inline void List_1_Add_m4B09565ECF12DBEF82EC294814FEFD39E7AD6E69 (List_1_t0737D5
 }
 // System.Void GameManager::DrawDeployTile(System.Int32,System.Int32,System.Int32)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameManager_DrawDeployTile_mCA12CE1D7B5B7CE9BF8A346C50312529751A8F4F (GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89 * __this, int32_t ____playerID0, int32_t ____x1, int32_t ____y2, const RuntimeMethod* method);
+// System.Void GameManager::SpawnAspect(System.Int32,System.String,System.Int32,UnityEngine.Vector2)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameManager_SpawnAspect_m3D9E0AAC7BA47C4CE13A07139E9A00C377AAF314 (GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89 * __this, int32_t ____entityID0, String_t* ____aspectCode1, int32_t ____hp2, Vector2_tA85D2DD88578276CA8A8796756458277E72D073D  ____posXZ3, const RuntimeMethod* method);
 // System.Int32 UnityEngine.Mathf::RoundToInt(System.Single)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Mathf_RoundToInt_m0EAD8BD38FCB72FA1D8A04E96337C820EC83F041 (float ___f0, const RuntimeMethod* method);
 // NetworkManager NetworkManager::get_Instance()
@@ -13310,8 +13313,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ClientHandle_AspectLocked_mE723ADBD6C703
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ClientHandle_GenerateTilemap_m62D6811851B4BB7A2CC99D5D281EA187A25EBBF8 (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * ____message0, const RuntimeMethod* method)
 {
 	int32_t V_0 = 0;
-	int32_t V_1 = 0;
-	ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* V_2 = NULL;
+	ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* V_1 = NULL;
 	{
 		// int width = _message.GetInt();
 		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_0 = ____message0;
@@ -13322,21 +13324,15 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ClientHandle_GenerateTilemap_m62D6811851
 		NullCheck(L_2);
 		int32_t L_3 = Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2(L_2, /*hidden argument*/NULL);
 		V_0 = L_3;
-		// int arrLen = _message.GetInt();
+		// byte[] map = _message.GetBytes(true);
 		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_4 = ____message0;
 		NullCheck(L_4);
-		int32_t L_5 = Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2(L_4, /*hidden argument*/NULL);
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_5 = Message_GetBytes_mD5C41290E9C53B0B52BF5EB492C88F803631B374(L_4, (bool)1, /*hidden argument*/NULL);
 		V_1 = L_5;
-		// byte[] map = _message.GetByteArray(arrLen);
-		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_6 = ____message0;
-		int32_t L_7 = V_1;
-		NullCheck(L_6);
-		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_8 = Message_GetByteArray_mC5EDC6B08C917B066150E44164B7915628F25B1B(L_6, L_7, /*hidden argument*/NULL);
-		V_2 = L_8;
 		// Tilemap.BuildMapFromBytes(width, height, map);
-		int32_t L_9 = V_0;
-		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_10 = V_2;
-		Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32(L_1, L_9, L_10, /*hidden argument*/NULL);
+		int32_t L_6 = V_0;
+		ByteU5BU5D_tD06FDBE8142446525DF1C40351D523A228373821* L_7 = V_1;
+		Tilemap_BuildMapFromBytes_mD2AF9C1E4414D826DE30082D714E861F4020EB32(L_1, L_6, L_7, /*hidden argument*/NULL);
 		// }
 		return;
 	}
@@ -13433,7 +13429,46 @@ IL_0057:
 // System.Void ClientHandle::SpawnAspect(RiptideNetworking.Message)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ClientHandle_SpawnAspect_m2FA37F80383542434539BC2D3578673BFA748C59 (Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * ____message0, const RuntimeMethod* method)
 {
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
 	{
+		il2cpp_codegen_initialize_method (ClientHandle_SpawnAspect_m2FA37F80383542434539BC2D3578673BFA748C59_MetadataUsageId);
+		s_Il2CppMethodInitialized = true;
+	}
+	int32_t V_0 = 0;
+	String_t* V_1 = NULL;
+	int32_t V_2 = 0;
+	Vector2_tA85D2DD88578276CA8A8796756458277E72D073D  V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	{
+		// int aspectID = _message.GetInt();
+		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_0 = ____message0;
+		NullCheck(L_0);
+		int32_t L_1 = Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2(L_0, /*hidden argument*/NULL);
+		V_0 = L_1;
+		// string code = _message.GetString();
+		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_2 = ____message0;
+		NullCheck(L_2);
+		String_t* L_3 = Message_GetString_m33642D43A350BDB4DBEA73FCAF3E2786AA6F06EE(L_2, /*hidden argument*/NULL);
+		V_1 = L_3;
+		// int currHP = _message.GetInt();
+		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_4 = ____message0;
+		NullCheck(L_4);
+		int32_t L_5 = Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2(L_4, /*hidden argument*/NULL);
+		V_2 = L_5;
+		// Vector2 pos = _message.GetVector2();
+		Message_t237C8782ED8BCAA556E91B06BC366AC4FBA28454 * L_6 = ____message0;
+		Vector2_tA85D2DD88578276CA8A8796756458277E72D073D  L_7 = MessageExtensions_GetVector2_mE147A1A00411BF12F93E2369659FCE5E061ACF50(L_6, /*hidden argument*/NULL);
+		V_3 = L_7;
+		// GameManager.Instance.SpawnAspect(aspectID, code, currHP, pos);
+		IL2CPP_RUNTIME_CLASS_INIT(GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89_il2cpp_TypeInfo_var);
+		GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89 * L_8 = ((GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89_StaticFields*)il2cpp_codegen_static_fields_for(GameManager_tAC830B937D5E37F47803FE8AB44CAB0762B77B89_il2cpp_TypeInfo_var))->get_Instance_14();
+		int32_t L_9 = V_0;
+		String_t* L_10 = V_1;
+		int32_t L_11 = V_2;
+		Vector2_tA85D2DD88578276CA8A8796756458277E72D073D  L_12 = V_3;
+		NullCheck(L_8);
+		GameManager_SpawnAspect_m3D9E0AAC7BA47C4CE13A07139E9A00C377AAF314(L_8, L_9, L_10, L_11, L_12, /*hidden argument*/NULL);
 		// }
 		return;
 	}

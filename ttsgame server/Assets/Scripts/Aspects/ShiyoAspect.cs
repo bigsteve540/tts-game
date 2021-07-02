@@ -20,6 +20,7 @@ public class ShiyoAspect : IAspectBehaviour
 
     public string AspectName { get; }
     public int AspectID { get; }
+    public string AspectCode => "A004";
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }

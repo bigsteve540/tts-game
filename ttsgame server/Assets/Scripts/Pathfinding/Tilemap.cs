@@ -37,9 +37,7 @@ public static class Tilemap
         msg.Add(_layout.Width);
         msg.Add(_layout.Height);
 
-        byte[] map = ConvertMapToBytes();
-        msg.Add(map.Length);
-        msg.Add(map);
+        msg.Add(ConvertMapToBytes(), true, true);
 
         NetworkManager.Instance.Server.SendToAll(msg);
 
@@ -111,7 +109,7 @@ public static class Tilemap
         }
     }
 
-    public static byte[] ConvertMapToBytes()
+    public static byte[] ConvertMapToBytes() //TODO: convert to a standard array
     {
         List<byte> tileTypes = new List<byte>();
         for (int x = 0; x < defaultMaptiles.GetLength(0); x++)

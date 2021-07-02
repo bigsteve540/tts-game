@@ -27,7 +27,19 @@ public static class ServerHandle
 
         if(++readyPlayers == NetworkManager.Instance.Server.ClientCount) //spawn all aspects to all clients
         {
-
+            foreach (Player player in Player.AllActive.Values)
+            {
+                for (int i = 0; i < player.Aspects.Length; i++)
+                {
+                    Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.SpawnAspect);
+                    msg.Add(player.Aspects[i].AspectID);
+                    msg.Add(player.Aspects[i].AspectCode);
+                    msg.Add(player.Aspects[i].CurrentHP);
+                    msg.Add(player.Aspects[i].MapPosition);
+                    NetworkManager.Instance.Server.SendToAll(msg);
+                }
+                
+            }
         }
     }
 }

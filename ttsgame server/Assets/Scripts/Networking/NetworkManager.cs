@@ -85,7 +85,6 @@ public class NetworkManager : MonoBehaviour
         Server.Start(port, maxClientCount, actionQueue);
     }
 
-
     private void OnApplicationQuit()
     {
         Server.Stop();

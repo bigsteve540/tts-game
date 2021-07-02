@@ -18,8 +18,7 @@ public static class ClientHandle
     {
         int width = _message.GetInt();
         int height = _message.GetInt();
-        int arrLen = _message.GetInt();
-        byte[] map = _message.GetByteArray(arrLen);
+        byte[] map = _message.GetBytes(true);
         Tilemap.BuildMapFromBytes(width, height, map);
     }
     public static void GenerateDeploymentZones(Message _message)
@@ -38,6 +37,10 @@ public static class ClientHandle
     }
     public static void SpawnAspect(Message _message)
     {
-
+        int aspectID = _message.GetInt();
+        string code = _message.GetString();
+        int currHP = _message.GetInt();
+        Vector2 pos = _message.GetVector2();
+        GameManager.Instance.SpawnAspect(aspectID, code, currHP, pos);
     }
 }

@@ -11,6 +11,7 @@ public class KrakAspect : IAspectBehaviour
 
     public string AspectName => "Krak";
     public int AspectID { get; }
+    public string AspectCode => "A002";
 
     public uint BaseInitiative { get; }
     public int InitiativeOffset { get; }

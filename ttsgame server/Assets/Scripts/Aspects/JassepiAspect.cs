@@ -20,6 +20,7 @@ public class JassepiAspect : IAspectBehaviour
 
     public string AspectName { get; }
     public int AspectID { get; }
+    public string AspectCode => "A003";
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }

@@ -39,18 +39,6 @@ public class GameManager : MonoBehaviour
         return IDCounter++;
     }
 
-    void Start()
-    {
-        //IAspectBehaviour gen = new GeneviveAspect(new Vector2(0, 1));
-        //IAspectBehaviour d = new DummyAspect();
-
-        //GameEventSystem.SubInterrupt(TestInterrupt); // <-- interrupt sample   
-
-        //Timeline.Progress();
-        //Timeline.Progress();
-        //d.MoveToTile(0, 9);
-    }
-
     public void DrawMap(int _sizeX, int _sizeY) //TODO: remove this bit post testing
     {
         for (int y = 0; y < _sizeY; y++)
@@ -65,14 +53,4 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(deployVisuals, new Vector3(_x, 1f, _y), Quaternion.identity);
     }
-
-    //private bool TestInterrupt(int _IDofTarget, TimelineEventType[] _types)
-    //{
-    //    if (!_types.Contains(TimelineEventType.Damage))
-    //        return false;
-
-    //    //do whatever the interrupt does
-    //    Debug.Log("Interrupted");
-    //    return true;
-    //}
 }

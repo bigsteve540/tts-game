@@ -9,6 +9,7 @@ public class DummyAspect : IAspectBehaviour
 
     public string AspectName => "Dummy";
     public int AspectID { get; }
+    public string AspectCode => "A000";
 
     public bool Active { get; set; }
 

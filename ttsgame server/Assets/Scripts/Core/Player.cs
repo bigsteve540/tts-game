@@ -7,8 +7,9 @@ public class Player
 {
     public static Dictionary<ushort, Player> AllActive { get; private set; } = new Dictionary<ushort, Player>();
 
+    public IAspectBehaviour[] Aspects;
+
     private int selfID = -1;
-    private IAspectBehaviour[] aspects;
     private int aspectsIterator = 0;
 
     public Player(ushort _id)
@@ -19,14 +20,14 @@ public class Player
 
     public void AddAspect(string _code, Vector2 _pos)
     {
-        if (aspects == null)
-            aspects = new IAspectBehaviour[GameSettings.AspectCountPerPlayer];
+        if (Aspects == null)
+            Aspects = new IAspectBehaviour[GameSettings.AspectCountPerPlayer];
 
-        if (aspectsIterator >= aspects.Length)
+        if (aspectsIterator >= Aspects.Length)
             return;
 
-        aspects[aspectsIterator++] = Activator.CreateInstance(Utilities.AspectTypeFromCode[_code], selfID, _pos) as IAspectBehaviour;
-        Debug.Log($"Generated {aspects[aspectsIterator -1].AspectName} for player {selfID}");
+        Aspects[aspectsIterator++] = Activator.CreateInstance(Utilities.AspectTypeFromCode[_code], selfID, _pos) as IAspectBehaviour;
+        Debug.Log($"Generated {Aspects[aspectsIterator -1].AspectName} for player {selfID}");
     }
 
     public Player Wipe()
