@@ -6,7 +6,6 @@ using RiptideNetworking;
 
 public enum ServerToClientRequest : ushort
 {
-    TestPingReceived = 1,
     LoadDraft,
     AspectLocked,
     GenerateTilemap,
@@ -16,7 +15,6 @@ public enum ServerToClientRequest : ushort
 }
 public enum ClientToServerRequest : ushort
 {
-    TestPing = 1,
     DraftInteract,
     DeploymentCompleted
 }
@@ -70,9 +68,8 @@ public class NetworkManager : MonoBehaviour
 
         messageHandlers = new Dictionary<ushort, MessageHandler>()
         {
-            { (ushort)ClientToServerRequest.TestPing, ServerHandle.TestPing },
             { (ushort)ClientToServerRequest.DraftInteract, ServerHandle.DraftInteract },
-            {(ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted }
+            { (ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted }
         };
 
         actionQueue = new ActionQueue();

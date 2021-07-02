@@ -6,7 +6,6 @@ using UnityEngine;
 
 public enum ServerToClientRequest : ushort
 {
-    TestPingReceived = 1,
     LoadDraft,
     AspectLocked,
     GenerateTilemap,
@@ -16,7 +15,6 @@ public enum ServerToClientRequest : ushort
 }
 public enum ClientToServerRequest : ushort
 {
-    TestPing = 1,
     DraftInteract,
     DeploymentCompleted
 }
@@ -79,7 +77,6 @@ public class NetworkManager : MonoBehaviour
     {
         messageHandlers = new Dictionary<ushort, MessageHandler>()
         {
-            { (ushort)ServerToClientRequest.TestPingReceived, ClientHandle.TestPingReceived },
             { (ushort)ServerToClientRequest.LoadDraft, ClientHandle.LoadDraft },
             { (ushort)ServerToClientRequest.AspectLocked, ClientHandle.AspectLocked },
             { (ushort)ServerToClientRequest.GenerateTilemap, ClientHandle.GenerateTilemap },
@@ -89,31 +86,16 @@ public class NetworkManager : MonoBehaviour
         Client.Connect(ip, port, actionQueue);
     }
 
-    public void GetPing(long _serverTicks) //TODO: replace with riptideRTT
-    {
-        DateTime actualTime = DateTime.Now;
-        DateTime serverTime = new DateTime(_serverTicks);
-
-        float clientToServerRTT = (float)(actualTime.Subtract(requestTime).TotalMilliseconds * 0.5f);
-        float serverToClientTT = (float)actualTime.Subtract(serverTime).TotalMilliseconds;
-
-        float syncError = clientToServerRTT - serverToClientTT;
-
-        Ping = Mathf.RoundToInt(clientToServerRTT - syncError);
-
-    }
-
     private void SuccessfulConnection(object _sender, EventArgs _e)
     {
-        StartCoroutine(TestPing());
+        StartCoroutine(UpdatePing());
     }
 
-    private IEnumerator TestPing()
+    private IEnumerator UpdatePing()
     {
         while (true)
         {
-            Client.Send(Message.Create(MessageSendMode.unreliable, (ushort)ClientToServerRequest.TestPing));
-            requestTime = DateTime.Now;
+            Ping = Mathf.RoundToInt(Client.SmoothRTT * 0.5f);
             yield return new WaitForSecondsRealtime(0.25f);
         }
     }
@@ -135,7 +117,7 @@ public class NetworkManager : MonoBehaviour
 
     private void LocalDisconnect(object _sender, EventArgs _e)
     {
-        StopCoroutine(TestPing());
+        StopCoroutine(UpdatePing());
         Client.Connected -= SuccessfulConnection;
         Client.ConnectionFailed -= FailedToConnect;
         Client.MessageReceived -= MessageReceived;

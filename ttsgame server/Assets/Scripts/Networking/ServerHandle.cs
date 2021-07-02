@@ -8,12 +8,6 @@ public static class ServerHandle
 {
     private static int readyPlayers = 0;
 
-    public static void TestPing(ServerClient _fromClient, Message _message)
-    {
-        _message.Add(DateTime.Now.Ticks);
-        NetworkManager.Instance.Server.Send(_message, _fromClient);
-    }
-
     public static void DraftInteract(ServerClient _fromClient, Message _message)
     {
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick || _fromClient.Id != DraftManager.ActivePlayerID)
