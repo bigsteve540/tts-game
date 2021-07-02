@@ -39,7 +39,7 @@ public class DeploymentUI : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null)
+        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null) //FIXME: multiple of the same aspect causes the code to break
         {
             int id = NetworkManager.Instance.Client.Id;
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
@@ -64,7 +64,7 @@ public class DeploymentUI : MonoBehaviour
                 counter++;
             }
 
-            if(counter == 5) //send current vector positions to client
+            if(counter == 5) //send current vector positions to SERVER
             {
                 Message msg = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerRequest.DeploymentCompleted);
                 foreach (Vector2 item in entityPositions.Values)

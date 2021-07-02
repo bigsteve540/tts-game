@@ -25,8 +25,9 @@ public static class ServerHandle
             Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);
         }
 
-        if(++readyPlayers == NetworkManager.Instance.Server.ClientCount) //spawn all aspects to all clients
+        if(++readyPlayers == NetworkManager.Instance.Server.MaxClientCount) //spawn all aspects to all clients
         {
+            Debug.Log("SPAWNING CHAMPIONS TO CLIENT YEEHAW");
             foreach (Player player in Player.AllActive.Values)
             {
                 for (int i = 0; i < player.Aspects.Length; i++)
