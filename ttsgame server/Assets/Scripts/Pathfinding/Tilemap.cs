@@ -74,31 +74,6 @@ public static class Tilemap
         tiles[_indexX, _indexY] = defaultMaptiles[_indexX, _indexY];
     }
 
-    private static void GenerateTilemap(GameMapLayout _layout)
-    {
-        defaultMaptiles = new TileType[_layout.Width, _layout.Height];
-        tiles = new TileType[_layout.Width, _layout.Height];
-
-        for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
-            for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-                defaultMaptiles[x, y] = mapdataMapper[_layout.MapData[_layout.Width * x + y]];
-
-        Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
-    }
-    private static void GenerateLegalDeploymentZones(GameMapLayout _layout)
-    {
-        for (int x = 0; x < _layout.Width; x++)
-            for (int y = 0; y < _layout.Height; y++)
-                if (int.TryParse(_layout.MapData[_layout.Width * x + y].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
-                {
-                    if (!deploymentZones.ContainsKey(zoneID))
-                        deploymentZones.Add(zoneID, new List<Vector2>());
-
-                    deploymentZones[zoneID].Add(new Vector2(x,y));
-                }
-        Debug.Log("Generated Deployment Zones");
-    }
-
     public static byte[] ConvertMapToBytes()
     {
         int arrX = defaultMaptiles.GetLength(0);
@@ -111,6 +86,17 @@ public static class Tilemap
         return tileTypes;
     }
 
+    private static void GenerateTilemap(GameMapLayout _layout)
+    {
+        defaultMaptiles = new TileType[_layout.Width, _layout.Height];
+        tiles = new TileType[_layout.Width, _layout.Height];
+
+        for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
+            for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
+                defaultMaptiles[x, y] = mapdataMapper[_layout.MapData[_layout.Width * x + y]];
+
+        Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
+    }
     private static void GeneratePathingGraph(int _sizeX, int _sizeY)
     {
         graph = new Node[_sizeX, _sizeY];
@@ -150,6 +136,19 @@ public static class Tilemap
                 if (legalDown && legalLeft)    
                     graph[x, y].Edges[7] = graph[x - 1, y - 1];
             }
+    }
+    private static void GenerateLegalDeploymentZones(GameMapLayout _layout)
+    {
+        for (int x = 0; x < _layout.Width; x++)
+            for (int y = 0; y < _layout.Height; y++)
+                if (int.TryParse(_layout.MapData[_layout.Width * x + y].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
+                {
+                    if (!deploymentZones.ContainsKey(zoneID))
+                        deploymentZones.Add(zoneID, new List<Vector2>());
+
+                    deploymentZones[zoneID].Add(new Vector2(x,y));
+                }
+        Debug.Log("Generated Deployment Zones");
     }
 
     public static List<Node> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
