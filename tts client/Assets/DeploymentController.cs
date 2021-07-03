@@ -12,6 +12,9 @@ public class DeploymentController : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.GameState == GameState.Game)
+            Destroy(gameObject);
+
         if (!mouseStick)
             return;
 

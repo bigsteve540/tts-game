@@ -39,7 +39,7 @@ public class DeploymentUI : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null) //FIXME: multiple of the same aspect causes the code to break
+        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null && GameManager.GameState == GameState.Deploy) //FIXME: multiple of the same aspect causes the code to break
         {
             int id = NetworkManager.Instance.Client.Id;
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);

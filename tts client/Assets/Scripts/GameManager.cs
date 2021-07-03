@@ -42,11 +42,16 @@ public class GameManager : MonoBehaviour
             AspectData.Add(data[i].AspectCode, data[i]);
     }
 
-    public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _posXZ)
+    public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _pos)
     {
+        if (GameState != GameState.Game)
+            GameState = GameState.Game;
+
+        Vector3 posXZ = new Vector3(_pos.x, 0f, _pos.y);
+
         Entities.Add(
             _entityID, 
-            Instantiate(EntityBody, _posXZ, Quaternion.identity).GetComponent<EntityController>().Init(AspectData[_aspectCode])
+            Instantiate(EntityBody, posXZ, Quaternion.identity).GetComponent<EntityController>().Init(AspectData[_aspectCode])
             );
     }
 
