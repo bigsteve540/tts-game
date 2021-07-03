@@ -14,12 +14,8 @@ public class EntityController : MonoBehaviour
     {
         data = _data;
         Instantiate(data.AspectModel, model.transform);
-        return this;
-    }
-
-    public void SpawnAspect()
-    {
         model.SetActive(true);
+        return this;
     }
     public void ChangeAspectData(AspectData _new) { data = _new; }
 }

@@ -24,7 +24,7 @@ public class DeploymentUI : MonoBehaviour
     [SerializeField] private AspectPortraitUI[] portraits;
     [SerializeField] private GameObject deploymentPrefab;
 
-    private Dictionary<string, Vector2> entityPositions = new Dictionary<string, Vector2>();
+    private (string Code, Vector2 Pos)[] entityPositions = new (string, Vector2)[5];
     private DeploymentController deployingBody = null;
     private int counter = 0;
     private int activeSelection = -1;
@@ -54,7 +54,7 @@ public class DeploymentUI : MonoBehaviour
             if (match)
             {
                 deployingBody.HaltMouseSticking();
-                entityPositions.Add(portraits[activeSelection].AspectCode, entityPos);
+                entityPositions[activeSelection] = (portraits[activeSelection].AspectCode, entityPos);
 
                 portraits[activeSelection].GreyOut();
                 portraits[activeSelection].SetInteractivity(false);
@@ -67,8 +67,8 @@ public class DeploymentUI : MonoBehaviour
             if(counter == 5) //send current vector positions to SERVER
             {
                 Message msg = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerRequest.DeploymentCompleted);
-                foreach (Vector2 item in entityPositions.Values)
-                    msg.Add(item);
+                foreach ((string, Vector2) pos in entityPositions)
+                    msg.Add(pos.Item2);
                 NetworkManager.Instance.Client.Send(msg);
             }
         }
