@@ -29,9 +29,9 @@ public static class Tilemap
 
     public static void Init(GameMapLayout _layout)
     {
-        Generate(_layout);
-        GenerateLegalDeploymentZones(_layout);
         GeneratePathingGraph(_layout.Width, _layout.Height);
+        GenerateLegalDeploymentZones(_layout);
+        GenerateTilemap(_layout);
 
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateTilemap);
         msg.Add(_layout.Width);
@@ -50,8 +50,6 @@ public static class Tilemap
                 msg.Add(deploymentZones[i][j]);
             NetworkManager.Instance.Server.SendToAll(msg);
         }
-
-        GameManager.Instance.DrawMap(_layout.Width, _layout.Height); //remove this after testing
     }
 
     public static bool TileDeployableForID(int _clientID, Vector2 _targetTile)
@@ -80,7 +78,7 @@ public static class Tilemap
         tiles[_indexX, _indexY] = GetDefaultTile(_indexX, _indexY);
     }
 
-    private static void Generate(GameMapLayout _layout)
+    private static void GenerateTilemap(GameMapLayout _layout)
     {
         defaultMaptiles = new TileType[_layout.Width, _layout.Height];
         tiles = new TileType[_layout.Width, _layout.Height];
@@ -94,28 +92,24 @@ public static class Tilemap
     private static void GenerateLegalDeploymentZones(GameMapLayout _layout)
     {
         for (int x = 0; x < _layout.Width; x++)
-        {
             for (int y = 0; y < _layout.Height; y++)
-            {
                 if (int.TryParse(_layout.MapData[_layout.Width * x + y].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
                 {
                     if (!deploymentZones.ContainsKey(zoneID))
                         deploymentZones.Add(zoneID, new List<Vector2>());
 
                     deploymentZones[zoneID].Add(new Vector2(x,y));
-                    GameManager.Instance.DrawDeployTile(zoneID, x, y);
                 }
-            }
-        }
+        Debug.Log("Generated Deployment Zones");
     }
 
-    public static byte[] ConvertMapToBytes() //TODO: convert to a standard array
+    public static byte[] ConvertMapToBytes()
     {
-        List<byte> tileTypes = new List<byte>();
+        byte[] tileTypes = new byte[defaultMaptiles.GetLength(0) * defaultMaptiles.GetLength(1)];
         for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
             for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-                tileTypes.Add(Convert.ToByte((int)defaultMaptiles[x, y]));
-        return tileTypes.ToArray();
+                tileTypes[defaultMaptiles.GetLength(0) * x + y] = Convert.ToByte((int)defaultMaptiles[x, y]);
+        return tileTypes;
     }
 
     private static void GeneratePathingGraph(int _sizeX, int _sizeY)
