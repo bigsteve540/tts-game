@@ -105,10 +105,13 @@ public static class Tilemap
 
     public static byte[] ConvertMapToBytes()
     {
-        byte[] tileTypes = new byte[defaultMaptiles.GetLength(0) * defaultMaptiles.GetLength(1)];
-        for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
-            for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-                tileTypes[defaultMaptiles.GetLength(0) * x + y] = Convert.ToByte((int)defaultMaptiles[x, y]);
+        int arrX = defaultMaptiles.GetLength(0);
+        int arrY = defaultMaptiles.GetLength(1);
+        byte[] tileTypes = new byte[arrX * arrY];
+
+        for (int x = 0; x < arrX; x++)
+            for (int y = 0; y < arrY; y++)
+                tileTypes[arrX * x + y] = Convert.ToByte((int)defaultMaptiles[x, y]);
         return tileTypes;
     }
 
