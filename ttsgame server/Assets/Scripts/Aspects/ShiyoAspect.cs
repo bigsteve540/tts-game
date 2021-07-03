@@ -18,7 +18,7 @@ public class ShiyoAspect : IAspectBehaviour
     public IAbilityBehaviour[] Abilities { get; }
     public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
-    public string AspectName { get; }
+    public string AspectName => "Shiyo";
     public int AspectID { get; }
     public string AspectCode => "A004";
 
@@ -33,7 +33,11 @@ public class ShiyoAspect : IAspectBehaviour
 
     public ShiyoAspect(int _clientID, Vector2 _mapPos)
     {
+        ClientID = _clientID;
+        AspectID = GameManager.RegisterEntity(this);
 
+
+        MapPosition = _mapPos;
     }
 
     public void EndTurn()
@@ -41,13 +45,7 @@ public class ShiyoAspect : IAspectBehaviour
         throw new NotImplementedException();
     }
 
-    public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
-    {
-        throw new NotImplementedException();
-    }
+    public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false) { Utilities.GenericAspectModifyHealth(this, _data, _ignoreEffectors); }
 
-    public void MoveToTile(int _x, int _y)
-    {
-        throw new NotImplementedException();
-    }
+    public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
 }

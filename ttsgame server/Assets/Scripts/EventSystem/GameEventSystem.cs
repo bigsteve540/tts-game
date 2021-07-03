@@ -32,7 +32,7 @@ public static class GameEventSystem
         else
             listeners[eventType].Add(_listener.GetHashCode(), wrapper);
     }
-    public static void UnsubListener<T>(System.Action<T> _listener) where T : GameEventInfo //TODO: removing still doesn't work properly lmao
+    public static void UnsubListener<T>(System.Action<T> _listener) where T : GameEventInfo //TODO: removing still doesn't work properly lmao <--- dunno if this is actually true, seems kinda sus
     {
         System.Type eventType = typeof(T);
 

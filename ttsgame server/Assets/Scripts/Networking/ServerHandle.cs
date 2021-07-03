@@ -27,7 +27,7 @@ public static class ServerHandle
 
         if(++readyPlayers == NetworkManager.Instance.Server.MaxClientCount) //spawn all aspects to all clients
         {
-            Debug.Log("SPAWNING CHAMPIONS TO CLIENT YEEHAW");
+            Debug.Log("Sending aspect to clients and preparing for play");
             foreach (Player player in Player.AllActive.Values)
             {
                 for (int i = 0; i < player.Aspects.Length; i++)

@@ -38,7 +38,7 @@ public static class Timeline
         }
     }
 
-    public static void Progress() //probably called by endturn method
+    public static void Progress() //FIXME: probably called by endturn method
     {
         if (timelineEvents.Count != 0)
         {

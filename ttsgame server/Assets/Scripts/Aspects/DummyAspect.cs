@@ -11,8 +11,6 @@ public class DummyAspect : IAspectBehaviour
     public int AspectID { get; }
     public string AspectCode => "A000";
 
-    public bool Active { get; set; }
-
     public uint BaseInitiative { get; } //dictates where on the timeline aspects will begin the game
     public int InitiativeOffset { get; } //dictates the amount of skew added or subtracted from the turn initiative on turn end, signed int
 
@@ -40,8 +38,6 @@ public class DummyAspect : IAspectBehaviour
 
         AspectID = GameManager.RegisterEntity(this);
 
-        Active = false;
-
         MaxHP = _maxHP;
         CurrentHP = MaxHP;
         CurrentArmor = BaseArmor;
@@ -60,7 +56,6 @@ public class DummyAspect : IAspectBehaviour
     public void EndTurn()
     {
         //do some extra stuff
-        Active = false;
         Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset), false);
     }
 
