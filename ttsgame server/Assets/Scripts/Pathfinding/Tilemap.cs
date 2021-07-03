@@ -64,10 +64,6 @@ public static class Tilemap
     {
         return tiles[_indexX, _indexY];
     }
-    public static TileType GetDefaultTile(int _indexX, int _indexY) //TODO: function might be redunant, clean later if necessary
-    {
-        return defaultMaptiles[_indexX, _indexY];
-    }
 
     public static void ChangeTileType(int _indexX, int _indexY, TileType _newType)
     {
@@ -75,7 +71,7 @@ public static class Tilemap
     }
     public static void SetTileToDefault(int _indexX, int _indexY)
     {
-        tiles[_indexX, _indexY] = GetDefaultTile(_indexX, _indexY);
+        tiles[_indexX, _indexY] = defaultMaptiles[_indexX, _indexY];
     }
 
     private static void GenerateTilemap(GameMapLayout _layout)
