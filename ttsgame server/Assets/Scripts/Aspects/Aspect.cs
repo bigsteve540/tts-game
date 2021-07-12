@@ -55,6 +55,8 @@ public class Aspect : IAspectBehaviour
 
         MapPosition = _mapPos;
 
+        //Abilities = d.Abilities;
+
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
     }
 

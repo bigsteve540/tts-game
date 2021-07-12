@@ -12,6 +12,6 @@ public class AspectData : ScriptableObject
     [Space]
     public uint MaxHealth = default;
     public int BaseArmor = default;
-
+    [Space]
     public AspectAbilityData[] Abilities = default;
 }

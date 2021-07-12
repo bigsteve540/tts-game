@@ -11,22 +11,7 @@ public struct AspectDataWrapper
     public uint MaxHealth;
     public int BaseArmor;
 
-    public AspectAbilityWrapper[] Abilities { get; }
-
-    public AspectDataWrapper(int i = 0)
-    {
-        AspectName = default;
-
-        BaseInitiative = default;
-        InitiativeOffset = default;
-
-        MaxActionPoints = default;
-
-        MaxHealth = default;
-        BaseArmor = default;
-
-        Abilities = default;
-    }
+    public AspectAbilityWrapper[] Abilities;
 }
 
 [System.Serializable]

@@ -4,5 +4,6 @@
     "InitiativeOffset": 0,
     "MaxActionPoints": 100,
     "MaxHealth": 3000,
-    "BaseArmor": 0
+    "BaseArmor": 0,
+    "Abilities": []
 }

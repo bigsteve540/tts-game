@@ -35,7 +35,7 @@ public class SerializeAspectFromFile
         public uint MaxHealth;
         public int BaseArmor;
 
-        public AspectAbilityWrapper[] Abilities { get; }
+        [SerializeField] public AspectAbilityWrapper[] Abilities;
 
         public AspectDataWrapper(AspectData _toSerialize)
         {
@@ -47,12 +47,13 @@ public class SerializeAspectFromFile
             BaseArmor = _toSerialize.BaseArmor;
 
             int abilityLen = _toSerialize.Abilities.Length;
-
             Abilities = new AspectAbilityWrapper[abilityLen];
+
             for (int i = 0; i < abilityLen; i++)
                 Abilities[i] = new AspectAbilityWrapper(_toSerialize.Abilities[i]);
         }
     }
+
     [System.Serializable]
     struct AspectAbilityWrapper
     {

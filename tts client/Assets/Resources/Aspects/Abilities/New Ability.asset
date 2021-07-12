@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
-  m_Name: A000
+  m_Script: {fileID: 11500000, guid: 32230a9c22596114fb61c50e01883a7e, type: 3}
+  m_Name: New Ability
   m_EditorClassIdentifier: 
-  Name: Dummy
-  BaseInitiative: 0
-  InitiativeOffset: 0
-  MaxActionPoints: 100
-  MaxHealth: 5000
-  BaseArmor: 0
-  Abilities:
-  - {fileID: 11400000, guid: 5ad46605db36be946a1f8b35253ea491, type: 2}
+  Name: 
+  Description: 
+  ActionPointCost: 0
+  Value: 0
