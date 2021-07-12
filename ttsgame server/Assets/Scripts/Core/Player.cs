@@ -26,7 +26,7 @@ public class Player
         if (aspectsIterator >= Aspects.Length)
             return;
 
-        Aspects[aspectsIterator++] = Activator.CreateInstance(Utilities.AspectTypeFromCode[_code], selfID, _pos) as IAspectBehaviour;
+        Aspects[aspectsIterator++] = new Aspect(selfID, _code, _pos);
         Debug.Log($"Generated {Aspects[aspectsIterator -1].AspectName} for player {selfID}");
     }
 

@@ -29,15 +29,6 @@ public struct InterruptData
 
 public static class Utilities
 {
-    public static Dictionary<string, Type> AspectTypeFromCode = new Dictionary<string, Type>
-    {
-        { "A000", typeof(DummyAspect) },
-        { "A001", typeof(GeneviveAspect)},
-        { "A002", typeof(KrakAspect) },
-        { "A003", typeof(JassepiAspect) },
-        { "A004", typeof(ShiyoAspect) }
-    };
-
     private static float gradient = 8 / 360;
 
     private static InterruptEventType[] interruptEventCache = new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby };
@@ -90,7 +81,7 @@ public static class Utilities
         Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
     }
 
-    public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) 
+    public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
     {
         InterruptData interruptData = new InterruptData(_target.AspectID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
 

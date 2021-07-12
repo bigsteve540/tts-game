@@ -1,0 +1,8 @@
+{
+    "AspectName": "Krak",
+    "BaseInitiative": 0,
+    "InitiativeOffset": 0,
+    "MaxActionPoints": 100,
+    "MaxHealth": 3000,
+    "BaseArmor": 0
+}

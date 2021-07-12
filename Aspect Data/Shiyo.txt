@@ -1,0 +1,8 @@
+{
+    "AspectName": "Shiyo",
+    "BaseInitiative": 0,
+    "InitiativeOffset": 0,
+    "MaxActionPoints": 100,
+    "MaxHealth": 8000,
+    "BaseArmor": 0
+}

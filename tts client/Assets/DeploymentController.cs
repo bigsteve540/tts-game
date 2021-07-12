@@ -21,6 +21,6 @@ public class DeploymentController : MonoBehaviour
         Vector3 placementPos = CameraController.RaycastGroundPointFromCamera(CameraController.ControllableCamera);
         if (placementPos == Vector3.one * -1f)
             return;
-        transform.root.position = new Vector3(Mathf.CeilToInt(placementPos.x), placementPos.y, Mathf.CeilToInt(placementPos.z));
+        transform.root.position = new Vector3(Mathf.FloorToInt(placementPos.x), placementPos.y, Mathf.FloorToInt(placementPos.z));
     }
 }

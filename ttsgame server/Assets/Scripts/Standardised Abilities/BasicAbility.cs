@@ -1,9 +1,8 @@
 ﻿using RiptideNetworking;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAbility : IAbilityBehaviour, IInterruptable
+public class BasicAttack : IAbilityBehaviour, IInterruptable
 {
     public IAspectBehaviour Caster { get; }
 
@@ -14,14 +13,16 @@ public class BasicAbility : IAbilityBehaviour, IInterruptable
     public InterruptData InterruptData { get; }
     public InterruptEventType[] AffectedTypes => new InterruptEventType[1] { InterruptEventType.Damage };
 
-    public BasicAbility(IAspectBehaviour _caster, int _actionPointCost, int _castRange, float _damage)
+    public BasicAttack(IAspectBehaviour _caster, int _range)
     {
+        AspectAbilityData d = Resources.Load<AspectAbilityData>("Basic Attack");
+
         Caster = _caster;
 
-        ActionPointCost = _actionPointCost;
-        CastRange = _castRange;
+        ActionPointCost = d.ActionPointCost;
+        CastRange = _range;
 
-        Damage = _damage;
+        Damage = d.Value;
 
         InterruptData = new InterruptData(Caster.AspectID, AffectedTypes);
     }

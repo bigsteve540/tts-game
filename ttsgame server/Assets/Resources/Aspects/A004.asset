@@ -9,17 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f01b0ce33767b1a44bb8e509cbfd7920, type: 3}
-  m_Name: A004_(Shiyo)
+  m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
+  m_Name: A004
   m_EditorClassIdentifier: 
-  AspectCode: A004
-  AspectName: Shiyo
+  Name: Shiyo
   BaseInitiative: 0
   InitiativeOffset: 0
   MaxActionPoints: 100
   MaxHealth: 8000
   BaseArmor: 0
   Abilities: []
-  AspectSprite: {fileID: 21300000, guid: 8ca63a6c6b63c734cb8d74588b9f511b, type: 3}
-  AspectModel: {fileID: 3360359037910117355, guid: c91fb99dc8308144dbb5a31dae2a9082,
-    type: 3}

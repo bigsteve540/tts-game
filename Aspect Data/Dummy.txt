@@ -1,0 +1,8 @@
+{
+    "AspectName": "Dummy",
+    "BaseInitiative": 0,
+    "InitiativeOffset": 0,
+    "MaxActionPoints": 100,
+    "MaxHealth": 5000,
+    "BaseArmor": 0
+}

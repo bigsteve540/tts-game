@@ -12,7 +12,7 @@ public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehavi
     int InitiativeOffset { get; }
 
     uint TotalActionPoints { get; }
-    uint CurrentActionPoints { get; } //private set
+    uint CurrentActionPoints { get; }
 
     ITimelineEvent Turn { get; set; }
 

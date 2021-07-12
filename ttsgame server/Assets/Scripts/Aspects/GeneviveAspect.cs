@@ -37,6 +37,8 @@ public class GeneviveAspect : IAspectBehaviour
 
     public GeneviveAspect(int _clientID, Vector2 _mapPos)
     {
+        AspectData d = Resources.Load<AspectData>(AspectCode);
+
         ClientID = _clientID;
         Active = false;
         AspectID = GameManager.RegisterEntity(this);
@@ -51,7 +53,7 @@ public class GeneviveAspect : IAspectBehaviour
 
         Abilities = new IAbilityBehaviour[]
         {
-            new BasicAbility(this, 20, 1, -500),
+            new BasicAttack(this, 1),
             new IonicShatter(this),
             new TaintedEdge(this),
             new DeathMark(this),

@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AspectCode: A002
   AspectName: Krak
+  BaseInitiative: 0
+  InitiativeOffset: 0
+  MaxActionPoints: 100
+  MaxHealth: 3000
+  BaseArmor: 0
+  Abilities: []
   AspectSprite: {fileID: 21300000, guid: ceae929e5cd5b674ba75a79a3960a814, type: 3}
   AspectModel: {fileID: 3360359037910117355, guid: c91fb99dc8308144dbb5a31dae2a9082,
     type: 3}

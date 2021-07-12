@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyAspect : IAspectBehaviour
+public class Aspect : IAspectBehaviour
 {
     public int ClientID { get; }
 
-    public string AspectName => "Dummy";
+    public string AspectName { get; }
     public int AspectID { get; }
-    public string AspectCode => "A000";
+    public string AspectCode { get; }
 
-    public uint BaseInitiative { get; } //dictates where on the timeline aspects will begin the game
-    public int InitiativeOffset { get; } //dictates the amount of skew added or subtracted from the turn initiative on turn end, signed int
+    public uint BaseInitiative { get; } 
+    public int InitiativeOffset { get; }
 
-    public uint TotalActionPoints { get; } //100 to begin with, aspects can be buffed or nerfed via this
-    public uint CurrentActionPoints => TotalActionPoints;
+    public uint TotalActionPoints { get; }
+    public uint CurrentActionPoints { get; }
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }
@@ -25,28 +25,35 @@ public class DummyAspect : IAspectBehaviour
     public uint MaxHP { get; }
     public uint CurrentHP { get; private set; }
 
-    public int BaseArmor => 0;
+    public int BaseArmor { get; }
     public int CurrentArmor { get; set; }
 
     public IAbilityBehaviour[] Abilities { get; }
     public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
-    public DummyAspect(int _playerID, Vector2 _mapPos) : this(_playerID, 0, 0, 100, 5000, _mapPos) { }
-    public DummyAspect(int _playerID, uint _baseInitiative, int _initiativeOffset, uint _totalActionPoints, uint _maxHP, Vector2 _mapPosition)
+    public Aspect(int _playerID, string _code, Vector2 _mapPos)
     {
         ClientID = _playerID;
-
         AspectID = GameManager.RegisterEntity(this);
 
-        MaxHP = _maxHP;
+        AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
+
+        AspectName = d.Name;
+        AspectCode = _code;
+
+        MaxHP = d.MaxHealth;
         CurrentHP = MaxHP;
+
+        BaseArmor = d.BaseArmor;
         CurrentArmor = BaseArmor;
 
-        BaseInitiative = _baseInitiative;
-        InitiativeOffset = _initiativeOffset;
-        TotalActionPoints = _totalActionPoints;
+        BaseInitiative = d.BaseInitiative;
+        InitiativeOffset = d.InitiativeOffset;
 
-        MapPosition = _mapPosition;
+        TotalActionPoints = d.MaxActionPoints;
+        CurrentActionPoints = TotalActionPoints;
+
+        MapPosition = _mapPos;
 
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
     }

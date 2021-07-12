@@ -1,0 +1,8 @@
+{
+    "AspectName": "Jassepi",
+    "BaseInitiative": 0,
+    "InitiativeOffset": 0,
+    "MaxActionPoints": 100,
+    "MaxHealth": 7000,
+    "BaseArmor": 0
+}

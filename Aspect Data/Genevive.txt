@@ -1,0 +1,8 @@
+{
+    "AspectName": "Genevive",
+    "BaseInitiative": 0,
+    "InitiativeOffset": 0,
+    "MaxActionPoints": 100,
+    "MaxHealth": 2500,
+    "BaseArmor": 0
+}
