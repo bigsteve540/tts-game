@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RiptideNetworking;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,9 @@ public class Aspect : IAspectBehaviour
 {
     public int ClientID { get; }
 
-    public string AspectName { get; }
-    public int AspectID { get; }
-    public string AspectCode { get; }
+    public string Name { get; }
+    public int EntityID { get; }
+    public string Code { get; }
 
     public uint BaseInitiative { get; } 
     public int InitiativeOffset { get; }
@@ -28,18 +29,18 @@ public class Aspect : IAspectBehaviour
     public int BaseArmor { get; }
     public int CurrentArmor { get; set; }
 
-    public IAbilityBehaviour[] Abilities { get; }
+    public AspectAbilityData[] Abilities { get; }
     public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
     public Aspect(int _playerID, string _code, Vector2 _mapPos)
     {
         ClientID = _playerID;
-        AspectID = GameManager.RegisterEntity(this);
+        EntityID = GameManager.RegisterEntity(this);
 
         AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
 
-        AspectName = d.Name;
-        AspectCode = _code;
+        Name = d.Name;
+        Code = _code;
 
         MaxHP = d.MaxHealth;
         CurrentHP = MaxHP;
@@ -55,12 +56,22 @@ public class Aspect : IAspectBehaviour
 
         MapPosition = _mapPos;
 
-        //Abilities = d.Abilities;
+        Abilities = d.Abilities;
 
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
     }
 
     public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
+
+    public void CastAbility(int _abIndex, int _targetID/*Message _message*/)
+    {
+        if (GameManager.ActiveAspect != this)
+            return;
+
+        AspectAbilityData d = Abilities[_abIndex/*_message.GetInt()*/];
+        for (int i = 0; i < d.Effects.Length; i++)
+            d.Effects[i].InvokeAction(this, _targetID/*_message*/, d);
+    }
 
     public void EndTurn()
     {
@@ -98,7 +109,7 @@ public class AspectTurn : ITimelineEvent
 
         GameManager.ActiveAspect = caster;
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
-        Debug.Log($"this is {caster.AspectName}'s turn");
+        Debug.Log($"this is {caster.Name}'s turn");
 
         #region ability trigger example
         //if (caster.AspectID == 0)

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RiptideNetworking;
 
 [CreateAssetMenu(fileName = "New Ability", menuName = "Aspects/New Ability")]
 public class AspectAbilityData : ScriptableObject
@@ -9,8 +10,6 @@ public class AspectAbilityData : ScriptableObject
     [Space]
     public int ActionPointCost = default;
     [Space]
-    public int Value = default;
-    public StatModifierType ValueType = default;
-    [Space]
-    public InterruptEventType[] TypesToTrigger = default;
+    public AbilityTargeting Targeting = default;
+    public AbilityAction[] Effects = default;
 }

@@ -27,7 +27,7 @@ public class Player
             return;
 
         Aspects[aspectsIterator++] = new Aspect(selfID, _code, _pos);
-        Debug.Log($"Generated {Aspects[aspectsIterator -1].AspectName} for player {selfID}");
+        Debug.Log($"Generated {Aspects[aspectsIterator -1].Name} for player {selfID}");
     }
 
     public Player Wipe()

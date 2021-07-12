@@ -4,10 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehaviour
+public interface IAspectBehaviour : IEntityBehaviour, IAbilityCasterBehaviour
 {
     int ClientID { get; }
+}
 
+public interface IEntityBehaviour : ITimelineBehaviour, IMoveBehaviour, ICombatBehaviour {}
+
+public interface ITimelineBehaviour : IEntityLabels
+{
     uint BaseInitiative { get; }
     int InitiativeOffset { get; }
 
@@ -16,17 +21,14 @@ public interface IAspectBehaviour : IAspectLabels, IMoveBehaviour, ICombatBehavi
 
     ITimelineEvent Turn { get; set; }
 
-    IAbilityBehaviour[] Abilities { get; }
-    List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
-
     void EndTurn();
 }
 
-public interface IAspectLabels
+public interface IEntityLabels
 {
-    string AspectName { get; }
-    string AspectCode { get; }
-    int AspectID { get; }
+    string Name { get; }
+    string Code { get; }
+    int EntityID { get; }
 }
 
 public interface IMoveBehaviour
@@ -47,18 +49,10 @@ public interface ICombatBehaviour
     void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false);
 }
 
-public interface IAbilityBehaviour
+public interface IAbilityCasterBehaviour
 {
-    IAspectBehaviour Caster { get; }
+    AspectAbilityData[] Abilities { get; }
+    List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
-    int ActionPointCost { get; }
-    int CastRange { get; }
-
-    void Activate(Message _message);
-}
-
-public interface IInterruptable
-{
-    InterruptData InterruptData { get; }
-    InterruptEventType[] AffectedTypes { get; }
+    void CastAbility(int _abIndex, int _targetID /*Message _message*/);
 }

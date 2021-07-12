@@ -62,24 +62,11 @@ public class SerializeAspectFromFile
 
         public int ActionPointCost;
 
-        public int Value;
-        public int ValueType;
-
-        public int[] TypesToTrigger;
-
         public AspectAbilityWrapper(AspectAbilityData _toSerialize)
         {
             AbilityName = _toSerialize.Name;
             Description = _toSerialize.Description;
             ActionPointCost = _toSerialize.ActionPointCost;
-            Value = _toSerialize.Value;
-            ValueType = (int)_toSerialize.ValueType;
-
-            int typesLen = _toSerialize.TypesToTrigger.Length;
-
-            TypesToTrigger = new int[typesLen];
-            for (int i = 0; i < typesLen; i++)
-                TypesToTrigger[i] = (int)_toSerialize.TypesToTrigger[i];
         }
     }
 }

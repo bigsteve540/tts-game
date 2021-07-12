@@ -9,15 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254c07502699fa148b93ed0b4e5dddfe, type: 3}
-  m_Name: Basic Attack
+  m_Script: {fileID: 11500000, guid: d67060070683f934d8713345e5d63f98, type: 3}
+  m_Name: New Inflict Damage Action
   m_EditorClassIdentifier: 
-  Name: Basic Attack
-  Description: Strike a target, dealing damage.
-  ActionPointCost: 25
-  Targeting:
-    Type: 1
-    Filter: {fileID: 0}
-  Triggers: 00000000
-  Effects:
-  - {fileID: 0}
+  Damage: 500
+  Type: 0

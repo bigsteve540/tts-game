@@ -15,7 +15,7 @@ public class HealthModifiedEventInfo : GameEventInfo
     public int TargetID { get; }
 
     public StatModifierType Type;
-    public float Value; //unsigned; negative for damage positive for healing
+    public float Value; //negative for damage positive for healing
 
     public bool IsDamage()
     {

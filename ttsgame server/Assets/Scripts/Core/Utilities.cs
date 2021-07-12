@@ -25,6 +25,12 @@ public struct InterruptData
         InterruptableTypes = _interruptTypes;
         ExtraInterruptData = _extraData.Length > 0 ? _extraData : null;
     }
+    public InterruptData(int _triggererID, InterruptEventType _type, params object[] _extraData)
+    {
+        TriggererID = _triggererID;
+        InterruptableTypes = new InterruptEventType[1] { _type };
+        ExtraInterruptData = _extraData;
+    }
 }
 
 public static class Utilities
@@ -68,7 +74,7 @@ public static class Utilities
         List<Node> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
         int pathCost = GetInitiativeCostForPath(path);
 
-        InterruptData data = new InterruptData(_aspect.AspectID, interruptEventCache, pathCost, path);
+        InterruptData data = new InterruptData(_aspect.EntityID, interruptEventCache, pathCost, path);
 
         if (GameEventSystem.CheckEventInterrupted(data) || pathCost > _aspect.CurrentActionPoints)
             return;
@@ -83,7 +89,7 @@ public static class Utilities
 
     public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
     {
-        InterruptData interruptData = new InterruptData(_target.AspectID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
+        InterruptData interruptData = new InterruptData(_target.EntityID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
 
         if (GameEventSystem.CheckEventInterrupted(interruptData)) //TODO: should probably make it so interruption can also effect _hpmoddata 
             return _target.CurrentHP;

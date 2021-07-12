@@ -32,9 +32,6 @@ public class AspectData : ScriptableObject
         BaseArmor = _wrapper.BaseArmor;
 
         for (int i = 0; i < Abilities.Length; i++)
-        {
-            Debug.Log(i);
             Abilities[i].Deserialize(_wrapper.Abilities[i]);
-        }
     }
 }

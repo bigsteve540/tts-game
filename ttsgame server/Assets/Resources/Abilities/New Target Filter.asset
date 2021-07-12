@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32230a9c22596114fb61c50e01883a7e, type: 3}
-  m_Name: New Ability
+  m_Script: {fileID: 11500000, guid: 460850521dd77d1458c71e31a1b50fe5, type: 3}
+  m_Name: New Target Filter
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  ActionPointCost: 0
-  Value: 0
+  TargetType: 0
+  IncludeSelf: 0
+  SelectionFilters: []

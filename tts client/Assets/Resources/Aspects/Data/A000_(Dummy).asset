@@ -19,7 +19,8 @@ MonoBehaviour:
   MaxActionPoints: 100
   MaxHealth: 5000
   BaseArmor: 0
-  Abilities: []
+  Abilities:
+  - {fileID: 11400000, guid: a2b35b22cb16cd74fbc994f3bbce2cce, type: 2}
   AspectSprite: {fileID: 21300000, guid: 95b3d3233c1f2ca4eacf43574150b92d, type: 3}
   AspectModel: {fileID: 8951110736519443080, guid: 3186e0891c44f8a40b77975e2342673d,
     type: 3}
