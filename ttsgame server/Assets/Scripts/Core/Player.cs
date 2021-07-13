@@ -26,7 +26,7 @@ public class Player
         if (aspectsIterator >= Aspects.Length)
             return;
 
-        Aspects[aspectsIterator++] = new Aspect(selfID, _code, _pos);
+        Aspects[aspectsIterator++] = new Aspect(selfID, selfID, _code, _pos);
         Debug.Log($"Generated {Aspects[aspectsIterator -1].Name} for player {selfID}");
     }
 

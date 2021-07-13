@@ -35,37 +35,18 @@ public struct InterruptData
 
 public static class Utilities
 {
-    private static float gradient = 8 / 360;
+    private const float GRADIENT = 8 / 360;
 
     private static InterruptEventType[] interruptEventCache = new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby };
 
-    public static bool TargetWithinRange(Vector2 _origin, Vector2 _target, int _maxDist)
+    public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, int _maxDist)
     {
-        List<Node> path = new List<Node>();
-        path.Clear();
-        path = Tilemap.GeneratePathToTile(_origin, _target);
-        if (path == null || path.Count > _maxDist)
+        int dist = (int)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.x));
+        if (dist > _maxDist)
             return false;
         return true;
     }
-    public static bool TargetWithinRange(Vector2 _origin, Vector2 _target, int _maxDist, out List<Node> _usedPath)
-    {
-        List<Node> path = new List<Node>();
-        path.Clear();
-        path = Tilemap.GeneratePathToTile(_origin, _target);
-        if (path == null || path.Count > _maxDist)
-        {
-            _usedPath = null;
-            return false;
-        }
-        _usedPath = new List<Node>(path);
-        return true;
-    }
-
-    public static uint ConvertDegToCardinal(float _input)
-    {
-        return (uint)Mathf.RoundToInt(gradient * _input);
-    }
+    public static uint ConvertDegToCardinal(float _input){ return (uint)Mathf.RoundToInt(GRADIENT * _input); }
 
     public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)
     {

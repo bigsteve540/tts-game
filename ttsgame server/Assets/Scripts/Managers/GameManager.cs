@@ -9,9 +9,9 @@ public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
 public class GameManager : MonoBehaviour
 {
     public static GameState GameState = GameState.Prep;
-    public static IAspectBehaviour ActiveAspect = null;
+    public static IEntityBehaviour ActiveEntity = null;
 
-    public static Dictionary<int, IAspectBehaviour> Entities = new Dictionary<int, IAspectBehaviour>();
+    public static Dictionary<int, IEntityBehaviour> Entities = new Dictionary<int, IEntityBehaviour>();
 
     private static int IDCounter = 0;
 
@@ -20,5 +20,24 @@ public class GameManager : MonoBehaviour
         Entities.Add(IDCounter, _entity);
         _entity.Turn = new AspectTurn(_entity, _entity.BaseInitiative, false);
         return IDCounter++;
+    }
+
+    public static List<IEntityBehaviour> FilterEntities(TargetFilter _filter, IEntityBehaviour _caster) //TODO:
+    {
+        List<IEntityBehaviour> final = new List<IEntityBehaviour>();
+
+        for (int i = 0; i < _filter.SelectionFilters.Length; i++)
+        {
+            List<IEntityBehaviour> matches = new List<IEntityBehaviour>();
+
+            foreach (IEntityBehaviour entity in Entities.Values)
+            {
+                if((_filter.TargetType & TargetFilter.TargetingRelation.Neutral) == TargetFilter.TargetingRelation.Neutral && entity.TeamID == 0)
+                    matches.Add(entity);
+
+            }
+        }
+
+        return null;
     }
 }

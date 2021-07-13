@@ -29,6 +29,7 @@ public interface IEntityLabels
     string Name { get; }
     string Code { get; }
     int EntityID { get; }
+    int TeamID { get; } //0 reserved for neutral, negative for server-owned entities
 }
 
 public interface IMoveBehaviour

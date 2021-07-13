@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460850521dd77d1458c71e31a1b50fe5, type: 3}
   m_Name: New Target Filter
   m_EditorClassIdentifier: 
-  TargetType: 0
-  IncludeSelf: 0
-  SelectionFilters: []
+  TargetType: 1
+  IncludeSelf: 2
+  SelectionFilters:
+  - Type: 0
+    Range: 1
+    LocalOffset: {x: 0, y: 0, z: 0}
+    MaxValidTargets: 1

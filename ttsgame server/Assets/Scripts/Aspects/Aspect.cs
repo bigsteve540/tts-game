@@ -7,6 +7,7 @@ using UnityEngine;
 public class Aspect : IAspectBehaviour
 {
     public int ClientID { get; }
+    public int TeamID { get; }
 
     public string Name { get; }
     public int EntityID { get; }
@@ -32,9 +33,10 @@ public class Aspect : IAspectBehaviour
     public AspectAbilityData[] Abilities { get; }
     public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
-    public Aspect(int _playerID, string _code, Vector2 _mapPos)
+    public Aspect(int _playerID, int _teamID, string _code, Vector2 _mapPos)
     {
         ClientID = _playerID;
+        TeamID = _teamID;
         EntityID = GameManager.RegisterEntity(this);
 
         AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
@@ -65,7 +67,7 @@ public class Aspect : IAspectBehaviour
 
     public void CastAbility(int _abIndex, int _targetID/*Message _message*/)
     {
-        if (GameManager.ActiveAspect != this)
+        if (GameManager.ActiveEntity != this)
             return;
 
         AspectAbilityData d = Abilities[_abIndex/*_message.GetInt()*/];
@@ -107,7 +109,7 @@ public class AspectTurn : ITimelineEvent
         }
         //how would you wait for user input using this method tho?
 
-        GameManager.ActiveAspect = caster;
+        GameManager.ActiveEntity = caster;
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
         Debug.Log($"this is {caster.Name}'s turn");
 

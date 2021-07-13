@@ -16,7 +16,7 @@ public class InflictDamageAction : AbilityAction
         if (GameEventSystem.CheckEventInterrupted(d))
             return;
 
-        IAspectBehaviour target = GameManager.Entities[_targetID/*targetAspectID*/];
+        IAspectBehaviour target = GameManager.Entities[_targetID/*targetAspectID*/] as IAspectBehaviour;
         Debug.Log($"damijing {target.Name}");
 
         target.ModifyHealth(new HealthModifiedEventInfo(_caster.EntityID, target.EntityID, this, Type, Damage * -1));
