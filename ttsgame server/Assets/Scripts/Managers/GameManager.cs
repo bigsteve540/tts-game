@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     private static int IDCounter = 0;
 
-    public static int RegisterEntity(IAspectBehaviour _entity)
+    public static int RegisterEntity(IEntityBehaviour _entity)
     {
         Entities.Add(IDCounter, _entity);
         _entity.Turn = new AspectTurn(_entity, _entity.BaseInitiative, false);

@@ -85,23 +85,26 @@ public class NetworkManager : MonoBehaviour
         Server.Start(port, maxClientCount, actionQueue);
 
         //Ability casting test sample
-        //Tilemap.Init(GameMaps.TestMap);
+        Tilemap.Init(GameMaps.TestMap);
 
-        //Player p = new Player(1);
-        //p.AddAspect("A000", new Vector2(0, 0));
-        //p.AddAspect("A001", new Vector2(0, 1));
+        Player p = new Player(1);
+        p.AddAspect("A000", new Vector2(0, 0));
+        p.AddAspect("A001", new Vector2(0, 1));
 
-        //Timeline.Progress();
-        //p.Aspects[0].CastAbility(0, /*client input packet here*/);
+        Aspect[] testers = new Aspect[]
+        {
+            new Aspect(0, "A000", new Vector2(1, 3)),
+            new Aspect(0, "A001", new Vector2(0, 3)),
+            new Aspect(0, "A001", new Vector2(1, 5))
+        };
+
+        Timeline.Progress();
+        (p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
     }
 
     private void OnApplicationQuit()
     {
-        Server.Stop();
-
-        Server.ClientConnected -= NewPlayerConnected;
-        Server.MessageReceived -= MessageReceived;
-        Server.ClientDisconnected -= PlayerLeft;
+        CloseServer();
     }
 
     private void NewPlayerConnected(object sender, ServerClientConnectedEventArgs e)
@@ -124,5 +127,14 @@ public class NetworkManager : MonoBehaviour
     {
         Player.AllActive[e.Id].Wipe();
         Player.AllActive.Remove(e.Id);
+    }
+
+    public void CloseServer()
+    {
+        Server.Stop();
+
+        Server.ClientConnected -= NewPlayerConnected;
+        Server.MessageReceived -= MessageReceived;
+        Server.ClientDisconnected -= PlayerLeft;
     }
 }

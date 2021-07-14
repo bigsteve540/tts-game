@@ -99,7 +99,7 @@ public static class DraftManager
 
     private static void OnUserFailsToSelectAspect()
     {
-        NetworkManager.Instance.Server.Stop();
         SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
+        NetworkManager.Instance.CloseServer();
     }
 }

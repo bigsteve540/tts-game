@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
-  m_Name: A000
+  m_Script: {fileID: 11500000, guid: 87b01942f4836e64e852122df16e432b, type: 3}
+  m_Name: Test Ability Debug Output Action
   m_EditorClassIdentifier: 
-  Name: Dummy
-  BaseInitiative: 0
-  InitiativeOffset: 0
-  MaxActionPoints: 100
-  MaxHealth: 5000
-  BaseArmor: 0
-  Abilities:
-  - {fileID: 11400000, guid: abde2cd1fd553614faae68cdf4bcd09e, type: 2}
+  OutputFormat: 'Test Ability was triggered with the following entities: '

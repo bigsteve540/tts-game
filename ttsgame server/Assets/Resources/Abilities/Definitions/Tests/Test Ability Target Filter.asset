@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
-  m_Name: A000
+  m_Script: {fileID: 11500000, guid: 460850521dd77d1458c71e31a1b50fe5, type: 3}
+  m_Name: Test Ability Target Filter
   m_EditorClassIdentifier: 
-  Name: Dummy
-  BaseInitiative: 0
-  InitiativeOffset: 0
-  MaxActionPoints: 100
-  MaxHealth: 5000
-  BaseArmor: 0
-  Abilities:
-  - {fileID: 11400000, guid: abde2cd1fd553614faae68cdf4bcd09e, type: 2}
+  TargetType: 3
+  IncludeSelf: 2
+  SelectionFilters:
+  - Type: 2
+    Range: 3
+    LocalOffset: {x: 0, y: 3}
+    MaxValidTargets: 1

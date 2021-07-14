@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Aspects/Definitions/Inflict Damage Action")]
+[CreateAssetMenu(menuName ="Aspects/Definitions/Ability Actions/Inflict Damage Action")]
 public class InflictDamageAction : AbilityAction
 {
     public uint Damage = default;

@@ -32,7 +32,7 @@ public class SelectionFilter
         Radius,
         Random,
         Closest,
-        Designated
+        ClientDesignated
     }
 
     public FilterType Type;

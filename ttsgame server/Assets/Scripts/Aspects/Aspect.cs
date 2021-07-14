@@ -4,10 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aspect : IAspectBehaviour
+public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 {
-    public int ClientID { get; }
-    public int TeamID { get; }
+    public int GroupingID { get; } //use to "group" entities together: 0 reserved for neutral, negative for server-owned entities, positive for player controlled
 
     public string Name { get; }
     public int EntityID { get; }
@@ -33,10 +32,9 @@ public class Aspect : IAspectBehaviour
     public AspectAbilityData[] Abilities { get; }
     public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
 
-    public Aspect(int _playerID, int _teamID, string _code, Vector2 _mapPos)
+    public Aspect(int _groupID, string _code, Vector2 _mapPos)
     {
-        ClientID = _playerID;
-        TeamID = _teamID;
+        GroupingID = _groupID;
         EntityID = GameManager.RegisterEntity(this);
 
         AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
@@ -61,16 +59,17 @@ public class Aspect : IAspectBehaviour
         Abilities = d.Abilities;
 
         Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
+        Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
-    public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
+    public void MoveToTile(int _x, int _y) { Utilities.GenericMovement(this, _x, _y); }
 
-    public void CastAbility(int _abIndex, Message _message)
+    public void CastAbility(Message _message) //TODO: pull ability index from packet
     {
         if (GameManager.ActiveEntity != this)
             return;
 
-        AspectAbilityData d = Abilities[_message.GetInt()];
+        AspectAbilityData d = Abilities[0];
         
         for (int i = 0; i < d.Effects.Length; i++)
             d.Effects[i].InvokeAction(this, d.FilterEntities(this, _message));
@@ -84,7 +83,7 @@ public class Aspect : IAspectBehaviour
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
     {
-        CurrentHP = Utilities.GenericAspectModifyHealth(this, _data, _ignoreEffectors);
+        CurrentHP = Utilities.GenericModifyHealth(this, _data, _ignoreEffectors);
     }
 }
 
@@ -93,8 +92,8 @@ public class AspectTurn : ITimelineEvent
     public uint Initiative { get; set; }
     public bool PlaceInfront { get; }
 
-    private IAspectBehaviour caster;
-    public AspectTurn(IAspectBehaviour _caster, uint _initiative, bool _placeInfront)
+    private IEntityBehaviour caster;
+    public AspectTurn(IEntityBehaviour _caster, uint _initiative, bool _placeInfront)
     {
         caster = _caster;
         Initiative = _initiative;
@@ -104,7 +103,7 @@ public class AspectTurn : ITimelineEvent
 
     public void Activate()
     {
-        foreach (Func<InterruptData, bool> interrupter in caster.ActiveInterrupters)
+        foreach (Func<InterruptData, bool> interrupter in (caster as IAbilityCasterBehaviour).ActiveInterrupters)
         {
             GameEventSystem.UnsubInterrupt(interrupter);
         }

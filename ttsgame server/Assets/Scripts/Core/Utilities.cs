@@ -48,7 +48,7 @@ public static class Utilities
     }
     public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, uint _maxDist, out uint _distToTarget)
     {
-        uint dist = (uint)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.x));
+        uint dist = (uint)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.y));
         if (dist > _maxDist)
         {
             _distToTarget = 0;
@@ -60,7 +60,7 @@ public static class Utilities
 
     public static uint ConvertDegToCardinal(float _input){ return (uint)Mathf.RoundToInt(GRADIENT * _input); }
 
-    public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)
+    public static void GenericMovement(IEntityBehaviour _aspect, int _newX, int _newY)
     {
         Vector2 newPos = new Vector2(_newX, _newY);
 
@@ -80,7 +80,7 @@ public static class Utilities
         Tilemap.ChangeTileType((int)_aspect.MapPosition.x, (int)_aspect.MapPosition.y, TileType.Impassable);
     }
 
-    public static uint GenericAspectModifyHealth(IAspectBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
+    public static uint GenericModifyHealth(IEntityBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
     {
         InterruptData interruptData = new InterruptData(_target.EntityID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
 

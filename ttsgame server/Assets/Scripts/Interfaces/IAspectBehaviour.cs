@@ -4,11 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAspectBehaviour : IEntityBehaviour, IAbilityCasterBehaviour
-{
-    int ClientID { get; }
-}
-
 public interface IEntityBehaviour : ITimelineBehaviour, IMoveBehaviour, ICombatBehaviour {}
 
 public interface ITimelineBehaviour : IEntityLabels
@@ -29,7 +24,7 @@ public interface IEntityLabels
     string Name { get; }
     string Code { get; }
     int EntityID { get; }
-    int TeamID { get; } //0 reserved for neutral, negative for server-owned entities
+    int GroupingID { get; }
 }
 
 public interface IMoveBehaviour
@@ -55,5 +50,5 @@ public interface IAbilityCasterBehaviour
     AspectAbilityData[] Abilities { get; }
     List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
-    void CastAbility(int _abIndex, Message _message);
+    void CastAbility(Message _message);
 }
