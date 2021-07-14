@@ -84,14 +84,15 @@ public class NetworkManager : MonoBehaviour
 
         Server.Start(port, maxClientCount, actionQueue);
 
-        Tilemap.Init(GameMaps.TestMap);
+        //Ability casting test sample
+        //Tilemap.Init(GameMaps.TestMap);
 
-        Player p = new Player(1);
-        p.AddAspect("A000", new Vector2(0, 0));
-        p.AddAspect("A001", new Vector2(0, 1));
+        //Player p = new Player(1);
+        //p.AddAspect("A000", new Vector2(0, 0));
+        //p.AddAspect("A001", new Vector2(0, 1));
 
-        Timeline.Progress();
-        p.Aspects[0].CastAbility(0, 1);
+        //Timeline.Progress();
+        //p.Aspects[0].CastAbility(0, /*client input packet here*/);
     }
 
     private void OnApplicationQuit()

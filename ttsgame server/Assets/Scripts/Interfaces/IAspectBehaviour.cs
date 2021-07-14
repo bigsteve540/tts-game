@@ -55,5 +55,5 @@ public interface IAbilityCasterBehaviour
     AspectAbilityData[] Abilities { get; }
     List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
 
-    void CastAbility(int _abIndex, int _targetID /*Message _message*/);
+    void CastAbility(int _abIndex, Message _message);
 }

@@ -65,14 +65,15 @@ public class Aspect : IAspectBehaviour
 
     public void MoveToTile(int _x, int _y) { Utilities.GenericAspectMovement(this, _x, _y); }
 
-    public void CastAbility(int _abIndex, int _targetID/*Message _message*/)
+    public void CastAbility(int _abIndex, Message _message)
     {
         if (GameManager.ActiveEntity != this)
             return;
 
-        AspectAbilityData d = Abilities[_abIndex/*_message.GetInt()*/];
+        AspectAbilityData d = Abilities[_message.GetInt()];
+        
         for (int i = 0; i < d.Effects.Length; i++)
-            d.Effects[i].InvokeAction(this, _targetID/*_message*/, d);
+            d.Effects[i].InvokeAction(this, d.FilterEntities(this, _message));
     }
 
     public void EndTurn()

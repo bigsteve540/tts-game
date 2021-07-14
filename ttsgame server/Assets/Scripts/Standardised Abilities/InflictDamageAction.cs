@@ -8,17 +8,16 @@ public class InflictDamageAction : AbilityAction
     public uint Damage = default;
     public StatModifierType Type = default;
 
-    public override void InvokeAction(IEntityBehaviour _caster, int _targetID/*Message _message*/, AspectAbilityData _data)
+    public override void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets)
     {
-        //int targetAspectID = _message.GetInt(); //TODO: inline this with the line below
-
         InterruptData d = new InterruptData(_caster.EntityID, InterruptEventType.Damage);
         if (GameEventSystem.CheckEventInterrupted(d))
             return;
 
-        IAspectBehaviour target = GameManager.Entities[_targetID/*targetAspectID*/] as IAspectBehaviour;
-        Debug.Log($"damijing {target.Name}");
-
-        target.ModifyHealth(new HealthModifiedEventInfo(_caster.EntityID, target.EntityID, this, Type, Damage * -1));
+        for (int i = 0; i < _targets.Count; i++)
+        {
+            Debug.Log($"damijing {_targets[i].Name}");
+            _targets[i].ModifyHealth(new HealthModifiedEventInfo(_caster.EntityID, _targets[i].EntityID, this, Type, Damage * -1));
+        }
     }
 }

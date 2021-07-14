@@ -31,11 +31,12 @@ public class SelectionFilter
     {
         Radius,
         Random,
-        Closest
+        Closest,
+        Designated
     }
 
     public FilterType Type;
     public uint Range;
-    public Vector3 LocalOffset;
+    public Vector2 LocalOffset;
     public uint MaxValidTargets = 1;
 }

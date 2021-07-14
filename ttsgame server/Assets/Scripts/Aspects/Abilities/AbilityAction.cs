@@ -5,5 +5,5 @@ using RiptideNetworking;
 
 public abstract class AbilityAction : ScriptableObject
 {
-    public virtual void InvokeAction(IEntityBehaviour _caster, int _targetID/*Message _message*/, AspectAbilityData _data) { }
+    public virtual void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets) { }
 }

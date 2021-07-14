@@ -39,13 +39,25 @@ public static class Utilities
 
     private static InterruptEventType[] interruptEventCache = new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby };
 
-    public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, int _maxDist)
+    public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, uint _maxDist)
     {
-        int dist = (int)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.x));
+        uint dist = (uint)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.x));
         if (dist > _maxDist)
             return false;
         return true;
     }
+    public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, uint _maxDist, out uint _distToTarget)
+    {
+        uint dist = (uint)Mathf.Max(Mathf.Abs(_target.x - _origin.x), Mathf.Abs(_target.y - _origin.x));
+        if (dist > _maxDist)
+        {
+            _distToTarget = 0;
+            return false;
+        }
+        _distToTarget = dist;
+        return true;
+    }
+
     public static uint ConvertDegToCardinal(float _input){ return (uint)Mathf.RoundToInt(GRADIENT * _input); }
 
     public static void GenericAspectMovement(IAspectBehaviour _aspect, int _newX, int _newY)

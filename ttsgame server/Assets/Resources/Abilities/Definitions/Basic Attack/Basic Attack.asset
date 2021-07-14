@@ -17,6 +17,6 @@ MonoBehaviour:
   ActionPointCost: 25
   Targeting:
     Type: 1
-    Filter: {fileID: 11400000, guid: 0f6b16d9949218d40888e5104fcee4f8, type: 2}
+    Filter: {fileID: 0}
   Effects:
   - {fileID: 11400000, guid: e950e126ecfe22444a044474917791e9, type: 2}
