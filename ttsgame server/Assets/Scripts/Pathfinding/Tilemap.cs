@@ -50,6 +50,8 @@ public static class Tilemap
                 msg.Add(deploymentZones[i][j]);
             NetworkManager.Instance.Server.SendToAll(msg);
         }
+
+        DrawDebugMap();
     }
 
     public static bool TileDeployableForID(int _clientID, Vector2 _targetTile)
@@ -149,6 +151,39 @@ public static class Tilemap
                     deploymentZones[zoneID].Add(new Vector2(x,y));
                 }
         Debug.Log("Generated Deployment Zones");
+    }
+
+
+    private static void DrawDebugMap()
+    {
+        for (int x = 0; x < GameMaps.TestMap.Width; x++)
+        {
+            for (int y = 0; y < GameMaps.TestMap.Height; y++)
+            {
+                GameObject go = GameObject.CreatePrimitive(PrimitiveType.Quad);
+
+                go.transform.rotation = Quaternion.Euler(Vector3.right * 90f);
+                go.transform.position = new Vector3(x, 0.49f, y);
+
+                Color groundColor;
+                switch (GetTile(x, y))
+                {
+                    case TileType.Normal:
+                        groundColor = Color.white;
+                        break;
+                    case TileType.Difficult:
+                        groundColor = Color.blue;
+                        break;
+                    case TileType.Impassable:
+                        groundColor = Color.red;
+                        break;
+                    default:
+                        groundColor = Color.black;
+                        break;
+                }
+                go.GetComponent<MeshRenderer>().material.color = groundColor;
+            }
+        }
     }
 
     public static List<Node> GeneratePathToTile(Vector2 _origin, Vector2 _goal)

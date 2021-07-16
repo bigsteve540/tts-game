@@ -1,7 +1,7 @@
 Tilemap.Init(GameMaps.TestMap);
 
-IAspectBehaviour gen = new GeneviveAspect(-99, new Vector2(0, 1));
-IAspectBehaviour d = new DummyAspect(-1,new Vector2(10,0));
+Aspect gen = new Aspect(-99, "A001", new Vector2(0, 1));
+Aspect d = new Aspect(-1, "A000", new Vector2(10, 0));
 
 GameEventSystem.SubInterrupt(TestInterrupt); // <-- interrupt sample   
 
@@ -10,16 +10,16 @@ d.MoveToTile(0, 0);
 
 private bool TestInterrupt(InterruptData _data)
 {
-    if (!_data.SearchTypesFor(InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby))
-       return false;
+    if (!_data.InterruptFlags.HasFlag(InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby))
+        return false;
 
-    if(!Utilities.TargetWithinRange(new Vector2(0,1), GameManager.Entities[_data.TriggererID].MapPosition, 7))
+    if (!Utilities.GetChebyshevDistance(new Vector2(0, 1), GameManager.Entities[_data.TriggererID].MapPosition, 7))
     {
         int pathCost = (int)_data.ExtraInterruptData[0];
         IList pathdata = (IList)_data.ExtraInterruptData[1];
 
         for (int i = 0; i < pathdata.Count; i++)
-            if (Utilities.TargetWithinRange(new Vector2(0, 1), (pathdata[i] as Node).Position, 7))
+            if (Utilities.GetChebyshevDistance(new Vector2(0, 1), (pathdata[i] as Node).Position, 7))
             {
                 Debug.Log("Interrupted Along Path");
                 return true;

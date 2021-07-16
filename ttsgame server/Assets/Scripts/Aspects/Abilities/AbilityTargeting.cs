@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TargetingType
 {
-    Self, Filtered
+    None, Self, Filtered
 }
 
 [System.Serializable]

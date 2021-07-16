@@ -89,17 +89,20 @@ public class NetworkManager : MonoBehaviour
 
         Player p = new Player(1);
         p.AddAspect("A000", new Vector2(0, 0));
-        p.AddAspect("A001", new Vector2(0, 1));
+        //p.AddAspect("A001", new Vector2(0, 1));
 
-        Aspect[] testers = new Aspect[]
-        {
-            new Aspect(0, "A000", new Vector2(1, 3)),
-            new Aspect(0, "A001", new Vector2(0, 3)),
-            new Aspect(0, "A001", new Vector2(1, 5))
-        };
+        //Aspect[] testers = new Aspect[]
+        //{
+        //    new Aspect(0, "A000", new Vector2(0, 0));
+        Aspect a = new Aspect(0, "A001", new Vector2(0, 3));
+        //    new Aspect(0, "A001", new Vector2(1, 5))
+        //};
 
         Timeline.Progress();
         (p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
+        Timeline.Progress();
+        a.MoveToTile(0, 8);
+
     }
 
     private void OnApplicationQuit()

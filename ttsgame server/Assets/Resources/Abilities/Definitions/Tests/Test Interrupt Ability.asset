@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254c07502699fa148b93ed0b4e5dddfe, type: 3}
-  m_Name: Test Ability
+  m_Script: {fileID: 11500000, guid: 8dff3cbd16a59a74081689209702ab7f, type: 3}
+  m_Name: New Interrupt Action
   m_EditorClassIdentifier: 
-  Name: Test Ability
-  Description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  Name: INTERRUPT POGGERS
+  Description: 
   ActionPointCost: 0
-  Actions: []
+  Actions:
+  - {fileID: 11400000, guid: bae373d5a1458a94aa65906086a18713, type: 2}
   targeting:
     Type: 0
     Filter: {fileID: 0}
+  Flags: 3
+  Range: 7

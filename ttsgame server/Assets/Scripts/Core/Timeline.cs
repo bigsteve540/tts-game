@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum InterruptEventType { Any, Movement_Start, Movement_Passby, Damage, Heal, Interrupt, Enemy_targeted }
+[System.Flags]
+public enum InterruptEventType
+{
+    Movement_Start = 1 << 0,
+    Movement_Passby = 1 << 1,
+    Damage = 1 << 2,
+    Heal = 1 << 3,
+    Interrupt = 1 << 4,
+    Enemy_targeted = 1 << 5
+}
 
 public static class Timeline
 {

@@ -7,8 +7,10 @@ using UnityEngine;
 
 public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour //TODO: prolly doesnt need to be monobehaviour lol
 {
+    public bool mapVisualisation = false;
+
     public static GameState GameState = GameState.Prep;
     public static IEntityBehaviour ActiveEntity = null;
 

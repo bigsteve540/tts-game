@@ -6,30 +6,15 @@ using UnityEngine;
 public struct InterruptData
 {
     public int TriggererID { get; }
-    public InterruptEventType[] InterruptableTypes { get; }
+    public InterruptEventType InterruptFlags { get; }
 
     public object[] ExtraInterruptData { get; }
 
-    public bool SearchTypesFor(params InterruptEventType[] _types)
-    {
-        for (int i = 0; i < _types.Length; i++)
-            for (int j = 0; j < InterruptableTypes.Length; j++)
-                if (_types[i] == InterruptableTypes[j])
-                    return true;
-        return false;
-    }
-
-    public InterruptData(int _triggererID, InterruptEventType[] _interruptTypes, params object[] _extraData)
+    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params object[] _extraData) //set flags with | operator
     {
         TriggererID = _triggererID;
-        InterruptableTypes = _interruptTypes;
+        InterruptFlags = _interruptTypes;
         ExtraInterruptData = _extraData.Length > 0 ? _extraData : null;
-    }
-    public InterruptData(int _triggererID, InterruptEventType _type, params object[] _extraData)
-    {
-        TriggererID = _triggererID;
-        InterruptableTypes = new InterruptEventType[1] { _type };
-        ExtraInterruptData = _extraData;
     }
 }
 
@@ -37,7 +22,7 @@ public static class Utilities
 {
     private const float GRADIENT = 8 / 360;
 
-    private static InterruptEventType[] interruptEventCache = new InterruptEventType[2] { InterruptEventType.Movement_Start, InterruptEventType.Movement_Passby };
+    private static InterruptEventType interruptEventCache = InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby;
 
     public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, uint _maxDist)
     {
@@ -67,7 +52,7 @@ public static class Utilities
         List<Node> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
         int pathCost = GetInitiativeCostForPath(path);
 
-        InterruptData data = new InterruptData(_aspect.EntityID, interruptEventCache, pathCost, path);
+        InterruptData data = new InterruptData(_aspect.EntityID, interruptEventCache);
 
         if (GameEventSystem.CheckEventInterrupted(data) || pathCost > _aspect.CurrentActionPoints)
             return;
@@ -82,7 +67,7 @@ public static class Utilities
 
     public static uint GenericModifyHealth(IEntityBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
     {
-        InterruptData interruptData = new InterruptData(_target.EntityID, new InterruptEventType[1] { Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal }, _hpModData);
+        InterruptData interruptData = new InterruptData(_target.EntityID, Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal, _hpModData);
 
         if (GameEventSystem.CheckEventInterrupted(interruptData)) //TODO: should probably make it so interruption can also effect _hpmoddata 
             return _target.CurrentHP;

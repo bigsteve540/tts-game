@@ -69,10 +69,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         if (GameManager.ActiveEntity != this)
             return;
 
-        AspectAbilityData d = Abilities[0];
-        
-        for (int i = 0; i < d.Effects.Length; i++)
-            d.Effects[i].InvokeAction(this, d.FilterEntities(this, _message));
+        Abilities[0].TriggerAbility(this, _message);
     }
 
     public void EndTurn()
@@ -103,13 +100,13 @@ public class AspectTurn : ITimelineEvent
 
     public void Activate()
     {
+        GameManager.ActiveEntity = caster;
+
         foreach (Func<InterruptData, bool> interrupter in (caster as IAbilityCasterBehaviour).ActiveInterrupters)
-        {
             GameEventSystem.UnsubInterrupt(interrupter);
-        }
+        (caster as IAbilityCasterBehaviour).ActiveInterrupters.Clear();
         //how would you wait for user input using this method tho?
 
-        GameManager.ActiveEntity = caster;
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
         Debug.Log($"this is {caster.Name}'s turn");
 
@@ -119,17 +116,17 @@ public class AspectTurn : ITimelineEvent
         #endregion  
 
         #region pathfinder system example
-        //Tilemap.GeneratePathToTile(caster, caster.AspectID == 1 ? GameManager.Entities[0].MapPosition : GameManager.Entities[1].MapPosition);
+        List<Node> path = Tilemap.GeneratePathToTile(caster.MapPosition, new Vector2(GameMaps.TestMap.Width - 1, GameMaps.TestMap.Height - 1));
 
-        //int currentNode = 0;
-        //while (currentNode < caster.Path.Count - 1)
-        //{
-        //    Vector3 start = new Vector3(caster.Path[currentNode].Position.x, 0.5f, caster.Path[currentNode].Position.y);
-        //    Vector3 end = new Vector3(caster.Path[currentNode + 1].Position.x, 0.5f, caster.Path[currentNode + 1].Position.y);
-        //    Debug.DrawLine(start, end, caster.AspectID == 1 ? Color.black : Color.cyan, Mathf.Infinity); //acts stupid with 3 units because of ternary ops
+        int currentNode = 0;
+        while (currentNode < path.Count - 1)
+        {
+            Vector3 start = new Vector3(path[currentNode].Position.x, 0.5f, path[currentNode].Position.y);
+            Vector3 end = new Vector3(path[currentNode + 1].Position.x, 0.5f, path[currentNode + 1].Position.y);
+            Debug.DrawLine(start, end, Color.black, Mathf.Infinity);
 
-        //    currentNode++;
-        //}
+            currentNode++;
+        }
         #endregion
     }
 }
