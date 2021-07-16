@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dff3cbd16a59a74081689209702ab7f, type: 3}
-  m_Name: New Interrupt Action
+  m_Name: Test Interrupt Ability
   m_EditorClassIdentifier: 
   Name: INTERRUPT POGGERS
   Description: 
   ActionPointCost: 0
+  Targeting:
+    Type: 2
+    Filter: {fileID: 11400000, guid: 0529c013db1e1d946a49bc23c0c70e7b, type: 2}
   Actions:
   - {fileID: 11400000, guid: bae373d5a1458a94aa65906086a18713, type: 2}
-  targeting:
-    Type: 0
-    Filter: {fileID: 0}
   Flags: 3
-  Range: 7
+  IncludeEntities: 0
