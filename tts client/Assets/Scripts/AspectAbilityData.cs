@@ -8,14 +8,11 @@ public class AspectAbilityData : ScriptableObject
     public string Description = default;
     [Space]
     public int ActionPointCost = default;
-    [Space]
-    public int Value = default;
 
     public void Deserialize(AspectAbilityWrapper _wrapper)
     {
         Name = _wrapper.AbilityName;
         Description = _wrapper.Description;
         ActionPointCost = _wrapper.ActionPointCost;
-        Value = _wrapper.Value;
     }
 }

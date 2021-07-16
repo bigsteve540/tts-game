@@ -21,9 +21,4 @@ public struct AspectAbilityWrapper
     public string Description;
 
     public int ActionPointCost;
-
-    public int Value;
-    public int ValueType;
-
-    public int[] TypesToTrigger;
 }
