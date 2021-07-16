@@ -39,7 +39,7 @@ public class DeploymentUI : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null && GameManager.GameState == GameState.Deploy) //FIXME: multiple of the same aspect causes the code to break
+        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null && GameManager.GameState == GameState.Deploy)
         {
             int id = NetworkManager.Instance.Client.Id;
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
@@ -50,9 +50,12 @@ public class DeploymentUI : MonoBehaviour
                     match = true;
                     break;
                 }
-
             if (match)
             {
+                foreach (Vector2 position in DeploymentController.PosList)
+                    if (position == entityPos)
+                        return;
+                
                 deployingBody.HaltMouseSticking();
                 entityPositions[activeSelection] = (portraits[activeSelection].AspectCode, entityPos);
 

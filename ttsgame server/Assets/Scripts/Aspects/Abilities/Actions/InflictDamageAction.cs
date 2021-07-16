@@ -5,14 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Aspects/Definitions/Ability Actions/Inflict Damage Action")]
 public class InflictDamageAction : AbilityAction
 {
+    [Space]
     public uint Damage = default;
     public StatModifierType Type = default;
 
     public override void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets)
     {
-        InterruptData d = new InterruptData(_caster.EntityID, InterruptEventType.Damage);
-        if (GameEventSystem.CheckEventInterrupted(d))
-            return;
+        base.InvokeAction(_caster, _targets);
 
         for (int i = 0; i < _targets.Count; i++)
         {

@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameState GameState = GameState.Prep;
 
+    public delegate void HealthModificationHandler(int _entityID, int _modifierVal);
+    public static HealthModificationHandler OnHealthModified;
+
     public static Dictionary<int, EntityController> Entities = new Dictionary<int, EntityController>();
     public static Dictionary<int, List<Vector2>> DeployableTiles = new Dictionary<int, List<Vector2>>();
 
@@ -42,10 +45,12 @@ public class GameManager : MonoBehaviour
             AspectData.Add(data[i].AspectCode, data[i]);
     }
 
-    public void SpawnAspect(int _entityID, string _aspectCode, int _hp, Vector2 _pos)
+    public void SpawnAspect(int _groupID, int _entityID, string _aspectCode, int _hp, Vector2 _pos)
     {
         if (GameState != GameState.Game)
             GameState = GameState.Game;
+
+        UIManager.Instance.SetUIPanelActive(2);
 
         Vector3 posXZ = new Vector3(_pos.x, 0f, _pos.y);
 
@@ -53,6 +58,7 @@ public class GameManager : MonoBehaviour
             _entityID, 
             Instantiate(EntityBody, posXZ, Quaternion.identity).GetComponent<EntityController>().Init(AspectData[_aspectCode])
             );
+        GameUI.Instance.SpawnEntityPanel(_groupID, _entityID, _aspectCode, _hp);
     }
 
     public void DrawMap(int _sizeX, int _sizeY) //TODO: remove this bit post testing
@@ -87,6 +93,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        //Client.Disconnect(); // Disconnect when the game is closed
+        NetworkManager.Instance.Client.Disconnect();
     }
 }

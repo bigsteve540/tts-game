@@ -33,6 +33,7 @@ public static class ServerHandle
                 for (int i = 0; i < player.Aspects.Length; i++)
                 {
                     Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.SpawnAspect);
+                    msg.Add(player.GroupID);
                     msg.Add(player.Aspects[i].EntityID);
                     msg.Add(player.Aspects[i].Code);
                     msg.Add(player.Aspects[i].CurrentHP);
@@ -41,6 +42,7 @@ public static class ServerHandle
                 }
                 
             }
+            GameManager.GameState = GameState.Play;
         }
     }
 }

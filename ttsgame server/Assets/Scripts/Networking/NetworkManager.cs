@@ -85,23 +85,23 @@ public class NetworkManager : MonoBehaviour
         Server.Start(port, maxClientCount, actionQueue);
 
         //Ability casting test sample
-        Tilemap.Init(GameMaps.TestMap);
+        //Tilemap.Init(GameMaps.TestMap);
 
-        Player p = new Player(1);
-        p.AddAspect("A000", new Vector2(0, 0));
+        //Player p = new Player(1);
+        //p.AddAspect("A000", new Vector2(0, 0));
         //p.AddAspect("A001", new Vector2(0, 1));
 
         //Aspect[] testers = new Aspect[]
         //{
         //    new Aspect(0, "A000", new Vector2(0, 0));
-        Aspect a = new Aspect(0, "A001", new Vector2(0, 3));
+        //Aspect a = new Aspect(0, "A001", new Vector2(0, 3));
         //    new Aspect(0, "A001", new Vector2(1, 5))
         //};
 
-        Timeline.Progress();
-        (p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
-        Timeline.Progress();
-        a.MoveToTile(0, 8);
+        //Timeline.Progress();
+        //(p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
+        //Timeline.Progress();
+        //a.MoveToTile(0, 8);
 
     }
 

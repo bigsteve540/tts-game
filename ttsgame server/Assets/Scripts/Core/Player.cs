@@ -9,13 +9,13 @@ public class Player
 
     public IEntityBehaviour[] Aspects;
 
-    private int selfID = -1;
+    public int GroupID { get; private set; } = -1;
     private int aspectsIterator = 0;
 
     public Player(ushort _id)
     {
         AllActive.Add(_id, this);
-        selfID = _id;
+        GroupID = _id;
     }
 
     public void AddAspect(string _code, Vector2 _pos)
@@ -26,7 +26,7 @@ public class Player
         if (aspectsIterator >= Aspects.Length)
             return;
 
-        Aspects[aspectsIterator++] = new Aspect(selfID, _code, _pos);
+        Aspects[aspectsIterator++] = new Aspect(GroupID, _code, _pos);
     }
 
     public Player Wipe()

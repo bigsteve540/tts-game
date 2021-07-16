@@ -5,5 +5,16 @@ using RiptideNetworking;
 
 public abstract class AbilityAction : ScriptableObject
 {
-    public virtual void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets) { }
+    public bool Interruptable = default;
+    public InterruptEventType Flags = default;
+    
+    public virtual void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets)
+    {
+        if (Interruptable)
+        {
+            InterruptData d = new InterruptData(_caster.EntityID, Flags);
+            if (GameEventSystem.CheckEventInterrupted(d))
+                return;
+        }
+    }
 }

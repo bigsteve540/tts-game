@@ -97,6 +97,7 @@ public static class Utilities
         if (_hpModData.IsDamage())
             val = Mathf.Clamp((val * -1) - _target.CurrentArmor, 0f, val * -1) * -1;
 
+        //client msg to update ui with val
         return (uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP);
     }
 

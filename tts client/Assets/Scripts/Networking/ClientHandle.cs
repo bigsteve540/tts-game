@@ -37,10 +37,11 @@ public static class ClientHandle
     }
     public static void SpawnAspect(Message _message)
     {
+        int groupID = _message.GetInt();
         int aspectID = _message.GetInt();
         string code = _message.GetString();
         int currHP = _message.GetInt();
         Vector2 pos = _message.GetVector2();
-        GameManager.Instance.SpawnAspect(aspectID, code, currHP, pos);
+        GameManager.Instance.SpawnAspect(groupID, aspectID, code, currHP, pos);
     }
 }
