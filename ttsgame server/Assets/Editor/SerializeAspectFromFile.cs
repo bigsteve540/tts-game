@@ -62,11 +62,35 @@ public class SerializeAspectFromFile
 
         public int ActionPointCost;
 
+        [SerializeField]public TargetingWrapper TargetingMetrics;
+
         public AspectAbilityWrapper(AspectAbilityData _toSerialize)
         {
             AbilityName = _toSerialize.Name;
             Description = _toSerialize.Description;
             ActionPointCost = _toSerialize.ActionPointCost;
+            TargetingMetrics = new TargetingWrapper(_toSerialize.Targeting.Type, _toSerialize.Targeting.Filter);
+        }
+    }
+
+    [System.Serializable]
+    struct TargetingWrapper
+    {
+        public TargetingType Type;
+
+        public TargetFilter.TargetingRelation TargetType;
+        public TargetFilter.SelfInclusion IncludeSelf;
+
+        [SerializeField]public SelectionFilter[] SelectionFilters;
+
+        public TargetingWrapper(TargetingType _type, TargetFilter _filter)
+        {
+            Type = _type;
+
+            TargetType = _filter.TargetType;
+            IncludeSelf = _filter.IncludeSelf;
+
+            SelectionFilters = _filter.SelectionFilters;
         }
     }
 }

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum TargetingType
+{
+    None, Self, Filtered
+}
+
 public enum GameState { Prep, Draft, Deploy, Game, Post }
 public class GameManager : MonoBehaviour
 {

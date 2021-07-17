@@ -16,13 +16,13 @@ public class AspectData : ScriptableObject
     [Space]
     public AspectAbilityData[] Abilities = default;
     [Space]
+
     public Sprite AspectSprite;
     public GameObject AspectModel;
 
     public void Deserialize(AspectDataWrapper _wrapper)
     {
         AspectName = _wrapper.AspectName;
-
         BaseInitiative = _wrapper.BaseInitiative;
         InitiativeOffset = _wrapper.InitiativeOffset;
 

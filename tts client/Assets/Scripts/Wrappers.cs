@@ -13,7 +13,6 @@ public struct AspectDataWrapper
 
     public AspectAbilityWrapper[] Abilities;
 }
-
 [System.Serializable]
 public struct AspectAbilityWrapper
 {
@@ -21,4 +20,16 @@ public struct AspectAbilityWrapper
     public string Description;
 
     public int ActionPointCost;
+
+    public TargetingWrapper TargetingMetrics;
+}
+[System.Serializable]
+public struct TargetingWrapper
+{
+    public TargetingType Type;
+
+    public TargetFilter.TargetingRelation TargetType;
+    public TargetFilter.SelfInclusion IncludeSelf;
+
+    public SelectionFilter[] SelectionFilters;
 }

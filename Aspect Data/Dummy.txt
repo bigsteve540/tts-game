@@ -9,7 +9,23 @@
         {
             "AbilityName": "INTERRUPT POGGERS",
             "Description": "",
-            "ActionPointCost": 0
+            "ActionPointCost": 0,
+            "TargetingMetrics": {
+                "Type": 2,
+                "TargetType": 3,
+                "IncludeSelf": 2,
+                "SelectionFilters": [
+                    {
+                        "Type": 0,
+                        "Range": 7,
+                        "LocalOffset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "MaxValidTargets": 0
+                    }
+                ]
+            }
         }
     ]
 }
