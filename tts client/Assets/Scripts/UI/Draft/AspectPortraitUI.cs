@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class AspectPortraitUI : MonoBehaviour
 {
+#pragma warning disable CS0649
     [SerializeField] private Image portraitImage;
+
     private Button button;
     public string AspectCode = string.Empty;
 

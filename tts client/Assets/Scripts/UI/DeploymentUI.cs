@@ -20,10 +20,10 @@ public class DeploymentUI : MonoBehaviour
             }
         }
     }
-
+#pragma warning disable CS0649
     [SerializeField] private AspectPortraitUI[] portraits;
     [SerializeField] private GameObject deploymentPrefab;
-
+#pragma warning restore CS0649
     private (string Code, Vector2 Pos)[] entityPositions = new (string, Vector2)[5];
     private DeploymentController deployingBody = null;
     private int counter = 0;

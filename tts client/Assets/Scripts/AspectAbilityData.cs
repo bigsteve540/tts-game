@@ -10,9 +10,7 @@ public class AspectAbilityData : ScriptableObject
     public int ActionPointCost = default;
     [Space]
     public TargetingType TargetingType = default;
-    [HideInInspector] public TargetFilter TargetFilter = default;
-
-    public SelectionFilter[] Filters = default;
+    [SerializeField] public TargetFilter TargetFilter = default;
 
     public void Deserialize(AspectAbilityWrapper _wrapper)
     {
@@ -20,11 +18,13 @@ public class AspectAbilityData : ScriptableObject
         Description = _wrapper.Description;
         ActionPointCost = _wrapper.ActionPointCost;
         TargetingType = _wrapper.TargetingMetrics.Type;
+
         TargetFilter = new TargetFilter
         {
             TargetType = _wrapper.TargetingMetrics.TargetType,
-            IncludeSelf = _wrapper.TargetingMetrics.IncludeSelf
+            IncludeSelf = _wrapper.TargetingMetrics.IncludeSelf,
+            SelectionFilters = _wrapper.TargetingMetrics.SelectionFilters
         };
-        Filters = _wrapper.TargetingMetrics.SelectionFilters;
+
     }
 }

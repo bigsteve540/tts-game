@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Aspects/Definitions/Target Filter")]
-public class TargetFilter : ScriptableObject
+[System.Serializable]
+public class TargetFilter
 {
     [System.Flags]
     public enum TargetingRelation

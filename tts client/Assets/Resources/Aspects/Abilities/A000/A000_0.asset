@@ -15,3 +15,12 @@ MonoBehaviour:
   Name: INTERRUPT POGGERS
   Description: 
   ActionPointCost: 0
+  TargetingType: 2
+  TargetFilter:
+    TargetType: 3
+    IncludeSelf: 2
+    SelectionFilters:
+    - Type: 0
+      Range: 7
+      LocalOffset: {x: 0, y: 0}
+      MaxValidTargets: 0

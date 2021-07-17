@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class DraftUI : MonoBehaviour
 {
     private static DraftUI instance;
@@ -32,7 +34,7 @@ public class DraftUI : MonoBehaviour
         foreach (AspectData data in GameManager.AspectData.Values)
             GeneratePortrait(data);
     }
-
+#pragma warning disable CS0649
     [SerializeField] private TextMeshProUGUI timerText;
     private float timerValue = 30f;
 
@@ -40,15 +42,14 @@ public class DraftUI : MonoBehaviour
     [SerializeField] private Transform scrollviewContent;
 
     [SerializeField] private Image[] localBans;
-    [SerializeField] private Image[] networkBans;
+    [SerializeField] private Image[] networkBans = default;
 
+    [SerializeField] private Image[] localPicks = default;
+    [SerializeField] private Image[] networkPicks = default;
+#pragma warning restore CS0649
     //local is x, network is y
     private Vector2Int banIndexors;
     private Vector2Int pickIndexors;
-
-    [SerializeField] private Image[] localPicks;
-    [SerializeField] private Image[] networkPicks;
-
     public void LockAspect(bool _isBan, int _lockerID, string _aspectCode)
     {
         if (_isBan)

@@ -9,9 +9,11 @@ public class AbilityTab : MonoBehaviour
     private TextMeshProUGUI AbilityName;
     private TextMeshProUGUI AblityDescription;
 
+    private AspectAbilityData data;
+
     public void TriggerAbility()
     {
-
+        TargetFetcher.StartFetching(data.TargetingType, data.TargetFilter);
     }
 
 }

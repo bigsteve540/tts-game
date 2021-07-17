@@ -26,10 +26,10 @@ public class GameManager : MonoBehaviour
     public static Dictionary<string, AspectData> AspectData = new Dictionary<string, AspectData>();
 
     public GameObject EntityBody;
-
+#pragma warning disable CS0649
     [SerializeField] private GameObject[] tileVisuals;
     [SerializeField] private GameObject deployZoneVisual;
-
+#pragma warning restore CS0649
     public static GameManager Instance;
     public void Awake()
     {
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         Entities.Add(
             _entityID, 
-            Instantiate(EntityBody, posXZ, Quaternion.identity).GetComponent<EntityController>().Init(AspectData[_aspectCode])
+            Instantiate(EntityBody, posXZ, Quaternion.identity).GetComponent<EntityController>().Init(_groupID, _entityID, AspectData[_aspectCode])
             );
         GameUI.Instance.SpawnEntityPanel(_groupID, _entityID, _aspectCode, _hp);
     }

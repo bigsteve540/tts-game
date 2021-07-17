@@ -5,7 +5,7 @@ using TMPro;
 
 public class DebugUI : MonoBehaviour
 {
-
+#pragma warning disable CS0649
     [SerializeField] private TextMeshProUGUI displayText;
 
     int frameCount = 0;

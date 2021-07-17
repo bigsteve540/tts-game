@@ -14,10 +14,10 @@ public class GameUI : MonoBehaviour
         }
         Instance = this;
     }
-
+#pragma warning disable CS0649
     [SerializeField] private GameObject AspectStatsPanel;
     [SerializeField] private Transform[] StatPanelAnchors;
-
+#pragma warning restore CS0649
     public void SpawnEntityPanel(int _groupID, int _entityID, string _aspectCode, int _hp)
     {
         if(Mathf.Sign(_groupID) == 1)
