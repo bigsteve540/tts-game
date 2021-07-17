@@ -45,17 +45,14 @@ public class DeploymentUI : MonoBehaviour
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
             bool match = false; 
             for (int i = 0; i < GameManager.DeployableTiles[id].Count; i++)
-                if (entityPos == GameManager.DeployableTiles[id][i])
+                if (entityPos == GameManager.DeployableTiles[id][i] && !DeploymentController.PosList.Contains(entityPos))
                 {
                     match = true;
                     break;
                 }
+
             if (match)
-            {
-                foreach (Vector2 position in DeploymentController.PosList)
-                    if (position == entityPos)
-                        return;
-                
+            {        
                 deployingBody.HaltMouseSticking();
                 entityPositions[activeSelection] = (portraits[activeSelection].AspectCode, entityPos);
 
