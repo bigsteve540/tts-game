@@ -46,7 +46,10 @@ public static class ClientHandle
     }
     public static void AssignActiveAspect(Message _message)
     {
+        GameManager.GetActiveEntity().ToggleActiveStatus(false);
         GameManager.ActiveEntityID = _message.GetInt();
+        GameManager.GetActiveEntity().ToggleActiveStatus(true);
+
         if(GameManager.GetActiveEntity().GroupID != NetworkManager.Instance.Client.Id)
         {
             //disable any ui if this entity doesnt belong to us

@@ -7,6 +7,7 @@ public class EntityController : MonoBehaviour
 {
     public int GroupID { get; private set; }
     public int EntityID { get; private set; }
+    private bool showActiveModel = false;
 #pragma warning disable CS0649 
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject VFXAnchors;
@@ -23,4 +24,8 @@ public class EntityController : MonoBehaviour
         return this;
     }
     public void ChangeAspectData(AspectData _new) { data = _new; }
+    public void ToggleActiveStatus(bool _active)
+    {
+        model.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _active ? Color.green : Color.white;
+    }
 }
