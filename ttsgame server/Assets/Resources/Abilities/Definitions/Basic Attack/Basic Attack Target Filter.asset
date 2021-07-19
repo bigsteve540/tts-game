@@ -16,6 +16,6 @@ MonoBehaviour:
   IncludeSelf: 2
   SelectionFilters:
   - Type: 3
-    Range: 1
+    Range: 0
     LocalOffset: {x: 0, y: 0}
     MaxValidTargets: 1

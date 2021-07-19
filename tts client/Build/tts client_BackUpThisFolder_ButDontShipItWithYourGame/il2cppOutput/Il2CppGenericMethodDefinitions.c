@@ -21,7 +21,7 @@ IL2CPP_EXTERN_C_END
 
 
 extern const Il2CppMethodSpec g_Il2CppMethodSpecTable[];
-const Il2CppMethodSpec g_Il2CppMethodSpecTable[20011] = 
+const Il2CppMethodSpec g_Il2CppMethodSpecTable[20012] = 
 {
 	{ 0, 0, -1 } /* System.Void <>f__AnonymousType0`1<System.Object>::.ctor(<message>j__TPar) */,
 	{ 1, 0, -1 } /* System.Boolean <>f__AnonymousType0`1<System.Object>::Equals(System.Object) */,
@@ -3928,6 +3928,7 @@ const Il2CppMethodSpec g_Il2CppMethodSpecTable[20011] =
 	{ 8978, 753, -1 } /* System.Void System.Collections.Generic.List`1<UnityEngine.XR.XRDisplaySubsystem>::.ctor() */,
 	{ 3078, 16, -1 } /* System.Void System.Nullable`1<System.Int32>::.ctor(!0) */,
 	{ 3084, 16, -1 } /* !0 System.Nullable`1<System.Int32>::GetValueOrDefault() */,
+	{ 12092, -1, 1505 } /* !!0 UnityEngine.Resources::Load<AspectAbilityData>(System.String) */,
 	{ 12128, -1, 1964 } /* !!0 UnityEngine.Component::GetComponent<UnityEngine.UI.Button>() */,
 	{ 8791, 1511, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.Int32,System.Collections.Generic.List`1<UnityEngine.Vector2>>::set_Item(!0,!1) */,
 	{ 8790, 1511, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.Int32,System.Collections.Generic.List`1<UnityEngine.Vector2>>::get_Item(!0) */,
@@ -3943,6 +3944,7 @@ const Il2CppMethodSpec g_Il2CppMethodSpecTable[20011] =
 	{ 8861, 1514, -1 } /* System.Boolean System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<System.String,AspectData>::MoveNext() */,
 	{ 8860, 1514, -1 } /* System.Void System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator<System.String,AspectData>::Dispose() */,
 	{ 12159, -1, 1523 } /* !!0 UnityEngine.GameObject::GetComponent<AspectPortraitUI>() */,
+	{ 12128, -1, 2062 } /* !!0 UnityEngine.Component::GetComponent<UnityEngine.MeshRenderer>() */,
 	{ 8790, 1507, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.Int32,EntityController>::get_Item(!0) */,
 	{ 12095, -1, 1516 } /* !!0[] UnityEngine.Resources::LoadAll<AspectData>(System.String) */,
 	{ 8792, 1514, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.String,AspectData>::Add(!0,!1) */,
@@ -3963,7 +3965,6 @@ const Il2CppMethodSpec g_Il2CppMethodSpecTable[20011] =
 	{ 8792, 1518, -1 } /* System.Void System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::Add(!0,!1) */,
 	{ 8790, 1518, -1 } /* !1 System.Collections.Generic.Dictionary`2<System.UInt16,NetworkManager/MessageHandler>::get_Item(!0) */,
 	{ 12128, -1, 1509 } /* !!0 UnityEngine.Component::GetComponent<EntityController>() */,
-	{ 12092, -1, 1505 } /* !!0 UnityEngine.Resources::Load<AspectAbilityData>(System.String) */,
 	{ 19183, -1, 44 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Boolean>(System.IntPtr) */,
 	{ 19183, -1, 7 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Char>(System.IntPtr) */,
 	{ 19183, -1, 78 } /* ArrayType UnityEngine.AndroidJNIHelper::ConvertFromJNIArray<System.Double>(System.IntPtr) */,

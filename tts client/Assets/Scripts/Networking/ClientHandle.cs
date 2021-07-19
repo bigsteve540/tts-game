@@ -46,7 +46,8 @@ public static class ClientHandle
     }
     public static void AssignActiveAspect(Message _message)
     {
-        GameManager.GetActiveEntity().ToggleActiveStatus(false);
+        if(GameManager.ActiveEntityID != -1)
+            GameManager.GetActiveEntity().ToggleActiveStatus(false);
         GameManager.ActiveEntityID = _message.GetInt();
         GameManager.GetActiveEntity().ToggleActiveStatus(true);
 

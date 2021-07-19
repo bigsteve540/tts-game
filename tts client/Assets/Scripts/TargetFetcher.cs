@@ -8,7 +8,7 @@ public class TargetFetcher : MonoBehaviour
     private static bool fetching = false;
     private static int entityLayer = 1 << 9;
 
-    static int currentAbilityIndex;
+    static int currentAbilityIndex = -1;
     static TargetFilter currentFilter;
     static List<int> entityIDs = new List<int>();
 
@@ -22,13 +22,14 @@ public class TargetFetcher : MonoBehaviour
             msg.Add(entityIDs.ToArray());
             NetworkManager.Instance.Client.Send(msg);
 
-            Debug.Log($"Sending index {currentAbilityIndex} to server!");
+            Debug.Log($"Ended fetching.");
 
             currentAbilityIndex = -1;
             fetching = false;
             InputManager.OnMouseClicked -= ScanTargets;
         }
 
+        Debug.Log("Started Fetching.");
         fetching = true;
         bool match = false;
         foreach (SelectionFilter sFilter in _filter.SelectionFilters)

@@ -799,22 +799,22 @@ static const Il2CppTokenRangePair s_rgctxIndices[9] =
 };
 static const Il2CppRGCTXDefinition s_rgctxValues[16] = 
 {
-	{ (Il2CppRGCTXDataType)3, 19878 },
 	{ (Il2CppRGCTXDataType)3, 19879 },
 	{ (Il2CppRGCTXDataType)3, 19880 },
+	{ (Il2CppRGCTXDataType)3, 19881 },
 	{ (Il2CppRGCTXDataType)1, 22616 },
 	{ (Il2CppRGCTXDataType)2, 22616 },
-	{ (Il2CppRGCTXDataType)3, 19881 },
 	{ (Il2CppRGCTXDataType)3, 19882 },
+	{ (Il2CppRGCTXDataType)3, 19883 },
 	{ (Il2CppRGCTXDataType)1, 22617 },
 	{ (Il2CppRGCTXDataType)2, 22617 },
-	{ (Il2CppRGCTXDataType)3, 19883 },
+	{ (Il2CppRGCTXDataType)3, 19884 },
 	{ (Il2CppRGCTXDataType)1, 22625 },
 	{ (Il2CppRGCTXDataType)2, 22625 },
-	{ (Il2CppRGCTXDataType)3, 19884 },
-	{ (Il2CppRGCTXDataType)1, 24343 },
 	{ (Il2CppRGCTXDataType)3, 19885 },
+	{ (Il2CppRGCTXDataType)1, 24343 },
 	{ (Il2CppRGCTXDataType)3, 19886 },
+	{ (Il2CppRGCTXDataType)3, 19887 },
 };
 extern const Il2CppCodeGenModule g_UnityEngine_AndroidJNIModuleCodeGenModule;
 const Il2CppCodeGenModule g_UnityEngine_AndroidJNIModuleCodeGenModule = 

@@ -19,4 +19,4 @@ MonoBehaviour:
   MaxHealth: 5000
   BaseArmor: 0
   Abilities:
-  - {fileID: 11400000, guid: 6d1d8bf1fcd65404281d1b6f2b8493a0, type: 2}
+  - {fileID: 11400000, guid: 5ad46605db36be946a1f8b35253ea491, type: 2}
