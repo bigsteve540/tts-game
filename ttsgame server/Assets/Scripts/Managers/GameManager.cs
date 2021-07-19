@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour //TODO: prolly doesnt need to be monobe
     public static int RegisterEntity(IEntityBehaviour _entity)
     {
         Entities.Add(IDCounter, _entity);
-        _entity.Turn = new AspectTurn(_entity, _entity.BaseInitiative, false);
+        _entity.Turn = new AspectTurn(_entity, _entity.BaseInitiative);
         return IDCounter++;
     }
 }

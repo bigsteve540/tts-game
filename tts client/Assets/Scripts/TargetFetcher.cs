@@ -22,6 +22,9 @@ public class TargetFetcher : MonoBehaviour
             msg.Add(entityIDs.ToArray());
             NetworkManager.Instance.Client.Send(msg);
 
+            Debug.Log($"Sending index {currentAbilityIndex} to server!");
+
+            currentAbilityIndex = -1;
             fetching = false;
             InputManager.OnMouseClicked -= ScanTargets;
         }
@@ -55,12 +58,18 @@ public class TargetFetcher : MonoBehaviour
             if (Physics.Raycast(r, out RaycastHit _info, Mathf.Infinity, entityLayer))
             {
                 int clickedID = _info.transform.root.GetComponent<EntityController>().EntityID;
+                Debug.Log($"Clicked on {clickedID}!");
 
                 if (entityIDs.Contains(clickedID))
                     entityIDs.Remove(clickedID);
                 else
+                {
                     if (EntityMeetsFetchCriteria(clickedID))
+                    {
+
                         entityIDs.Add(clickedID);
+                    }
+                }
 
                 Debug.Log(entityIDs.Count);
             }

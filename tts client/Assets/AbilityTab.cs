@@ -10,10 +10,14 @@ public class AbilityTab : MonoBehaviour
     [SerializeField]private TextMeshProUGUI AblityDescription;
 
     private AspectAbilityData data;
-    private int entityID, abilityIndex;
+    private int abilityIndex;
 
+    private void OnEnable() //this is just proxy for the init method
+    {
+        Init(0, Resources.Load<AspectAbilityData>("Aspects/Abilities/A000/A000_0"));
+    }
 
-    public void Init(int _entityID, int _abilityIndex, AspectAbilityData _data)
+    public void Init(int _abilityIndex, AspectAbilityData _data)
     {
         data = _data;
     }

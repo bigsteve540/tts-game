@@ -16,7 +16,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
     public int InitiativeOffset { get; }
 
     public uint TotalActionPoints { get; }
-    public uint CurrentActionPoints { get; }
+    public uint CurrentActionPoints { get; private set; }
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }
@@ -69,13 +69,15 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         if (GameManager.ActiveEntity != this)
             return;
 
-        Abilities[_message.GetInt()].TriggerAbility(this, _message);
+        int abIndex = _message.GetInt();
+        Abilities[abIndex].TriggerAbility(this, _message);
+        CurrentActionPoints -= (uint)Abilities[abIndex].ActionPointCost;
     }
 
     public void EndTurn()
     {
-        //do some extra stuff
-        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset), false);
+        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
+        Timeline.Progress();
     }
 
     public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
@@ -87,14 +89,13 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 public class AspectTurn : ITimelineEvent
 {
     public uint Initiative { get; set; }
-    public bool PlaceInfront { get; }
+    public bool PlaceInfront => false;
 
     private IEntityBehaviour caster;
-    public AspectTurn(IEntityBehaviour _caster, uint _initiative, bool _placeInfront)
+    public AspectTurn(IEntityBehaviour _caster, uint _initiative)
     {
         caster = _caster;
         Initiative = _initiative;
-        PlaceInfront = _placeInfront;
         Timeline.AddTimelineEvent(this);
     }
 

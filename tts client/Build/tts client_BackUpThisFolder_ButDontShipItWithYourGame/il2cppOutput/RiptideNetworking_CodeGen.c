@@ -232,101 +232,107 @@ extern void Message_Write_m5D58ACA3E57692B56DD8D8D0958EDF4A4374E134 ();
 extern void Message_GetUShort_m917B148BEEFC7FEE212DB9B96A411FA5E8F13FDC ();
 // 0x0000006A System.UInt16 RiptideNetworking.Message::ReadUShort()
 extern void Message_ReadUShort_mE496700033B10F4615F64BFD4256F84E78810F50 ();
-// 0x0000006B System.Int32 RiptideNetworking.Message::GetInt()
+// 0x0000006B RiptideNetworking.Message RiptideNetworking.Message::Add(System.Int32)
+extern void Message_Add_m027D73E29FDB0740BCD86E7A14A28B271525B557 ();
+// 0x0000006C System.Void RiptideNetworking.Message::Write(System.Int32)
+extern void Message_Write_m1F540846DDFB8A596A1774687F71ED53042BD41C ();
+// 0x0000006D System.Int32 RiptideNetworking.Message::GetInt()
 extern void Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2 ();
-// 0x0000006C System.Int32 RiptideNetworking.Message::ReadInt()
+// 0x0000006E System.Int32 RiptideNetworking.Message::ReadInt()
 extern void Message_ReadInt_m392A834B601B429BEC0F0D593BC79A1538A97C49 ();
-// 0x0000006D RiptideNetworking.Message RiptideNetworking.Message::Add(System.Single)
+// 0x0000006F RiptideNetworking.Message RiptideNetworking.Message::Add(System.Int32[],System.Boolean,System.Boolean)
+extern void Message_Add_m3F1E0888DD56D83AFB81B0C418A37E135F9A22E2 ();
+// 0x00000070 RiptideNetworking.Message RiptideNetworking.Message::Add(System.Single)
 extern void Message_Add_m0A08DD743458049FEE0F755C9E941B2493F27155 ();
-// 0x0000006E System.Single RiptideNetworking.Message::GetFloat()
+// 0x00000071 System.Single RiptideNetworking.Message::GetFloat()
 extern void Message_GetFloat_m2E2D3C22349CC333A30959B89311890DE9E8949D ();
-// 0x0000006F System.Single RiptideNetworking.Message::ReadFloat()
+// 0x00000072 System.Single RiptideNetworking.Message::ReadFloat()
 extern void Message_ReadFloat_m5F6283C7360E951604B24EA58D71ADAED4031185 ();
-// 0x00000070 RiptideNetworking.Message RiptideNetworking.Message::Add(System.String)
+// 0x00000073 RiptideNetworking.Message RiptideNetworking.Message::Add(System.String)
 extern void Message_Add_m2202D71A50ADB8697238E528862295579B1B767C ();
-// 0x00000071 System.String RiptideNetworking.Message::GetString()
+// 0x00000074 System.String RiptideNetworking.Message::GetString()
 extern void Message_GetString_m33642D43A350BDB4DBEA73FCAF3E2786AA6F06EE ();
-// 0x00000072 System.Void RiptideNetworking.Message::.cctor()
+// 0x00000075 System.Void RiptideNetworking.Message::.cctor()
 extern void Message__cctor_m03FCB6F4E27FBC0BECCF6A4A2E43E7D64111B5FA ();
-// 0x00000073 System.Void RiptideNetworking.RiptideLogger::Initialize(RiptideNetworking.RiptideLogger_LogMethod,System.Boolean,System.String)
+// 0x00000076 System.Void RiptideNetworking.RiptideLogger::Initialize(RiptideNetworking.RiptideLogger_LogMethod,System.Boolean,System.String)
 extern void RiptideLogger_Initialize_m7CC0EB08AE152D017894202815BFD9908C3F9B62 ();
-// 0x00000074 System.Void RiptideNetworking.RiptideLogger::Log(System.String,System.String)
+// 0x00000077 System.Void RiptideNetworking.RiptideLogger::Log(System.String,System.String)
 extern void RiptideLogger_Log_mAB654BE8367E23EC36F00327A4A389B3B6369A2E ();
-// 0x00000075 System.String RiptideNetworking.RiptideLogger::GetTimestamp(System.DateTime)
+// 0x00000078 System.String RiptideNetworking.RiptideLogger::GetTimestamp(System.DateTime)
 extern void RiptideLogger_GetTimestamp_m98D2A407DE4629B463A42C04D8086166076A679A ();
-// 0x00000076 System.Void RiptideNetworking.RiptideLogger_LogMethod::.ctor(System.Object,System.IntPtr)
+// 0x00000079 System.Void RiptideNetworking.RiptideLogger_LogMethod::.ctor(System.Object,System.IntPtr)
 extern void LogMethod__ctor_m463D5930D732F697BB6E89F4D577C4E1567258EB ();
-// 0x00000077 System.Void RiptideNetworking.RiptideLogger_LogMethod::Invoke(System.String)
+// 0x0000007A System.Void RiptideNetworking.RiptideLogger_LogMethod::Invoke(System.String)
 extern void LogMethod_Invoke_m9BD1B7EAD2E399DCCB558FE535D43911C3A12D8B ();
-// 0x00000078 System.IAsyncResult RiptideNetworking.RiptideLogger_LogMethod::BeginInvoke(System.String,System.AsyncCallback,System.Object)
+// 0x0000007B System.IAsyncResult RiptideNetworking.RiptideLogger_LogMethod::BeginInvoke(System.String,System.AsyncCallback,System.Object)
 extern void LogMethod_BeginInvoke_m9A5A4FF02A106DFEBAD8C982BA717974E77F62C9 ();
-// 0x00000079 System.Void RiptideNetworking.RiptideLogger_LogMethod::EndInvoke(System.IAsyncResult)
+// 0x0000007C System.Void RiptideNetworking.RiptideLogger_LogMethod::EndInvoke(System.IAsyncResult)
 extern void LogMethod_EndInvoke_mA9EF5C4B1C7F969073C05459D1A55E381C8543BE ();
-// 0x0000007A System.UInt16 RiptideNetworking.Rudp::get_NextSequenceId()
+// 0x0000007D System.UInt16 RiptideNetworking.Rudp::get_NextSequenceId()
 extern void Rudp_get_NextSequenceId_m0AC92BE640B4A3CE0BB3F0C7AA1B8D047FB6EDDF ();
-// 0x0000007B RiptideNetworking.SendLockables RiptideNetworking.Rudp::get_SendLockables()
+// 0x0000007E RiptideNetworking.SendLockables RiptideNetworking.Rudp::get_SendLockables()
 extern void Rudp_get_SendLockables_mF9AC7AE6FF65963B935E6E5507880117CC08F299 ();
-// 0x0000007C System.Void RiptideNetworking.Rudp::set_SendLockables(RiptideNetworking.SendLockables)
+// 0x0000007F System.Void RiptideNetworking.Rudp::set_SendLockables(RiptideNetworking.SendLockables)
 extern void Rudp_set_SendLockables_m1BF80F91F09642C9949ABD2BE67FBAC49F5C356A ();
-// 0x0000007D RiptideNetworking.ReceiveLockables RiptideNetworking.Rudp::get_ReceiveLockables()
+// 0x00000080 RiptideNetworking.ReceiveLockables RiptideNetworking.Rudp::get_ReceiveLockables()
 extern void Rudp_get_ReceiveLockables_m3E1F955793D0E80B038413A838C4ADAF648BE1AD ();
-// 0x0000007E System.Void RiptideNetworking.Rudp::set_ReceiveLockables(RiptideNetworking.ReceiveLockables)
+// 0x00000081 System.Void RiptideNetworking.Rudp::set_ReceiveLockables(RiptideNetworking.ReceiveLockables)
 extern void Rudp_set_ReceiveLockables_m006F1D4282FB6B77176598CEA87A2C8A864726A8 ();
-// 0x0000007F System.Collections.Generic.Dictionary`2<System.UInt16,RiptideNetworking.Rudp_PendingMessage> RiptideNetworking.Rudp::get_PendingMessages()
+// 0x00000082 System.Collections.Generic.Dictionary`2<System.UInt16,RiptideNetworking.Rudp_PendingMessage> RiptideNetworking.Rudp::get_PendingMessages()
 extern void Rudp_get_PendingMessages_m868934BC841D1A72CC0454A18DD69B1069B9BA27 ();
-// 0x00000080 System.Int16 RiptideNetworking.Rudp::get_RTT()
+// 0x00000083 System.Int16 RiptideNetworking.Rudp::get_RTT()
 extern void Rudp_get_RTT_m8F0185B04C75225FF6EE3B181192972C4030F27F ();
-// 0x00000081 System.Void RiptideNetworking.Rudp::set_RTT(System.Int16)
+// 0x00000084 System.Void RiptideNetworking.Rudp::set_RTT(System.Int16)
 extern void Rudp_set_RTT_mF4B646C8FF47E8F9D345E6B6491A47F2A9D462C9 ();
-// 0x00000082 System.Int16 RiptideNetworking.Rudp::get_SmoothRTT()
+// 0x00000085 System.Int16 RiptideNetworking.Rudp::get_SmoothRTT()
 extern void Rudp_get_SmoothRTT_mD61BBCF54EF88AC1A34153276FE4F2C95F8917AF ();
-// 0x00000083 System.Void RiptideNetworking.Rudp::set_SmoothRTT(System.Int16)
+// 0x00000086 System.Void RiptideNetworking.Rudp::set_SmoothRTT(System.Int16)
 extern void Rudp_set_SmoothRTT_mBFCCD866540BF9786EB78927FE21265EC1EF9F72 ();
-// 0x00000084 System.Void RiptideNetworking.Rudp::.ctor(RiptideNetworking.RudpSocket)
+// 0x00000087 System.Void RiptideNetworking.Rudp::.ctor(RiptideNetworking.RudpSocket)
 extern void Rudp__ctor_m8D62E3BC629D457522A024B9674CAA19CA442323 ();
-// 0x00000085 System.Void RiptideNetworking.Rudp::UpdateReceivedAcks(System.UInt16,System.UInt16)
+// 0x00000088 System.Void RiptideNetworking.Rudp::UpdateReceivedAcks(System.UInt16,System.UInt16)
 extern void Rudp_UpdateReceivedAcks_m8B53D1BFD4B0940E22FD6CE5DEE35B093FDB4C0D ();
-// 0x00000086 System.Int32 RiptideNetworking.Rudp::GetSequenceGap(System.UInt16,System.UInt16)
+// 0x00000089 System.Int32 RiptideNetworking.Rudp::GetSequenceGap(System.UInt16,System.UInt16)
 extern void Rudp_GetSequenceGap_mBF2383319CCA90CDA74433EB2687693E9C2BEF42 ();
-// 0x00000087 System.Void RiptideNetworking.Rudp::CheckMessageAckStatus(System.UInt16,System.UInt16)
+// 0x0000008A System.Void RiptideNetworking.Rudp::CheckMessageAckStatus(System.UInt16,System.UInt16)
 extern void Rudp_CheckMessageAckStatus_m2EAFBCAEE00051553E6E067014927633B24D5269 ();
-// 0x00000088 System.Void RiptideNetworking.Rudp::AckMessage(System.UInt16)
+// 0x0000008B System.Void RiptideNetworking.Rudp::AckMessage(System.UInt16)
 extern void Rudp_AckMessage_m9863E20B56831EBB0FA81C2EEA97EEAD1CB22FC7 ();
-// 0x00000089 System.Void RiptideNetworking.Rudp_PendingMessage::.ctor(RiptideNetworking.Rudp,System.UInt16,RiptideNetworking.Message,System.Net.IPEndPoint,System.Byte)
+// 0x0000008C System.Void RiptideNetworking.Rudp_PendingMessage::.ctor(RiptideNetworking.Rudp,System.UInt16,RiptideNetworking.Message,System.Net.IPEndPoint,System.Byte)
 extern void PendingMessage__ctor_m63062680447E2DF3178111348EEA4BACE4C06E53 ();
-// 0x0000008A System.Void RiptideNetworking.Rudp_PendingMessage::RetrySend()
+// 0x0000008D System.Void RiptideNetworking.Rudp_PendingMessage::RetrySend()
 extern void PendingMessage_RetrySend_m686778E635CD2377438FC5EC2A1E4B27A213CC48 ();
-// 0x0000008B System.Void RiptideNetworking.Rudp_PendingMessage::TrySend()
+// 0x0000008E System.Void RiptideNetworking.Rudp_PendingMessage::TrySend()
 extern void PendingMessage_TrySend_m0725059CECF92714EFB042A06F26BB183D2B5FC8 ();
-// 0x0000008C System.Void RiptideNetworking.Rudp_PendingMessage::Clear()
+// 0x0000008F System.Void RiptideNetworking.Rudp_PendingMessage::Clear()
 extern void PendingMessage_Clear_m3457D3277260DD533434A4E0FA0805831EB4C8BD ();
-// 0x0000008D System.Void RiptideNetworking.Rudp_PendingMessage::<.ctor>b__9_0(System.Object,System.Timers.ElapsedEventArgs)
+// 0x00000090 System.Void RiptideNetworking.Rudp_PendingMessage::<.ctor>b__9_0(System.Object,System.Timers.ElapsedEventArgs)
 extern void PendingMessage_U3C_ctorU3Eb__9_0_mF500EAD33C0E10778F77B66EE8A7BCAD4FAE51B5 ();
-// 0x0000008E System.Boolean RiptideNetworking.RudpSocket::get_ShouldOutputInfoLogs()
+// 0x00000091 System.Boolean RiptideNetworking.RudpSocket::get_ShouldOutputInfoLogs()
 extern void RudpSocket_get_ShouldOutputInfoLogs_mF38BC2076BA502D72763FC766979ECE42F51DC12 ();
-// 0x0000008F System.Void RiptideNetworking.RudpSocket::.ctor(System.String)
+// 0x00000092 System.Void RiptideNetworking.RudpSocket::.ctor(System.String)
 extern void RudpSocket__ctor_mC778C8371E2596EBDDEF3F6526907BDB2DE82771 ();
-// 0x00000090 System.Void RiptideNetworking.RudpSocket::StartListening(System.UInt16)
+// 0x00000093 System.Void RiptideNetworking.RudpSocket::StartListening(System.UInt16)
 extern void RudpSocket_StartListening_mBA0330186905F34ACFE5180F5232EFD844D47C4F ();
-// 0x00000091 System.Void RiptideNetworking.RudpSocket::StopListening()
+// 0x00000094 System.Void RiptideNetworking.RudpSocket::StopListening()
 extern void RudpSocket_StopListening_m813240EC8B5A36170D248B456DFA7F82C7557D4F ();
-// 0x00000092 System.Void RiptideNetworking.RudpSocket::Receive()
+// 0x00000095 System.Void RiptideNetworking.RudpSocket::Receive()
 extern void RudpSocket_Receive_m0CFB57F8357D5251965B28FE5112836111033A66 ();
-// 0x00000093 System.Void RiptideNetworking.RudpSocket::PrepareToHandle(System.Byte[],System.Int32,System.Net.IPEndPoint)
+// 0x00000096 System.Void RiptideNetworking.RudpSocket::PrepareToHandle(System.Byte[],System.Int32,System.Net.IPEndPoint)
 extern void RudpSocket_PrepareToHandle_mDC1450211B2AF604591BCDEA29E54E8A14D4C87C ();
-// 0x00000094 System.Boolean RiptideNetworking.RudpSocket::ShouldHandleMessageFrom(System.Net.IPEndPoint,System.Byte)
-// 0x00000095 System.Void RiptideNetworking.RudpSocket::ReliableHandle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType)
-// 0x00000096 System.Void RiptideNetworking.RudpSocket::ReliableHandle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType,RiptideNetworking.SendLockables)
+// 0x00000097 System.Boolean RiptideNetworking.RudpSocket::ShouldHandleMessageFrom(System.Net.IPEndPoint,System.Byte)
+// 0x00000098 System.Void RiptideNetworking.RudpSocket::ReliableHandle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType)
+// 0x00000099 System.Void RiptideNetworking.RudpSocket::ReliableHandle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType,RiptideNetworking.SendLockables)
 extern void RudpSocket_ReliableHandle_mC09E79862F7BE4655F71C60DAEAEFFA9BAAE06E4 ();
-// 0x00000097 System.Void RiptideNetworking.RudpSocket::Handle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType)
-// 0x00000098 System.Void RiptideNetworking.RudpSocket::Send(System.Byte[],System.Net.IPEndPoint)
+// 0x0000009A System.Void RiptideNetworking.RudpSocket::Handle(System.Byte[],System.Net.IPEndPoint,RiptideNetworking.HeaderType)
+// 0x0000009B System.Void RiptideNetworking.RudpSocket::Send(System.Byte[],System.Net.IPEndPoint)
 extern void RudpSocket_Send_mAC1052EF3A797D297DFCFE79CB8ED36FF3E5C534 ();
-// 0x00000099 System.Void RiptideNetworking.RudpSocket::Send(System.Byte[],System.Int32,System.Net.IPEndPoint)
+// 0x0000009C System.Void RiptideNetworking.RudpSocket::Send(System.Byte[],System.Int32,System.Net.IPEndPoint)
 extern void RudpSocket_Send_m9646B8A2560002C75691117D306092D86479DFB0 ();
-// 0x0000009A System.Void RiptideNetworking.RudpSocket::SendReliable(RiptideNetworking.Message,System.Net.IPEndPoint,RiptideNetworking.Rudp,System.Byte)
+// 0x0000009D System.Void RiptideNetworking.RudpSocket::SendReliable(RiptideNetworking.Message,System.Net.IPEndPoint,RiptideNetworking.Rudp,System.Byte)
 extern void RudpSocket_SendReliable_m7756C637A96B2E6BB40039BB935529565FF86A12 ();
-// 0x0000009B System.Void RiptideNetworking.RudpSocket::SendAck(System.UInt16,System.Net.IPEndPoint)
-static Il2CppMethodPointer s_methodPointers[155] = 
+// 0x0000009E System.Void RiptideNetworking.RudpSocket::SendAck(System.UInt16,System.Net.IPEndPoint)
+static Il2CppMethodPointer s_methodPointers[158] = 
 {
 	ActionQueue__ctor_m4C3002524392AAB970CA9DA4C050D538DED67EBA,
 	ActionQueue_Add_m6D25D1FB5965CA3D9497A0D3BB05CF1D5603DCC1,
@@ -434,8 +440,11 @@ static Il2CppMethodPointer s_methodPointers[155] =
 	Message_Write_m5D58ACA3E57692B56DD8D8D0958EDF4A4374E134,
 	Message_GetUShort_m917B148BEEFC7FEE212DB9B96A411FA5E8F13FDC,
 	Message_ReadUShort_mE496700033B10F4615F64BFD4256F84E78810F50,
+	Message_Add_m027D73E29FDB0740BCD86E7A14A28B271525B557,
+	Message_Write_m1F540846DDFB8A596A1774687F71ED53042BD41C,
 	Message_GetInt_m72404E688EF8BC7F681753A7519762891A270DB2,
 	Message_ReadInt_m392A834B601B429BEC0F0D593BC79A1538A97C49,
+	Message_Add_m3F1E0888DD56D83AFB81B0C418A37E135F9A22E2,
 	Message_Add_m0A08DD743458049FEE0F755C9E941B2493F27155,
 	Message_GetFloat_m2E2D3C22349CC333A30959B89311890DE9E8949D,
 	Message_ReadFloat_m5F6283C7360E951604B24EA58D71ADAED4031185,
@@ -484,7 +493,7 @@ static Il2CppMethodPointer s_methodPointers[155] =
 	RudpSocket_SendReliable_m7756C637A96B2E6BB40039BB935529565FF86A12,
 	NULL,
 };
-static const int32_t s_InvokerIndices[155] = 
+static const int32_t s_InvokerIndices[158] = 
 {
 	26,
 	26,
@@ -592,8 +601,11 @@ static const int32_t s_InvokerIndices[155] =
 	562,
 	215,
 	215,
+	34,
+	32,
 	10,
 	10,
+	644,
 	1672,
 	686,
 	686,
@@ -646,7 +658,7 @@ extern const Il2CppCodeGenModule g_RiptideNetworkingCodeGenModule;
 const Il2CppCodeGenModule g_RiptideNetworkingCodeGenModule = 
 {
 	"RiptideNetworking.dll",
-	155,
+	158,
 	s_methodPointers,
 	s_InvokerIndices,
 	0,
