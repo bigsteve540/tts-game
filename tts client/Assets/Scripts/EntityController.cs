@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EntityController : MonoBehaviour
 {
+    public int GroupID { get; private set; }
+    public int EntityID { get; private set; }
 #pragma warning disable CS0649 
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject VFXAnchors;
@@ -13,6 +15,8 @@ public class EntityController : MonoBehaviour
 
     public EntityController Init(int _groupID, int _entityID, AspectData _data)
     {
+        GroupID = _groupID;
+        EntityID = _entityID;
         data = _data;
         Instantiate(data.AspectModel, model.transform);
         model.SetActive(true);

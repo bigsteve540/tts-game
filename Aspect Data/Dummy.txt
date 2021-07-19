@@ -7,22 +7,22 @@
     "BaseArmor": 0,
     "Abilities": [
         {
-            "AbilityName": "INTERRUPT POGGERS",
-            "Description": "",
-            "ActionPointCost": 0,
+            "AbilityName": "Basic Attack",
+            "Description": "Strike a target, dealing damage.",
+            "ActionPointCost": 25,
             "TargetingMetrics": {
                 "Type": 2,
-                "TargetType": 3,
+                "TargetType": 1,
                 "IncludeSelf": 2,
                 "SelectionFilters": [
                     {
-                        "Type": 0,
-                        "Range": 7,
+                        "Type": 3,
+                        "Range": 0,
                         "LocalOffset": {
                             "x": 0.0,
                             "y": 0.0
                         },
-                        "MaxValidTargets": 0
+                        "MaxValidTargets": 1
                     }
                 ]
             }

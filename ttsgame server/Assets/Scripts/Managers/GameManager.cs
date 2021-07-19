@@ -1,8 +1,4 @@
-﻿using RiptideNetworking;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }

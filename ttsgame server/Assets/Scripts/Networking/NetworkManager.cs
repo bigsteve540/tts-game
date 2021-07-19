@@ -11,12 +11,14 @@ public enum ServerToClientRequest : ushort
     GenerateTilemap,
     GenerateDeploymentZones,
     SpawnAspect,
+    AssignActiveAspect,
     ModifyAspectHealth
 }
 public enum ClientToServerRequest : ushort
 {
     DraftInteract,
-    DeploymentCompleted
+    DeploymentCompleted,
+    CastAspectAbility
 }
 
 public class NetworkManager : MonoBehaviour
@@ -69,7 +71,8 @@ public class NetworkManager : MonoBehaviour
         messageHandlers = new Dictionary<ushort, MessageHandler>()
         {
             { (ushort)ClientToServerRequest.DraftInteract, ServerHandle.DraftInteract },
-            { (ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted }
+            { (ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted },
+            { (ushort)ClientToServerRequest.CastAspectAbility, ServerHandle.CastAspectAbility }
         };
 
         actionQueue = new ActionQueue();

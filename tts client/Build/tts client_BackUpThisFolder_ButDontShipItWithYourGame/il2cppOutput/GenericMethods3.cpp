@@ -73,6 +73,8 @@ struct InterfaceActionInvoker0
 	}
 };
 
+// SelectionFilter[]
+struct SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400;
 // System.ArgumentException
 struct ArgumentException_tEDCD16F20A09ECE461C3DA766C16EDA8864057D1;
 // System.ArgumentNullException
@@ -2714,97 +2716,6 @@ public:
 public:
 };
 
-
-// AspectAbilityWrapper
-struct  AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7 
-{
-public:
-	// System.String AspectAbilityWrapper::AbilityName
-	String_t* ___AbilityName_0;
-	// System.String AspectAbilityWrapper::Description
-	String_t* ___Description_1;
-	// System.Int32 AspectAbilityWrapper::ActionPointCost
-	int32_t ___ActionPointCost_2;
-	// System.Int32 AspectAbilityWrapper::Value
-	int32_t ___Value_3;
-	// System.Int32 AspectAbilityWrapper::ValueType
-	int32_t ___ValueType_4;
-	// System.Int32[] AspectAbilityWrapper::TypesToTrigger
-	Int32U5BU5D_t2B9E4FDDDB9F0A00EC0AC631BA2DA915EB1ECF83* ___TypesToTrigger_5;
-
-public:
-	inline static int32_t get_offset_of_AbilityName_0() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___AbilityName_0)); }
-	inline String_t* get_AbilityName_0() const { return ___AbilityName_0; }
-	inline String_t** get_address_of_AbilityName_0() { return &___AbilityName_0; }
-	inline void set_AbilityName_0(String_t* value)
-	{
-		___AbilityName_0 = value;
-		Il2CppCodeGenWriteBarrier((void**)(&___AbilityName_0), (void*)value);
-	}
-
-	inline static int32_t get_offset_of_Description_1() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___Description_1)); }
-	inline String_t* get_Description_1() const { return ___Description_1; }
-	inline String_t** get_address_of_Description_1() { return &___Description_1; }
-	inline void set_Description_1(String_t* value)
-	{
-		___Description_1 = value;
-		Il2CppCodeGenWriteBarrier((void**)(&___Description_1), (void*)value);
-	}
-
-	inline static int32_t get_offset_of_ActionPointCost_2() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___ActionPointCost_2)); }
-	inline int32_t get_ActionPointCost_2() const { return ___ActionPointCost_2; }
-	inline int32_t* get_address_of_ActionPointCost_2() { return &___ActionPointCost_2; }
-	inline void set_ActionPointCost_2(int32_t value)
-	{
-		___ActionPointCost_2 = value;
-	}
-
-	inline static int32_t get_offset_of_Value_3() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___Value_3)); }
-	inline int32_t get_Value_3() const { return ___Value_3; }
-	inline int32_t* get_address_of_Value_3() { return &___Value_3; }
-	inline void set_Value_3(int32_t value)
-	{
-		___Value_3 = value;
-	}
-
-	inline static int32_t get_offset_of_ValueType_4() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___ValueType_4)); }
-	inline int32_t get_ValueType_4() const { return ___ValueType_4; }
-	inline int32_t* get_address_of_ValueType_4() { return &___ValueType_4; }
-	inline void set_ValueType_4(int32_t value)
-	{
-		___ValueType_4 = value;
-	}
-
-	inline static int32_t get_offset_of_TypesToTrigger_5() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___TypesToTrigger_5)); }
-	inline Int32U5BU5D_t2B9E4FDDDB9F0A00EC0AC631BA2DA915EB1ECF83* get_TypesToTrigger_5() const { return ___TypesToTrigger_5; }
-	inline Int32U5BU5D_t2B9E4FDDDB9F0A00EC0AC631BA2DA915EB1ECF83** get_address_of_TypesToTrigger_5() { return &___TypesToTrigger_5; }
-	inline void set_TypesToTrigger_5(Int32U5BU5D_t2B9E4FDDDB9F0A00EC0AC631BA2DA915EB1ECF83* value)
-	{
-		___TypesToTrigger_5 = value;
-		Il2CppCodeGenWriteBarrier((void**)(&___TypesToTrigger_5), (void*)value);
-	}
-};
-
-// Native definition for P/Invoke marshalling of AspectAbilityWrapper
-struct AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7_marshaled_pinvoke
-{
-	char* ___AbilityName_0;
-	char* ___Description_1;
-	int32_t ___ActionPointCost_2;
-	int32_t ___Value_3;
-	int32_t ___ValueType_4;
-	Il2CppSafeArray/*NONE*/* ___TypesToTrigger_5;
-};
-// Native definition for COM marshalling of AspectAbilityWrapper
-struct AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7_marshaled_com
-{
-	Il2CppChar* ___AbilityName_0;
-	Il2CppChar* ___Description_1;
-	int32_t ___ActionPointCost_2;
-	int32_t ___Value_3;
-	int32_t ___ValueType_4;
-	Il2CppSafeArray/*NONE*/* ___TypesToTrigger_5;
-};
 
 // Mono.Globalization.Unicode.CodePointIndexer_TableRange
 struct  TableRange_t485CF0807771CC05023466CFCB0AE25C46648100 
@@ -10537,6 +10448,60 @@ public:
 };
 
 
+// TargetFilter_SelfInclusion
+struct  SelfInclusion_t5E255CA75B4905AE5580F559A18FC856414FB96A 
+{
+public:
+	// System.Int32 TargetFilter_SelfInclusion::value__
+	int32_t ___value___2;
+
+public:
+	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(SelfInclusion_t5E255CA75B4905AE5580F559A18FC856414FB96A, ___value___2)); }
+	inline int32_t get_value___2() const { return ___value___2; }
+	inline int32_t* get_address_of_value___2() { return &___value___2; }
+	inline void set_value___2(int32_t value)
+	{
+		___value___2 = value;
+	}
+};
+
+
+// TargetFilter_TargetingRelation
+struct  TargetingRelation_tB7C74045C4A6A73DF78E044FBF9464F1422F2B87 
+{
+public:
+	// System.Int32 TargetFilter_TargetingRelation::value__
+	int32_t ___value___2;
+
+public:
+	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(TargetingRelation_tB7C74045C4A6A73DF78E044FBF9464F1422F2B87, ___value___2)); }
+	inline int32_t get_value___2() const { return ___value___2; }
+	inline int32_t* get_address_of_value___2() { return &___value___2; }
+	inline void set_value___2(int32_t value)
+	{
+		___value___2 = value;
+	}
+};
+
+
+// TargetingType
+struct  TargetingType_tB276726381EE78CB7B5B1AD13FE27C1169465CBF 
+{
+public:
+	// System.Int32 TargetingType::value__
+	int32_t ___value___2;
+
+public:
+	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(TargetingType_tB276726381EE78CB7B5B1AD13FE27C1169465CBF, ___value___2)); }
+	inline int32_t get_value___2() const { return ___value___2; }
+	inline int32_t* get_address_of_value___2() { return &___value___2; }
+	inline void set_value___2(int32_t value)
+	{
+		___value___2 = value;
+	}
+};
+
+
 // Unity.Collections.LowLevel.Unsafe.UnsafeUtility_AlignOfHelper`1<UnityEngine.Rendering.BatchVisibility>
 struct  AlignOfHelper_1_t95B15F423EA742E8D8EC50A3C9886ACFF9E7CB0C 
 {
@@ -14921,6 +14886,71 @@ public:
 };
 
 
+// TargetingWrapper
+struct  TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D 
+{
+public:
+	// TargetingType TargetingWrapper::Type
+	int32_t ___Type_0;
+	// TargetFilter_TargetingRelation TargetingWrapper::TargetType
+	int32_t ___TargetType_1;
+	// TargetFilter_SelfInclusion TargetingWrapper::IncludeSelf
+	int32_t ___IncludeSelf_2;
+	// SelectionFilter[] TargetingWrapper::SelectionFilters
+	SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400* ___SelectionFilters_3;
+
+public:
+	inline static int32_t get_offset_of_Type_0() { return static_cast<int32_t>(offsetof(TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D, ___Type_0)); }
+	inline int32_t get_Type_0() const { return ___Type_0; }
+	inline int32_t* get_address_of_Type_0() { return &___Type_0; }
+	inline void set_Type_0(int32_t value)
+	{
+		___Type_0 = value;
+	}
+
+	inline static int32_t get_offset_of_TargetType_1() { return static_cast<int32_t>(offsetof(TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D, ___TargetType_1)); }
+	inline int32_t get_TargetType_1() const { return ___TargetType_1; }
+	inline int32_t* get_address_of_TargetType_1() { return &___TargetType_1; }
+	inline void set_TargetType_1(int32_t value)
+	{
+		___TargetType_1 = value;
+	}
+
+	inline static int32_t get_offset_of_IncludeSelf_2() { return static_cast<int32_t>(offsetof(TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D, ___IncludeSelf_2)); }
+	inline int32_t get_IncludeSelf_2() const { return ___IncludeSelf_2; }
+	inline int32_t* get_address_of_IncludeSelf_2() { return &___IncludeSelf_2; }
+	inline void set_IncludeSelf_2(int32_t value)
+	{
+		___IncludeSelf_2 = value;
+	}
+
+	inline static int32_t get_offset_of_SelectionFilters_3() { return static_cast<int32_t>(offsetof(TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D, ___SelectionFilters_3)); }
+	inline SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400* get_SelectionFilters_3() const { return ___SelectionFilters_3; }
+	inline SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400** get_address_of_SelectionFilters_3() { return &___SelectionFilters_3; }
+	inline void set_SelectionFilters_3(SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400* value)
+	{
+		___SelectionFilters_3 = value;
+		Il2CppCodeGenWriteBarrier((void**)(&___SelectionFilters_3), (void*)value);
+	}
+};
+
+// Native definition for P/Invoke marshalling of TargetingWrapper
+struct TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D_marshaled_pinvoke
+{
+	int32_t ___Type_0;
+	int32_t ___TargetType_1;
+	int32_t ___IncludeSelf_2;
+	SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400* ___SelectionFilters_3;
+};
+// Native definition for COM marshalling of TargetingWrapper
+struct TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D_marshaled_com
+{
+	int32_t ___Type_0;
+	int32_t ___TargetType_1;
+	int32_t ___IncludeSelf_2;
+	SelectionFilterU5BU5D_tBAFD92707FE83949FE37AE9AED5ADD32F0716400* ___SelectionFilters_3;
+};
+
 // Unity.Collections.LowLevel.Unsafe.UnsafeUtility_AlignOfHelper`1<System.Int32Enum>
 struct  AlignOfHelper_1_t0125EA42DF90C216B8E26C698BE710299EE64EEA 
 {
@@ -16222,6 +16252,73 @@ public:
 	}
 };
 
+
+// AspectAbilityWrapper
+struct  AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7 
+{
+public:
+	// System.String AspectAbilityWrapper::AbilityName
+	String_t* ___AbilityName_0;
+	// System.String AspectAbilityWrapper::Description
+	String_t* ___Description_1;
+	// System.Int32 AspectAbilityWrapper::ActionPointCost
+	int32_t ___ActionPointCost_2;
+	// TargetingWrapper AspectAbilityWrapper::TargetingMetrics
+	TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D  ___TargetingMetrics_3;
+
+public:
+	inline static int32_t get_offset_of_AbilityName_0() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___AbilityName_0)); }
+	inline String_t* get_AbilityName_0() const { return ___AbilityName_0; }
+	inline String_t** get_address_of_AbilityName_0() { return &___AbilityName_0; }
+	inline void set_AbilityName_0(String_t* value)
+	{
+		___AbilityName_0 = value;
+		Il2CppCodeGenWriteBarrier((void**)(&___AbilityName_0), (void*)value);
+	}
+
+	inline static int32_t get_offset_of_Description_1() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___Description_1)); }
+	inline String_t* get_Description_1() const { return ___Description_1; }
+	inline String_t** get_address_of_Description_1() { return &___Description_1; }
+	inline void set_Description_1(String_t* value)
+	{
+		___Description_1 = value;
+		Il2CppCodeGenWriteBarrier((void**)(&___Description_1), (void*)value);
+	}
+
+	inline static int32_t get_offset_of_ActionPointCost_2() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___ActionPointCost_2)); }
+	inline int32_t get_ActionPointCost_2() const { return ___ActionPointCost_2; }
+	inline int32_t* get_address_of_ActionPointCost_2() { return &___ActionPointCost_2; }
+	inline void set_ActionPointCost_2(int32_t value)
+	{
+		___ActionPointCost_2 = value;
+	}
+
+	inline static int32_t get_offset_of_TargetingMetrics_3() { return static_cast<int32_t>(offsetof(AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7, ___TargetingMetrics_3)); }
+	inline TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D  get_TargetingMetrics_3() const { return ___TargetingMetrics_3; }
+	inline TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D * get_address_of_TargetingMetrics_3() { return &___TargetingMetrics_3; }
+	inline void set_TargetingMetrics_3(TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D  value)
+	{
+		___TargetingMetrics_3 = value;
+		Il2CppCodeGenWriteBarrier((void**)&(((&___TargetingMetrics_3))->___SelectionFilters_3), (void*)NULL);
+	}
+};
+
+// Native definition for P/Invoke marshalling of AspectAbilityWrapper
+struct AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7_marshaled_pinvoke
+{
+	char* ___AbilityName_0;
+	char* ___Description_1;
+	int32_t ___ActionPointCost_2;
+	TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D_marshaled_pinvoke ___TargetingMetrics_3;
+};
+// Native definition for COM marshalling of AspectAbilityWrapper
+struct AspectAbilityWrapper_tB3966E3871C93EF8B9B851B0C646FA1811223DA7_marshaled_com
+{
+	Il2CppChar* ___AbilityName_0;
+	Il2CppChar* ___Description_1;
+	int32_t ___ActionPointCost_2;
+	TargetingWrapper_tF574B75CFB8AF007E9C41A0F4BA12395CAD05D5D_marshaled_com ___TargetingMetrics_3;
+};
 
 // System.ArgumentException
 struct  ArgumentException_tEDCD16F20A09ECE461C3DA766C16EDA8864057D1  : public SystemException_t5380468142AA850BE4A341D7AF3EAB9C78746782

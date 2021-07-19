@@ -43,7 +43,13 @@ public static class ServerHandle
                 
             }
             GameManager.GameState = GameState.Play;
+            Timeline.Progress(); //TODO: set turn times here too
         }
+    }
+
+    public static void CastAspectAbility(ServerClient _fromClient, Message _message)
+    {
+        (GameManager.Entities[_message.GetInt()] as IAbilityCasterBehaviour).CastAbility(_message);
     }
 }
 

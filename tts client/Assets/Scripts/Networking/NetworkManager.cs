@@ -11,12 +11,14 @@ public enum ServerToClientRequest : ushort
     GenerateTilemap,
     GenerateDeploymentZones,
     SpawnAspect,
+    AssignActiveAspect,
     ModifyAspectHealth
 }
 public enum ClientToServerRequest : ushort
 {
     DraftInteract,
-    DeploymentCompleted
+    DeploymentCompleted,
+    CastAspectAbility
 }
 
 public class NetworkManager : MonoBehaviour
@@ -81,7 +83,8 @@ public class NetworkManager : MonoBehaviour
             { (ushort)ServerToClientRequest.AspectLocked, ClientHandle.AspectLocked },
             { (ushort)ServerToClientRequest.GenerateTilemap, ClientHandle.GenerateTilemap },
             { (ushort)ServerToClientRequest.GenerateDeploymentZones, ClientHandle.GenerateDeploymentZones },
-            { (ushort)ServerToClientRequest.SpawnAspect, ClientHandle.SpawnAspect }
+            { (ushort)ServerToClientRequest.SpawnAspect, ClientHandle.SpawnAspect },
+            { (ushort)ServerToClientRequest.AssignActiveAspect, ClientHandle.AssignActiveAspect }
         };
         Client.Connect(ip, port, actionQueue);
     }

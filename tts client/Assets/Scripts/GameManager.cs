@@ -12,6 +12,7 @@ public enum GameState { Prep, Draft, Deploy, Game, Post }
 public class GameManager : MonoBehaviour
 {
     public static GameState GameState = GameState.Prep;
+    public static int ActiveEntityID = -1;
 
     public delegate void HealthModificationHandler(int _entityID, int _modifierVal);
     public static HealthModificationHandler OnHealthModified;
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    public static EntityController GetActiveEntity()
+    {
+        return Entities[ActiveEntityID];
     }
 
     public void Start()

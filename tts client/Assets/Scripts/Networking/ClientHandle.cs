@@ -44,4 +44,12 @@ public static class ClientHandle
         Vector2 pos = _message.GetVector2();
         GameManager.Instance.SpawnAspect(groupID, aspectID, code, currHP, pos);
     }
+    public static void AssignActiveAspect(Message _message)
+    {
+        GameManager.ActiveEntityID = _message.GetInt();
+        if(GameManager.GetActiveEntity().GroupID != NetworkManager.Instance.Client.Id)
+        {
+            //disable any ui if this entity doesnt belong to us
+        }
+    }
 }

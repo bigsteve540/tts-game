@@ -5,15 +5,22 @@ using TMPro;
 
 public class AbilityTab : MonoBehaviour
 {
-    private TextMeshProUGUI ActionCost;
-    private TextMeshProUGUI AbilityName;
-    private TextMeshProUGUI AblityDescription;
+    [SerializeField]private TextMeshProUGUI ActionCost;
+    [SerializeField]private TextMeshProUGUI AbilityName;
+    [SerializeField]private TextMeshProUGUI AblityDescription;
 
     private AspectAbilityData data;
+    private int entityID, abilityIndex;
+
+
+    public void Init(int _entityID, int _abilityIndex, AspectAbilityData _data)
+    {
+        data = _data;
+    }
 
     public void TriggerAbility()
     {
-        TargetFetcher.StartFetching(data.TargetingType, data.TargetFilter);
+        TargetFetcher.StartFetching(abilityIndex, data.TargetingType, data.TargetFilter);
     }
 
 }

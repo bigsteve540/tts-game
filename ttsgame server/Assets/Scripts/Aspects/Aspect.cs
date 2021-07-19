@@ -64,12 +64,12 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 
     public void MoveToTile(int _x, int _y) { Utilities.GenericMovement(this, _x, _y); }
 
-    public void CastAbility(Message _message) //TODO: pull ability index from packet
+    public void CastAbility(Message _message)
     {
         if (GameManager.ActiveEntity != this)
             return;
 
-        Abilities[0].TriggerAbility(this, _message);
+        Abilities[_message.GetInt()].TriggerAbility(this, _message);
     }
 
     public void EndTurn()
@@ -101,6 +101,9 @@ public class AspectTurn : ITimelineEvent
     public void Activate()
     {
         GameManager.ActiveEntity = caster;
+        Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.AssignActiveAspect);
+        msg.Add(caster.EntityID);
+        NetworkManager.Instance.Server.SendToAll(msg);
 
         foreach (Func<InterruptData, bool> interrupter in (caster as IAbilityCasterBehaviour).ActiveInterrupters)
             GameEventSystem.UnsubInterrupt(interrupter);
@@ -116,17 +119,17 @@ public class AspectTurn : ITimelineEvent
         #endregion  
 
         #region pathfinder system example
-        List<Node> path = Tilemap.GeneratePathToTile(caster.MapPosition, new Vector2(GameMaps.TestMap.Width - 1, GameMaps.TestMap.Height - 1));
+        //List<Node> path = Tilemap.GeneratePathToTile(caster.MapPosition, new Vector2(GameMaps.TestMap.Width - 1, GameMaps.TestMap.Height - 1));
 
-        int currentNode = 0;
-        while (currentNode < path.Count - 1)
-        {
-            Vector3 start = new Vector3(path[currentNode].Position.x, 0.5f, path[currentNode].Position.y);
-            Vector3 end = new Vector3(path[currentNode + 1].Position.x, 0.5f, path[currentNode + 1].Position.y);
-            Debug.DrawLine(start, end, Color.black, Mathf.Infinity);
+        //int currentNode = 0;
+        //while (currentNode < path.Count - 1)
+        //{
+        //    Vector3 start = new Vector3(path[currentNode].Position.x, 0.5f, path[currentNode].Position.y);
+        //    Vector3 end = new Vector3(path[currentNode + 1].Position.x, 0.5f, path[currentNode + 1].Position.y);
+        //    Debug.DrawLine(start, end, Color.black, Mathf.Infinity);
 
-            currentNode++;
-        }
+        //    currentNode++;
+        //}
         #endregion
     }
 }

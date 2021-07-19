@@ -39,7 +39,7 @@ public class DeploymentUI : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.TestKey(InputKeys.Select, KeyState.Down) && deployingBody != null && GameManager.GameState == GameState.Deploy)
+        if (InputManager.TestKey(InputKeys.Mouse_Left, KeyState.Down) && deployingBody != null && GameManager.GameState == GameState.Deploy)
         {
             int id = NetworkManager.Instance.Client.Id;
             Vector2 entityPos = new Vector2(deployingBody.transform.position.x, deployingBody.transform.position.z);
