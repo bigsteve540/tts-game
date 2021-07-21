@@ -7,19 +7,18 @@ public class AbilityTab : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI ActionCost;
     [SerializeField]private TextMeshProUGUI AbilityName;
-    [SerializeField]private TextMeshProUGUI AblityDescription;
+    [SerializeField]private TextMeshProUGUI AbilityDescription;
 
     private AspectAbilityData data;
     private int abilityIndex;
 
-    private void OnEnable() //this is just proxy for the init method
-    {
-        Init(0, Resources.Load<AspectAbilityData>("Aspects/Abilities/A000/A000_0"));
-    }
-
     public void Init(int _abilityIndex, AspectAbilityData _data)
     {
         data = _data;
+
+        ActionCost.text = _data.ActionPointCost.ToString();
+        AbilityName.text = _data.Name;
+        AbilityDescription.text = _data.Description;
     }
 
     public void TriggerAbility()

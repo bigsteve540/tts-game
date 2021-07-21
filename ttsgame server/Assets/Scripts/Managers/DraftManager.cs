@@ -7,17 +7,15 @@ public static class DraftManager
 {
     public static int ActivePlayerID { get; private set; } = 0; //0 indicates not set
 
-    private static string[] activeBannedAspects;
     public static Dictionary<int, (string[] Bans, string[] Picks)> PlayerPicksNBans;
 
     private static int draftStepIterator = 0;
     
     public static void Init()
     {
-        activeBannedAspects = new string[GameSettings.TotalBans];
         PlayerPicksNBans = new Dictionary<int, (string[], string[])>();
         for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
-            PlayerPicksNBans.Add(i, (new string[3], new string[5]));
+            PlayerPicksNBans.Add(i, (new string[GameSettings.TotalBans], new string[GameSettings.AspectCountPerPlayer]));
 
         ActivePlayerID = 1;
 
@@ -30,7 +28,6 @@ public static class DraftManager
         if (++ActivePlayerID > GameSettings.TotalPlayers)
             ActivePlayerID = 1;
         SystemClockManager.Restart();
-        Debug.Log($"Active player is {ActivePlayerID}");
     }
 
     public static void AssignAspect(int _clientID, string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
@@ -38,55 +35,56 @@ public static class DraftManager
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick)
             return;
 
+        int comparator = GameManager.GameState == GameState.Ban ? GameSettings.BanCountPerPlayer : GameSettings.AspectCountPerPlayer;
+
         switch (GameManager.GameState)
         {
             case GameState.Ban:
-                for (int i = 0; i < GameSettings.BanCountPerPlayer; i++)
+                for (int i = 0; i < comparator; i++)
                     if (PlayerPicksNBans[_clientID].Bans[i] == null || PlayerPicksNBans[_clientID].Bans[i] == string.Empty)
                     {
                         PlayerPicksNBans[_clientID].Bans[i] = _aspectCode;
                         draftStepIterator++;
                         break;
                     }
-
-                Debug.Log($"Successfully banned {_aspectCode}");
-                GenerateDraftMessage(_aspectCode);
-
-                if (draftStepIterator >= GameSettings.TotalBans)
-                {
-                    GameManager.GameState = GameState.Pick;
-                    draftStepIterator = 0;
-                }
                 break;
             case GameState.Pick:
 
-                for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
+                for (int i = 0; i < comparator; i++)
                     if (PlayerPicksNBans[_clientID].Picks[i] == null || PlayerPicksNBans[_clientID].Picks[i] == string.Empty)
                     {
                         PlayerPicksNBans[_clientID].Picks[i] = _aspectCode;
                         draftStepIterator++;
                         break;
                     }
+                break;
+        }
+        GenerateDraftMessage(_aspectCode);
+        TestIteratorOverDraftMax();
 
-                Debug.Log($"Successfully picked {_aspectCode}");
-                GenerateDraftMessage(_aspectCode);
+        string stateTypeForDebug = GameManager.GameState == GameState.Ban ? "banned" : "picked";
+        Debug.Log($"Player {ActivePlayerID} Successfully {stateTypeForDebug} {_aspectCode}");
 
-                if (draftStepIterator >= GameSettings.TotalAspects)
-                {
-                    GameManager.GameState = GameState.Deploy;
-
+        AssignNextActivePlayer();
+    }
+    private static void TestIteratorOverDraftMax()
+    {
+        int comparator = GameManager.GameState == GameState.Ban ? GameSettings.TotalBans : GameSettings.TotalAspects;
+        if(draftStepIterator >= comparator)
+        {
+            GameManager.GameState++;
+            switch (GameManager.GameState)
+            {
+                case GameState.Pick:
                     SystemClockManager.Stop();
                     SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
 
-                    draftStepIterator = 0;
                     Tilemap.Init(GameMaps.TestMap);
-                    return;
-                }
-                break;
+                    break;
+            }
+            draftStepIterator = 0;
         }
-        AssignNextActivePlayer();
     }
-
     private static void GenerateDraftMessage(string _aspectCode)
     {
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.AspectLocked);

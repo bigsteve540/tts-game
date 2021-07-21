@@ -13,8 +13,6 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
-        AspectAbilityData a = Resources.Load<AspectAbilityData>("Aspects/Abilities/A000/A000_0");
-        Debug.Log(a.TargetFilter.IncludeSelf);
     }
 #pragma warning disable CS0649
     [SerializeField] private GameObject[] uiPanels;

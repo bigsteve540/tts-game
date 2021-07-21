@@ -51,6 +51,8 @@ public static class ClientHandle
         GameManager.ActiveEntityID = _message.GetInt();
         GameManager.GetActiveEntity().ToggleActiveStatus(true);
 
+        GameUI.Instance.SpawnAbilityTabs();
+
         if(GameManager.GetActiveEntity().GroupID != NetworkManager.Instance.Client.Id)
         {
             //disable any ui if this entity doesnt belong to us

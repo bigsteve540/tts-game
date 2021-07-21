@@ -24,6 +24,7 @@ public class EntityController : MonoBehaviour
         return this;
     }
     public void ChangeAspectData(AspectData _new) { data = _new; }
+    public string GetEntityCode() { return data.AspectCode; }
     public void ToggleActiveStatus(bool _active) //TODO just establish the model as a cached reference cuz this is bs
     {
         model.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material.color = _active ? Color.green : Color.white;

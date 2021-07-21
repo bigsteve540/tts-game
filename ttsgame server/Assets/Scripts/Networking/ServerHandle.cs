@@ -22,14 +22,14 @@ public static class ServerHandle
             Vector2 pos = _message.GetVector2();
             if (!Tilemap.TileDeployableForID(_fromClient.Id, pos))
                 throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
+            Debug.Log($"Player {_fromClient.Id} completed deployment. Generating aspects...");
             Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);
         }
 
-        if(++readyPlayers == NetworkManager.Instance.Server.MaxClientCount) //spawn all aspects to all clients
+        if(++readyPlayers == NetworkManager.Instance.Server.MaxClientCount)
         {
             Debug.Log("Sending aspect to clients and preparing for play");
             foreach (Player player in Player.AllActive.Values)
-            {
                 for (int i = 0; i < player.Aspects.Length; i++)
                 {
                     Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.SpawnAspect);
@@ -40,10 +40,13 @@ public static class ServerHandle
                     msg.Add(player.Aspects[i].MapPosition);
                     NetworkManager.Instance.Server.SendToAll(msg);
                 }
-                
-            }
+
             GameManager.GameState = GameState.Play;
-            Timeline.Progress(); //TODO: set turn times here too
+
+            Timeline.Progress();
+
+            SystemClockManager.OnClockTimeout += () => { Timeline.Progress(); };
+            SystemClockManager.Begin(GameSettings.PlayerTurnTimeLimit);
         }
     }
 
