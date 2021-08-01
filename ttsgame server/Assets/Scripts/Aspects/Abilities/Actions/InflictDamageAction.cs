@@ -9,9 +9,14 @@ public class InflictDamageAction : AbilityAction
     public uint Damage = default;
     public StatModifierType Type = default;
 
-    public override void InvokeAction(IEntityBehaviour _caster, List<IEntityBehaviour> _targets)
+    public override void InvokeAction(IEntityBehaviour _caster, dynamic _targets)
     {
-        base.InvokeAction(_caster, _targets);
+        if (Interruptable)
+        {
+            InterruptData d = new InterruptData(_caster.EntityID, Flags);
+            if (GameEventSystem.CheckEventInterrupted(d))
+                return;
+        }
 
         for (int i = 0; i < _targets.Count; i++)
         {

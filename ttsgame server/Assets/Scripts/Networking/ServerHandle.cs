@@ -20,7 +20,7 @@ public static class ServerHandle
         for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
         {
             Vector2 pos = _message.GetVector2();
-            if (!Tilemap.TileDeployableForID(_fromClient.Id, pos))
+            if (Tilemap.GetTile(pos).DeploymentID != _fromClient.Id)
                 throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
             Debug.Log($"Player {_fromClient.Id} completed deployment. Generating aspects...");
             Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);

@@ -22,25 +22,27 @@ public class InterruptAbilityData : AspectAbilityData
     }
     private bool Interrupt(InterruptData _data)
     {
-        List<IEntityBehaviour> targetAsList = FilterEntities(GameManager.Entities[_data.TriggererID], null);
+        dynamic target = FilterEntities(GameManager.Entities[_data.TriggererID], null);
 
-        if (!_data.InterruptFlags.HasFlag(Flags) && targetAsList != null)
+        if (!_data.InterruptFlags.HasFlag(Flags) && target != null)
             return false;
 
         Debug.Log("Interrupted");
 
         for (int i = 0; i < Actions.Length; i++)
-            Actions[i].InvokeAction(caster, targetAsList);
+            Actions[i].InvokeAction(caster, target);
         return true;
     }
 
-    protected override List<IEntityBehaviour> FilterEntities(IEntityBehaviour _caster, Message _message) //not actually the _caster, using it as a proxy for the target entity in this case
+    protected List<IEntityBehaviour> FilterEntities(IEntityBehaviour _caster, Message _message) //not actually the _caster, using it as a proxy for the target entity in this case
     {
-        if(IncludeEntities)
-            return base.FilterEntities(caster, _message);
+        dynamic d;
+
+        if (IncludeEntities)
+            d = Targeting.GetTargets(caster, _message);
         else
             if (Utilities.GetChebyshevDistance(caster.MapPosition, _caster.MapPosition, Targeting.Filter.SelectionFilters[0].Range))
-                return new List<IEntityBehaviour> { _caster };
+                d = _caster;
         return null;
     }
 }

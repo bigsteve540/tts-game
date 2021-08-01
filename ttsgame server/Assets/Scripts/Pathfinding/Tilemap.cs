@@ -7,8 +7,9 @@ public enum TileType { Normal, Difficult, Impassable }
 
 public static class Tilemap
 {
-    private static TileType[,] tiles;
-    private static TileType[,] defaultMaptiles;
+    public static int Width { get; private set; }
+    public static int Height { get; private set; }
+    private static Tile[] tiles;
 
     private static Node[,] graph;
 
@@ -29,9 +30,20 @@ public static class Tilemap
 
     public static void Init(GameMapLayout _layout)
     {
+        Width = _layout.Width;
+        Height = _layout.Height;
+
         GeneratePathingGraph(_layout.Width, _layout.Height);
         GenerateLegalDeploymentZones(_layout);
-        GenerateTilemap(_layout);
+
+        tiles = new Tile[_layout.Width * _layout.Height];
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            tiles[i] = new Tile(
+                new Vector2(i % _layout.Width, i / _layout.Width),
+                mapdataMapper[_layout.MapData[i]],
+                _layout.MapData[i].ToString());
+        }
 
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateTilemap);
         msg.Add(_layout.Width);
@@ -54,42 +66,40 @@ public static class Tilemap
         DrawDebugMap();
     }
 
-    public static bool TileDeployableForID(int _clientID, Vector2 _targetTile)
+    public static void MoveEntityBetweenTiles(Vector2 _from, Vector2 _to) 
     {
-        for (int i = 0; i < deploymentZones[_clientID].Count; i++)
-            if (deploymentZones[_clientID][i] == _targetTile)
-                return true;
-        return false;
-    }
+        int toIndexor = Width * (int)_to.x + (int)_to.y;
+        int fromIndexor = Width * (int)_from.x + (int)_from.y;
 
-    public static TileType GetTile(int _indexX, int _indexY)
-    {
-        return tiles[_indexX, _indexY];
+        if (tiles[toIndexor].EntityOnTile != null || tiles[toIndexor].State == TileType.Impassable)
+        {
+            //TODO: make this account for landing on an impassable tile
+        }
+        tiles[toIndexor].PlaceEntity(tiles[fromIndexor].EntityOnTile);
+        tiles[fromIndexor].RemoveEntity();
     }
-
-    public static void ChangeTileType(int _indexX, int _indexY, TileType _newType)
+    public static Tile GetTile(int _indexX, int _indexY)
     {
-        tiles[_indexX, _indexY] = _newType;
+        return tiles[Width * _indexX + _indexY];
     }
-    public static void SetTileToDefault(int _indexX, int _indexY)
+    public static Tile GetTile(Vector2 _pos)
     {
-        tiles[_indexX, _indexY] = defaultMaptiles[_indexX, _indexY];
+        return tiles[Width * (int)_pos.x + (int)_pos.y];
     }
 
     public static byte[] ConvertMapToBytes()
     {
-        int arrX = defaultMaptiles.GetLength(0);
-        int arrY = defaultMaptiles.GetLength(1);
-        byte[] tileTypes = new byte[arrX * arrY];
+        byte[] tileTypes = new byte[tiles.Length];
 
-        for (int x = 0; x < arrX; x++)
-            for (int y = 0; y < arrY; y++)
-                tileTypes[arrX * x + y] = Convert.ToByte((int)defaultMaptiles[x, y]);
+        for (int i = 0; i < tiles.Length; i++)
+                tileTypes[i] = tiles[i].ConvertStateToByte();
         return tileTypes;
     }
 
     private static void GenerateTilemap(GameMapLayout _layout)
     {
+
+        /*
         defaultMaptiles = new TileType[_layout.Width, _layout.Height];
         tiles = new TileType[_layout.Width, _layout.Height];
 
@@ -98,6 +108,7 @@ public static class Tilemap
                 defaultMaptiles[x, y] = mapdataMapper[_layout.MapData[_layout.Width * x + y]];
 
         Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
+        */
     }
     private static void GeneratePathingGraph(int _sizeX, int _sizeY)
     {
@@ -156,9 +167,9 @@ public static class Tilemap
 
     private static void DrawDebugMap()
     {
-        for (int x = 0; x < GameMaps.TestMap.Width; x++)
+        for (int x = 0; x < Width; x++)
         {
-            for (int y = 0; y < GameMaps.TestMap.Height; y++)
+            for (int y = 0; y < Height; y++)
             {
                 GameObject go = GameObject.CreatePrimitive(PrimitiveType.Quad);
 
@@ -166,7 +177,7 @@ public static class Tilemap
                 go.transform.position = new Vector3(x, 0.49f, y);
 
                 Color groundColor;
-                switch (GetTile(x, y))
+                switch (GetTile(x, y).State)
                 {
                     case TileType.Normal:
                         groundColor = Color.white;
@@ -224,7 +235,8 @@ public static class Tilemap
             for (int i = 0; i < node.Edges.Length; i++)
                 if (node.Edges[i] != null)
                 {
-                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tileCostMultiplier[tiles[(int)node.Edges[i].Position.x, (int)node.Edges[i].Position.y]]);
+                    int tileIndexor = Width * (int)node.Edges[i].Position.x + (int)node.Edges[i].Position.y;
+                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tileCostMultiplier[tiles[tileIndexor].State]);
 
                     if (moveCost < distances[node.Edges[i]])
                     {
@@ -248,7 +260,7 @@ public static class Tilemap
 
         goalPath.Reverse();
 
-        if (GetTile((int)goal.Position.x, (int)goal.Position.y) == TileType.Impassable)
+        if (GetTile((int)goal.Position.x, (int)goal.Position.y).State == TileType.Impassable)
             goalPath.RemoveAt(goalPath.Count - 1);
         return goalPath;
     }

@@ -58,7 +58,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 
         Abilities = d.Abilities;
 
-        Tilemap.ChangeTileType((int)MapPosition.x, (int)MapPosition.y, TileType.Impassable);
+        Tilemap.GetTile(MapPosition).PlaceEntity(this);
         Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
