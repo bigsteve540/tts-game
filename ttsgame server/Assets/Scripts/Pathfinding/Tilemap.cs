@@ -26,7 +26,6 @@ public static class Tilemap
         {'/', TileType.Difficult },
         {'X', TileType.Impassable }
     };
-    private static Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
 
     public static void Init(GameMapLayout _layout)
     {
@@ -34,7 +33,6 @@ public static class Tilemap
         Height = _layout.Height;
 
         GeneratePathingGraph(_layout.Width, _layout.Height);
-        GenerateLegalDeploymentZones(_layout);
 
         tiles = new Tile[_layout.Width * _layout.Height];
         for (int i = 0; i < tiles.Length; i++)
@@ -57,9 +55,9 @@ public static class Tilemap
         {
             msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateDeploymentZones);
             msg.Add(i);
-            msg.Add(deploymentZones[i].Count);
-            for (int j = 0; j < deploymentZones[i].Count; j++)
-                msg.Add(deploymentZones[i][j]);
+            msg.Add(Tile.DeploymentZones[i].Count);
+            for (int j = 0; j < Tile.DeploymentZones[i].Count; j++)
+                msg.Add(Tile.DeploymentZones[i][j]);
             NetworkManager.Instance.Server.SendToAll(msg);
         }
 
@@ -150,20 +148,6 @@ public static class Tilemap
                     graph[x, y].Edges[7] = graph[x - 1, y - 1];
             }
     }
-    private static void GenerateLegalDeploymentZones(GameMapLayout _layout)
-    {
-        for (int x = 0; x < _layout.Width; x++)
-            for (int y = 0; y < _layout.Height; y++)
-                if (int.TryParse(_layout.MapData[_layout.Width * x + y].ToString(), out int zoneID)) //imagine having to convert a char to a string, nice one c#
-                {
-                    if (!deploymentZones.ContainsKey(zoneID))
-                        deploymentZones.Add(zoneID, new List<Vector2>());
-
-                    deploymentZones[zoneID].Add(new Vector2(x,y));
-                }
-        Debug.Log("Generated Deployment Zones");
-    }
-
 
     private static void DrawDebugMap()
     {
