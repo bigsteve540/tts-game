@@ -44,7 +44,6 @@ public static class DraftManager
                     if (PlayerPicksNBans[_clientID].Bans[i] == null || PlayerPicksNBans[_clientID].Bans[i] == string.Empty)
                     {
                         PlayerPicksNBans[_clientID].Bans[i] = _aspectCode;
-                        draftStepIterator++;
                         break;
                     }
                 break;
@@ -54,7 +53,6 @@ public static class DraftManager
                     if (PlayerPicksNBans[_clientID].Picks[i] == null || PlayerPicksNBans[_clientID].Picks[i] == string.Empty)
                     {
                         PlayerPicksNBans[_clientID].Picks[i] = _aspectCode;
-                        draftStepIterator++;
                         break;
                     }
                 break;
@@ -69,13 +67,15 @@ public static class DraftManager
     }
     private static void TestIteratorOverDraftMax()
     {
+        draftStepIterator++;
+
         int comparator = GameManager.GameState == GameState.Ban ? GameSettings.TotalBans : GameSettings.TotalAspects;
         if(draftStepIterator >= comparator)
         {
             GameManager.GameState++;
             switch (GameManager.GameState)
             {
-                case GameState.Pick:
+                case GameState.Deploy:
                     SystemClockManager.Stop();
                     SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
 

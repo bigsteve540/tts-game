@@ -6,7 +6,7 @@ using UnityEngine;
 public class Tile
 {
     public static ReadOnlyDictionary<int, List<Vector2>> DeploymentZones;
-    private Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
+    private static Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
 
     public Vector2 Coords { get; }
     public TileType State;

@@ -38,7 +38,7 @@ public static class Tilemap
         for (int i = 0; i < tiles.Length; i++)
         {
             tiles[i] = new Tile(
-                new Vector2(i % _layout.Width, i / _layout.Width),
+                new Vector2(i / _layout.Width, i % _layout.Width),
                 mapdataMapper[_layout.MapData[i]],
                 _layout.MapData[i].ToString());
         }
@@ -96,7 +96,6 @@ public static class Tilemap
 
     private static void GenerateTilemap(GameMapLayout _layout)
     {
-
         /*
         defaultMaptiles = new TileType[_layout.Width, _layout.Height];
         tiles = new TileType[_layout.Width, _layout.Height];
