@@ -13,12 +13,7 @@ public static class Tilemap
 
     private static Node[,] graph;
 
-    private static Dictionary<TileType, float> tileCostMultiplier = new Dictionary<TileType, float>
-    {
-        { TileType.Normal, 1f },
-        { TileType.Difficult, 1.5f },
-        { TileType.Impassable, 999f }
-    };
+
     private static Dictionary<char, TileType> mapdataMapper = new Dictionary<char, TileType>
     {
         {'.', TileType.Normal }, {'1', TileType.Normal }, {'2', TileType.Normal }, {'3', TileType.Normal }, {'4', TileType.Normal },
@@ -92,20 +87,6 @@ public static class Tilemap
         for (int i = 0; i < tiles.Length; i++)
                 tileTypes[i] = tiles[i].ConvertStateToByte();
         return tileTypes;
-    }
-
-    private static void GenerateTilemap(GameMapLayout _layout)
-    {
-        /*
-        defaultMaptiles = new TileType[_layout.Width, _layout.Height];
-        tiles = new TileType[_layout.Width, _layout.Height];
-
-        for (int x = 0; x < defaultMaptiles.GetLength(0); x++)
-            for (int y = 0; y < defaultMaptiles.GetLength(1); y++)
-                defaultMaptiles[x, y] = mapdataMapper[_layout.MapData[_layout.Width * x + y]];
-
-        Array.Copy(defaultMaptiles, tiles, defaultMaptiles.Length);
-        */
     }
     private static void GeneratePathingGraph(int _sizeX, int _sizeY)
     {
@@ -219,7 +200,7 @@ public static class Tilemap
                 if (node.Edges[i] != null)
                 {
                     int tileIndexor = Width * (int)node.Edges[i].Position.x + (int)node.Edges[i].Position.y;
-                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tileCostMultiplier[tiles[tileIndexor].State]);
+                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tiles[tileIndexor].GetMovementCost());
 
                     if (moveCost < distances[node.Edges[i]])
                     {

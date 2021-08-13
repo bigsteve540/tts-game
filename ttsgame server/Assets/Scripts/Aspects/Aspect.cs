@@ -62,7 +62,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
-    public void MoveToTile(int _x, int _y) { Utilities.GenericMovement(this, _x, _y); }
+    public void MoveToTile(int _x, int _y) { Utilities.MoveEntity(this, _x, _y); }
 
     public void CastAbility(Message _message)
     {
@@ -74,15 +74,15 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         CurrentActionPoints -= (uint)Abilities[abIndex].ActionPointCost;
     }
 
+    public void SetCurrentHP(uint _val)
+    {
+        CurrentHP = _val;
+    }
+
     public void EndTurn()
     {
         Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
         Timeline.Progress();
-    }
-
-    public void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false)
-    {
-        CurrentHP = Utilities.GenericModifyHealth(this, _data, _ignoreEffectors);
     }
 }
 

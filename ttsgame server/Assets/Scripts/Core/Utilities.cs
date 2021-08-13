@@ -9,9 +9,9 @@ public struct InterruptData
     public int TriggererID { get; }
     public InterruptEventType InterruptFlags { get; }
 
-    public object[] ExtraInterruptData { get; }
+    public dynamic[] ExtraInterruptData { get; }
 
-    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params object[] _extraData) //set flags with | operator
+    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params dynamic[] _extraData) //set flags with | operator
     {
         TriggererID = _triggererID;
         InterruptFlags = _interruptTypes;
@@ -44,7 +44,7 @@ public static class Utilities
 
     public static uint ConvertDegToCardinal(float _input){ return (uint)Mathf.RoundToInt(GRADIENT * _input); }
 
-    public static void GenericMovement(IEntityBehaviour _aspect, int _newX, int _newY)
+    public static void MoveEntity(IEntityBehaviour _aspect, int _newX, int _newY)
     {
         Vector2 newPos = new Vector2(_newX, _newY);
 
@@ -66,15 +66,15 @@ public static class Utilities
         //msg.Add(_aspect.Code);
         //msg.Add(newPos);
     }
-    public static uint GenericModifyHealth(IEntityBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEffectors = false) //TODO: split this into uniquely interruptable events
+    public static void ModifyHealth(IEntityBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEventListeners = false)
     {
-        InterruptData interruptData = new InterruptData(_target.EntityID, Mathf.Sign(_hpModData.Value) == -1 ? InterruptEventType.Damage : InterruptEventType.Heal, _hpModData);
+        InterruptData interruptData = new InterruptData(_target.EntityID, _hpModData.IsDamage() ? InterruptEventType.Damage : InterruptEventType.Heal, _hpModData);
 
-        if (GameEventSystem.CheckEventInterrupted(interruptData)) //TODO: should probably make it so interruption can also effect _hpmoddata 
-            return _target.CurrentHP;
+        if (GameEventSystem.CheckEventInterrupted(interruptData))
+            return;
 
-        if (!_ignoreEffectors)
-            GameEventSystem.CallEvent(_hpModData); //instead of calling a separate method
+        if (!_ignoreEventListeners)
+            GameEventSystem.CallEvent(_hpModData);
 
         float prevHP = _target.CurrentHP;
         float val = 0f;
@@ -99,7 +99,7 @@ public static class Utilities
             val = Mathf.Clamp((val * -1) - _target.CurrentArmor, 0f, val * -1) * -1;
 
         //client msg to update ui with val
-        return (uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP);
+        _target.SetCurrentHP((uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP));
     }
 
     public static int GetInitiativeCostForPath(List<Node> _path)

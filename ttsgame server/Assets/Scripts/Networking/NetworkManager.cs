@@ -87,9 +87,9 @@ public class NetworkManager : MonoBehaviour
 
         Server.Start(port, maxClientCount, actionQueue);
 
-        //Ability casting test sample
         //Tilemap.Init(GameMaps.TestMap);
 
+        //Ability casting test sample
         //Player p = new Player(1);
         //p.AddAspect("A000", new Vector2(0, 0));
         //p.AddAspect("A001", new Vector2(0, 1));
@@ -105,6 +105,20 @@ public class NetworkManager : MonoBehaviour
         //(p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
         //Timeline.Progress();
         //a.MoveToTile(0, 8);
+
+        //Health Affect Pipeline Injection Test Sample
+        //Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
+
+        //void Shid(HealthModifiedEventInfo _info)
+        //{
+        //    _info.Value -= 100f;
+        //}
+
+        //GameEventSystem.SubListener<HealthModifiedEventInfo>(Shid);
+        //Debug.Log(a.CurrentHP);
+        //Utilities.ModifyHealth(a, new HealthModifiedEventInfo(0, 1, null, StatModifierType.Flat, -300f));
+        //Debug.Log(a.CurrentHP);
+        //GameEventSystem.UnsubListener<HealthModifiedEventInfo>(Shid);
 
     }
 

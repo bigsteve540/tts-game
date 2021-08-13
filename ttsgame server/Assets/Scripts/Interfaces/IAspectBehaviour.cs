@@ -42,7 +42,7 @@ public interface ICombatBehaviour
     int BaseArmor { get; }
     int CurrentArmor { get; set; }
 
-    void ModifyHealth(HealthModifiedEventInfo _data, bool _ignoreEffectors = false);
+    void SetCurrentHP(uint _val);
 }
 
 public interface IAbilityCasterBehaviour

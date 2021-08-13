@@ -7,6 +7,12 @@ public class Tile
 {
     public static ReadOnlyDictionary<int, List<Vector2>> DeploymentZones;
     private static Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
+    private static Dictionary<TileType, float> tileCostMultiplier = new Dictionary<TileType, float>
+    {
+        { TileType.Normal, 1f },
+        { TileType.Difficult, 1.5f },
+        { TileType.Impassable, 999f }
+    };
 
     public Vector2 Coords { get; }
     public TileType State;
@@ -16,13 +22,13 @@ public class Tile
 
     public IEntityBehaviour EntityOnTile { get; private set; }
 
-    private TileType baseState { get; }
+    private TileType BaseState { get; }
 
     public Tile(Vector2 _coords, TileType _baseState, string _mapStringCode)
     {
         Coords = _coords;
-        baseState = _baseState;
-        State = baseState;
+        BaseState = _baseState;
+        State = BaseState;
 
         Deployable = int.TryParse(_mapStringCode, out int _result);
         if(_result > 0)
@@ -37,7 +43,7 @@ public class Tile
         }
     }
 
-    public void RevertToDefault() { State = baseState; }
+    public void RevertToDefault() { State = BaseState; }
     public byte ConvertStateToByte() { return System.Convert.ToByte((int)State); }
     public void PlaceEntity(IEntityBehaviour _entity)
     {
@@ -47,6 +53,7 @@ public class Tile
     public void RemoveEntity()
     {
         EntityOnTile = null;
-        State = baseState;
+        State = BaseState;
     }
+    public float GetMovementCost() { return tileCostMultiplier[State]; }
 }
