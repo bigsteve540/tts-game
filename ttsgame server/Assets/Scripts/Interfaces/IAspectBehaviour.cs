@@ -31,7 +31,6 @@ public interface IMoveBehaviour
 {
     Vector2 MapPosition { get; set; }
     uint FacingDirection { get; set; }
-    void MoveToTile(int _x, int _y);
 }
 
 public interface ICombatBehaviour

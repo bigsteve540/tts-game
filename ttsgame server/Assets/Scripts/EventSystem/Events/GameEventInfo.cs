@@ -7,27 +7,10 @@ public abstract class GameEventInfo
 
 }
 
-public enum StatModifierType { Flat, Max, Missing, Current }
-public class HealthModifiedEventInfo : GameEventInfo
+public abstract class HealthModEventInfo : GameEventInfo
 {
-    public int CasterID { get; }
-    public object Source { get; }
-    public int TargetID { get; }
-
-    public StatModifierType Type;
-    public float Value; //negative for damage positive for healing
-
-    public bool IsDamage()
-    {
-        return Mathf.Sign(Value) == -1;
-    }
-
-    public HealthModifiedEventInfo(int _casterID, int _targetID, object _source, StatModifierType _type, float _value)
-    {
-        CasterID = _casterID;
-        Source = _source;
-        TargetID = _targetID;
-        Type = _type;
-        Value = _value;
-    }
+    public int Value;
+    public HealthModEventInfo(int _value) { Value = _value; }
 }
+public class PremitEventInfo : HealthModEventInfo { public PremitEventInfo(int _value) : base(_value) { } }
+public class PostmitEventInfo : HealthModEventInfo { public PostmitEventInfo(int _value) : base(_value) { } }

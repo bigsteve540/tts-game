@@ -1,6 +1,5 @@
 ﻿using RiptideNetworking;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,8 +61,6 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
-    public void MoveToTile(int _x, int _y) { Utilities.MoveEntity(this, _x, _y); }
-
     public void CastAbility(Message _message)
     {
         if (GameManager.ActiveEntity != this)
@@ -74,10 +71,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         CurrentActionPoints -= (uint)Abilities[abIndex].ActionPointCost;
     }
 
-    public void SetCurrentHP(uint _val)
-    {
-        CurrentHP = _val;
-    }
+    public void SetCurrentHP(uint _val) { CurrentHP = _val; }
 
     public void EndTurn()
     {
@@ -101,6 +95,7 @@ public class AspectTurn : ITimelineEvent
 
     public void Activate()
     {
+        //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
         GameManager.ActiveEntity = caster;
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.AssignActiveAspect);
         msg.Add(caster.EntityID);
@@ -109,28 +104,7 @@ public class AspectTurn : ITimelineEvent
         foreach (Func<InterruptData, bool> interrupter in (caster as IAbilityCasterBehaviour).ActiveInterrupters)
             GameEventSystem.UnsubInterrupt(interrupter);
         (caster as IAbilityCasterBehaviour).ActiveInterrupters.Clear();
-        //how would you wait for user input using this method tho?
 
-        //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
         Debug.Log($"this is {caster.Name}'s turn");
-
-        #region ability trigger example
-        //if (caster.AspectID == 0)
-        //    caster.Abilities[0].Activate();
-        #endregion  
-
-        #region pathfinder system example
-        //List<Node> path = Tilemap.GeneratePathToTile(caster.MapPosition, new Vector2(GameMaps.TestMap.Width - 1, GameMaps.TestMap.Height - 1));
-
-        //int currentNode = 0;
-        //while (currentNode < path.Count - 1)
-        //{
-        //    Vector3 start = new Vector3(path[currentNode].Position.x, 0.5f, path[currentNode].Position.y);
-        //    Vector3 end = new Vector3(path[currentNode + 1].Position.x, 0.5f, path[currentNode + 1].Position.y);
-        //    Debug.DrawLine(start, end, Color.black, Mathf.Infinity);
-
-        //    currentNode++;
-        //}
-        #endregion
     }
 }

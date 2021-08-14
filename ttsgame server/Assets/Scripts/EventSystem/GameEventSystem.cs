@@ -45,15 +45,13 @@ public static class GameEventSystem
             listeners[eventType].Remove(_listener.GetHashCode());
     }
 
-    public static void CallEvent(GameEventInfo _info)
+    public static void CallEvent<T>(T _info) where T : GameEventInfo
     {
-        System.Type eventType = _info.GetType();
-
-        if(listeners.Count == 0 || listeners[eventType] == null || listeners[eventType].Count == 0)
+        if(listeners.Count == 0 || listeners[typeof(T)] == null || listeners[typeof(T)].Count == 0)
             return;
 
         iterating = true;
-        foreach (KeyValuePair<int, EventListener> listener in listeners[eventType])
+        foreach (KeyValuePair<int, EventListener> listener in listeners[typeof(T)])
             listener.Value(_info);
         iterating = false;
 

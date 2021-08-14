@@ -87,7 +87,7 @@ public class NetworkManager : MonoBehaviour
 
         Server.Start(port, maxClientCount, actionQueue);
 
-        //Tilemap.Init(GameMaps.TestMap);
+        Tilemap.Init(GameMaps.TestMap);
 
         //Ability casting test sample
         //Player p = new Player(1);
@@ -107,25 +107,20 @@ public class NetworkManager : MonoBehaviour
         //a.MoveToTile(0, 8);
 
         //Health Affect Pipeline Injection Test Sample
-        //Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
+        Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
 
-        //void Shid(HealthModifiedEventInfo _info)
-        //{
-        //    _info.Value -= 100f;
-        //}
+        void Shid(PremitEventInfo _info) { _info.Value -= 100; }
 
-        //GameEventSystem.SubListener<HealthModifiedEventInfo>(Shid);
-        //Debug.Log(a.CurrentHP);
-        //Utilities.ModifyHealth(a, new HealthModifiedEventInfo(0, 1, null, StatModifierType.Flat, -300f));
-        //Debug.Log(a.CurrentHP);
-        //GameEventSystem.UnsubListener<HealthModifiedEventInfo>(Shid);
+        GameEventSystem.SubListener<PremitEventInfo>(Shid);
 
+        Debug.Log(a.CurrentHP);
+        Health.Modify(a, new HealthDataPacket(0, null, StatModifierType.Flat, -300), MitigationType.Pre | MitigationType.Post);
+        Debug.Log(a.CurrentHP);
+
+        GameEventSystem.UnsubListener<PremitEventInfo>(Shid);
     }
 
-    private void OnApplicationQuit()
-    {
-        CloseServer();
-    }
+    private void OnApplicationQuit() { CloseServer(); }
 
     private void NewPlayerConnected(object sender, ServerClientConnectedEventArgs e)
     {
@@ -134,6 +129,8 @@ public class NetworkManager : MonoBehaviour
             GameManager.GameState = GameState.Ban;
             Server.SendToAll(Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.LoadDraft));
             DraftManager.Init();
+            new Player(e.Client.Id);
+            return;
         }
         new Player(e.Client.Id);
     }

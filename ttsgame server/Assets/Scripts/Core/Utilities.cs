@@ -21,7 +21,7 @@ public struct InterruptData
 
 public static class Utilities
 {
-    private const float GRADIENT = 8 / 360;
+    private const float GRADIENT = 8f / 360f;
 
     public static bool GetChebyshevDistance(Vector2 _origin, Vector2 _target, uint _maxDist)
     {
@@ -42,85 +42,7 @@ public static class Utilities
         return true;
     }
 
-    public static uint ConvertDegToCardinal(float _input){ return (uint)Mathf.RoundToInt(GRADIENT * _input); }
-
-    public static void MoveEntity(IEntityBehaviour _aspect, int _newX, int _newY)
-    {
-        Vector2 newPos = new Vector2(_newX, _newY);
-
-        List<Node> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
-        int pathCost = GetInitiativeCostForPath(path);
-
-        InterruptData data = new InterruptData(_aspect.EntityID, InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby);
-
-        if (GameEventSystem.CheckEventInterrupted(data) || pathCost > _aspect.CurrentActionPoints)
-            return;
-
-        _aspect.FacingDirection = ConvertDegToCardinal(Vector2.Angle(Vector2.up, _aspect.MapPosition - newPos));
-        _aspect.MapPosition = newPos;
-
-        Tilemap.MoveEntityBetweenTiles(_aspect.MapPosition, newPos);
-
-        //TODO:
-        //Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.UpdateEntityPosition);
-        //msg.Add(_aspect.Code);
-        //msg.Add(newPos);
-    }
-    public static void ModifyHealth(IEntityBehaviour _target, HealthModifiedEventInfo _hpModData, bool _ignoreEventListeners = false)
-    {
-        InterruptData interruptData = new InterruptData(_target.EntityID, _hpModData.IsDamage() ? InterruptEventType.Damage : InterruptEventType.Heal, _hpModData);
-
-        if (GameEventSystem.CheckEventInterrupted(interruptData))
-            return;
-
-        if (!_ignoreEventListeners)
-            GameEventSystem.CallEvent(_hpModData);
-
-        float prevHP = _target.CurrentHP;
-        float val = 0f;
-
-        switch (_hpModData.Type)
-        {
-            case StatModifierType.Flat:
-                val = (int)_hpModData.Value;
-                break;
-            case StatModifierType.Max:
-                val = (int)(_target.MaxHP * _hpModData.Value);
-                break;
-            case StatModifierType.Missing:
-                val = (int)((_target.MaxHP - _target.CurrentHP) * _hpModData.Value);
-                break;
-            case StatModifierType.Current:
-                val = (int)(_target.CurrentHP * _hpModData.Value);
-                break;
-        }
-
-        if (_hpModData.IsDamage())
-            val = Mathf.Clamp((val * -1) - _target.CurrentArmor, 0f, val * -1) * -1;
-
-        //client msg to update ui with val
-        _target.SetCurrentHP((uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP));
-    }
-
-    public static int GetInitiativeCostForPath(List<Node> _path)
-    {
-        int total = 0;
-        for (int i = 0; i < _path.Count - 1; i++)
-            for (int j = 0; j < _path[i].Edges.Length; j++)
-                if (_path[i].Edges[j] == _path[i + 1])
-                    total += j % 2 == 0 ? 5 : 10;
-        return total;
-    }
-    public static int GetInitiativeCostForPath(Vector2 _origin, Vector2 _goal)
-    {
-        List<Node> path = Tilemap.GeneratePathToTile(_origin, _goal);
-        int total = 0;
-        for (int i = 0; i < path.Count - 1; i++)
-            for (int j = 0; j < path[i].Edges.Length; j++)
-                if (path[i].Edges[j] == path[i + 1])
-                    total += j % 2 == 0 ? 5 : 10;
-        return total;
-    }
+    public static uint ConvertToCardinal(float _degrees){ return (uint)Mathf.RoundToInt(GRADIENT * _degrees); }
 
     public static List<IEntityBehaviour> FilterEntities(IEntityBehaviour _caster, AbilityTargeting _targetFilter, Message _message)
     {

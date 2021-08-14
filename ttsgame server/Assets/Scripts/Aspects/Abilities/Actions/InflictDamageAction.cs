@@ -21,7 +21,7 @@ public class InflictDamageAction : AbilityAction
         for (int i = 0; i < _targets.Count; i++)
         {
             Debug.Log($"damijing {_targets[i].Name}");
-            _targets[i].ModifyHealth(new HealthModifiedEventInfo(_caster.EntityID, _targets[i].EntityID, this, Type, Damage * -1));
+            Health.Modify(_targets[i], new HealthDataPacket(_caster.EntityID, this, Type, (int)Damage * -1), MitigationType.Pre | MitigationType.Post);
         }
     }
 }
