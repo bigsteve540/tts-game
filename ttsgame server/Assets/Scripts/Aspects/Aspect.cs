@@ -56,8 +56,6 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         MapPosition = _mapPos;
 
         Abilities = d.Abilities;
-
-        Tilemap.GetTile(MapPosition).PlaceEntity(this);
         Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
@@ -82,15 +80,13 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 
 public class AspectTurn : ITimelineEvent
 {
-    public uint Initiative { get; set; }
     public bool PlaceInfront => false;
 
     private IEntityBehaviour caster;
     public AspectTurn(IEntityBehaviour _caster, uint _initiative)
     {
         caster = _caster;
-        Initiative = _initiative;
-        Timeline.AddTimelineEvent(this);
+        Timeline.AddTimelineEvent(_initiative, this);
     }
 
     public void Activate()

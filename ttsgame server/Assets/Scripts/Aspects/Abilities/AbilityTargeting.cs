@@ -14,7 +14,7 @@ public class AbilityTargeting
     public TargetingType Type;
     public TargetFilter Filter;
 
-    public dynamic GetTargets(IEntityBehaviour _caster, Message _extraNetParams)
+    public List<IEntityBehaviour> GetTargets(IEntityBehaviour _caster, Message _extraNetParams)
     {
         return null;
     }

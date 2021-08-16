@@ -8,9 +8,10 @@ public class DebugOutputAction : AbilityAction
     [TextArea]
     public string OutputFormat = default;
 
-    public override void InvokeAction(IEntityBehaviour _caster, dynamic _targets)
+    public override void InvokeAction(IEntityBehaviour _caster, object _targets)
     {
-        for (int i = 0; i < _targets.Count; i++)
-            Debug.Log(OutputFormat + _targets[i].Name);
+        IList list = (IList)_targets;
+        for (int i = 0; i < list.Count; i++)
+            Debug.Log(OutputFormat + (list[i] as IEntityBehaviour).Name);
     }
 }

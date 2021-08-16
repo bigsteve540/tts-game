@@ -27,6 +27,7 @@ public class Player
             return;
 
         Aspects[aspectsIterator++] = new Aspect(GroupID, _code, _pos);
+        Tilemap.GetTile(Aspects[aspectsIterator - 1].MapPosition).PlaceEntity(Aspects[aspectsIterator - 1]);
     }
 
     public Player Wipe()

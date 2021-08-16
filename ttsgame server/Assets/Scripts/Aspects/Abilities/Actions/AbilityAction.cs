@@ -8,5 +8,5 @@ public abstract class AbilityAction : ScriptableObject
     public bool Interruptable = default;
     public InterruptEventType Flags = default;
 
-    public abstract void InvokeAction(IEntityBehaviour _caster, dynamic _targets);
+    public abstract void InvokeAction(IEntityBehaviour _caster, object _targets);
 }

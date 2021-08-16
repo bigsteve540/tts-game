@@ -11,7 +11,7 @@ public struct InterruptData
 
     public dynamic[] ExtraInterruptData { get; }
 
-    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params dynamic[] _extraData) //set flags with | operator
+    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params object[] _extraData) //set flags with | operator
     {
         TriggererID = _triggererID;
         InterruptFlags = _interruptTypes;

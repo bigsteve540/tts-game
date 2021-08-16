@@ -1,25 +1,22 @@
-Tilemap.Init(GameMaps.TestMap);
-
 Aspect gen = new Aspect(-99, "A001", new Vector2(0, 1));
 Aspect d = new Aspect(-1, "A000", new Vector2(10, 0));
 
-GameEventSystem.SubInterrupt(TestInterrupt); // <-- interrupt sample   
+GameEventSystem.SubInterrupt(TestInterrupt); 
 
 Timeline.Progress();
-d.MoveToTile(0, 0);
+Movement.MoveEntity(d, 0, 0, MovementType.Standard);
 
-private bool TestInterrupt(InterruptData _data)
+bool TestInterrupt(InterruptData _data)
 {
     if (!_data.InterruptFlags.HasFlag(InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby))
         return false;
 
-    if (!Utilities.GetChebyshevDistance(new Vector2(0, 1), GameManager.Entities[_data.TriggererID].MapPosition, 7))
+    if (!Utilities.GetChebyshevDistance(gen.MapPosition, GameManager.Entities[_data.TriggererID].MapPosition, 7))
     {
-        int pathCost = (int)_data.ExtraInterruptData[0];
-        IList pathdata = (IList)_data.ExtraInterruptData[1];
+        int pathCost = Movement.GetInitiativeCostForPath(_data.ExtraInterruptData[0]);
 
-        for (int i = 0; i < pathdata.Count; i++)
-            if (Utilities.GetChebyshevDistance(new Vector2(0, 1), (pathdata[i] as Node).Position, 7))
+        for (int i = 0; i < _data.ExtraInterruptData[0].Count; i++)
+            if (Utilities.GetChebyshevDistance(new Vector2(0, 1), (_data.ExtraInterruptData[0][i] as Node).Position, 7))
             {
                 Debug.Log("Interrupted Along Path");
                 return true;

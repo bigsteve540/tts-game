@@ -200,7 +200,7 @@ public static class Tilemap
                 if (node.Edges[i] != null)
                 {
                     int tileIndexor = Width * (int)node.Edges[i].Position.x + (int)node.Edges[i].Position.y;
-                    float moveCost = distances[node] + (((i % 2 == 0) ? 5 : 10) * tiles[tileIndexor].GetMovementCost());
+                    float moveCost = distances[node] + (((i % 2 == 0) ? Movement.HORIZONTAL_MOVE_COST : Movement.DIAGONAL_MOVE_COST) * tiles[tileIndexor].GetMovementCost());
 
                     if (moveCost < distances[node.Edges[i]])
                     {

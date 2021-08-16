@@ -22,15 +22,15 @@ public class InterruptAbilityData : AspectAbilityData
     }
     private bool Interrupt(InterruptData _data)
     {
-        dynamic target = FilterEntities(GameManager.Entities[_data.TriggererID], null);
+        List<IEntityBehaviour> targets = FilterEntities(GameManager.Entities[_data.TriggererID], null);
 
-        if (!_data.InterruptFlags.HasFlag(Flags) && target != null)
+        if (!_data.InterruptFlags.HasFlag(Flags) && targets != null)
             return false;
 
         Debug.Log("Interrupted");
 
         for (int i = 0; i < Actions.Length; i++)
-            Actions[i].InvokeAction(caster, target);
+            Actions[i].InvokeAction(caster, targets);
         return true;
     }
 

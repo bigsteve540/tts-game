@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 [System.Flags]
@@ -16,36 +18,42 @@ public enum InterruptEventType
 public static class Timeline
 {
     public static uint TotalElapsedInitiative { get; private set; } = 0;
+    public static uint EventCount { get { return (uint)timelineEvents.Count; } }
 
-    private static List<ITimelineEvent> timelineEvents = new List<ITimelineEvent>();
+    
+    private static List<Pair<uint,ITimelineEvent>> timelineEvents = new List<Pair<uint, ITimelineEvent>>();
 
-    public static void AddTimelineEvent(ITimelineEvent _event)
+    public static void AddTimelineEvent(uint _initiative, ITimelineEvent _event)
     {
-        if (timelineEvents.Count == 0 || timelineEvents[timelineEvents.Count - 1].Initiative < _event.Initiative)
-            timelineEvents.Add(_event);
+        Pair<uint, ITimelineEvent> timelineEvent = new Pair<uint, ITimelineEvent>(_initiative, _event);
+
+        if (timelineEvents.Count == 0 || timelineEvents[timelineEvents.Count - 1].Initiative < _initiative)
+            timelineEvents.Add(timelineEvent);
         else
         {
             for (int i = 0; i < timelineEvents.Count; i++)
             {
-                if (_event.Initiative == timelineEvents[i].Initiative)
+                if (_initiative == timelineEvents[i].Initiative)
                 {
                     if (_event.PlaceInfront)
-                        timelineEvents.Insert(i, _event);
+                        timelineEvents.Insert(i, timelineEvent);
                     else
                         if(i == timelineEvents.Count)
-                            timelineEvents.Add(_event);
+                            timelineEvents.Add(timelineEvent);
                         else
-                            timelineEvents.Insert(i + 1, _event);
+                            timelineEvents.Insert(i + 1, timelineEvent);
                     break;
                 }
-                else if (_event.Initiative < timelineEvents[i].Initiative)
+                else if (_initiative < timelineEvents[i].Initiative)
                 {
-                    timelineEvents.Insert(i, _event);
+                    timelineEvents.Insert(i, timelineEvent);
                     break;
                 }
             }
         }
     }
+
+    public static void ClearEvents() { timelineEvents.Clear(); }
 
     public static void Progress()
     {
@@ -56,13 +64,27 @@ public static class Timeline
                 uint decrement = timelineEvents[0].Initiative;
                 TotalElapsedInitiative += decrement;
 
-                foreach (ITimelineEvent action in timelineEvents)  
-                    action.Initiative -= decrement;
+                for (int i = 0; i < timelineEvents.Count; i++)
+                    timelineEvents[i].Initiative -= decrement;
             }
 
             //TODO: tell client to update ui or smth
-            timelineEvents[0].Activate();
+            timelineEvents[0].Event.Activate();
             timelineEvents.RemoveAt(0);
         }
+    }
+
+    public static ReadOnlyCollection<Pair<uint, ITimelineEvent>> GetEventsList() { return timelineEvents.AsReadOnly(); }
+}
+
+public class Pair<T1, T2>
+{
+    public T1 Initiative { get; set; }
+    public T2 Event { get; }
+
+    public Pair(T1 _initiative, T2 _event)
+    {
+        Initiative = _initiative;
+        Event = _event;
     }
 }

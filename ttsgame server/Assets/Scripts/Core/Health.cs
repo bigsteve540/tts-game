@@ -9,17 +9,20 @@ public struct HealthDataPacket
     public object Source { get; private set; }
 
     public StatModifierType Type { get; private set; }
-    public int Value { get; private set; } //negative for damage positive for healing
+    public float Value { get; private set; } //negative for damage positive for healing
 
-    public bool IsDamage() { return Mathf.Sign(Value) == -1; }
+    public bool IgnoresArmor { get; }
+
+    public bool IsDamage { get { return Mathf.Sign(Value) == -1; } }
     public void ChangeValue(int _val) { Value = _val; }
 
-    public HealthDataPacket(int _casterID, object _source, StatModifierType _type, int _value)
+    public HealthDataPacket(int _casterID, object _source, StatModifierType _type, float _value, bool _ignoresArmor)
     {
         CasterID = _casterID;
         Source = _source;
         Type = _type;
         Value = _value;
+        IgnoresArmor = _ignoresArmor;
     }
 }
 [System.Flags]
@@ -29,9 +32,9 @@ public static class Health
     private static PremitEventInfo premit;
     private static PostmitEventInfo postmit;
 
-    public static void Modify(IEntityBehaviour _target, HealthDataPacket _info, MitigationType _mitType)
+    public static void Modify(IEntityBehaviour _target, HealthDataPacket _info, MitigationType _mitType = MitigationType.Pre | MitigationType.Post)
     {
-        InterruptData interruptData = new InterruptData(_target.EntityID, _info.IsDamage() ? InterruptEventType.Damage : InterruptEventType.Heal, _info);
+        InterruptData interruptData = new InterruptData(_target.EntityID, _info.IsDamage ? InterruptEventType.Damage : InterruptEventType.Heal, _info);
 
         if (GameEventSystem.CheckEventInterrupted(interruptData))
             return;
@@ -42,13 +45,13 @@ public static class Health
         switch (_info.Type)
         {
             case StatModifierType.Flat:
-                val = _info.Value;
+                val = (int)_info.Value;
                 break;
             case StatModifierType.Max:
                 val = (int)(_target.MaxHP * _info.Value);
                 break;
             case StatModifierType.Missing:
-                val = (int)(_target.MaxHP - _target.CurrentHP) * _info.Value;
+                val = (int)((_target.MaxHP - _target.CurrentHP) * _info.Value);
                 break;
             case StatModifierType.Current:
                 val = (int)(_target.CurrentHP * _info.Value);
@@ -65,8 +68,7 @@ public static class Health
             val = premit.Value;
         }
 
-        if (_info.IsDamage())
-            val = (int)Mathf.Clamp((val * -1) - _target.CurrentArmor, 0f, val * -1) * -1;
+        val = Mathf.Clamp(val + (_info.IgnoresArmor ? 0 : _target.CurrentArmor), _info.IsDamage ? val : 0, _info.IsDamage ? 0 : val);
 
         if (_mitType.HasFlag(MitigationType.Post))
         {

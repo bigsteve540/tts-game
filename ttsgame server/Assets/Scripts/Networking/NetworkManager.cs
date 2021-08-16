@@ -54,7 +54,7 @@ public class NetworkManager : MonoBehaviour
     private void Awake() { Instance = this; }
     private void FixedUpdate() { actionQueue.ExecuteAll(); }
 
-    private void Start()
+    public void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 30;
@@ -87,8 +87,6 @@ public class NetworkManager : MonoBehaviour
 
         Server.Start(port, maxClientCount, actionQueue);
 
-        Tilemap.Init(GameMaps.TestMap);
-
         //Ability casting test sample
         //Player p = new Player(1);
         //p.AddAspect("A000", new Vector2(0, 0));
@@ -107,17 +105,17 @@ public class NetworkManager : MonoBehaviour
         //a.MoveToTile(0, 8);
 
         //Health Affect Pipeline Injection Test Sample
-        Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
+        //Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
 
-        void Shid(PremitEventInfo _info) { _info.Value -= 100; }
+        //void Shid(PremitEventInfo _info) { _info.Value -= 100; }
 
-        GameEventSystem.SubListener<PremitEventInfo>(Shid);
+        //GameEventSystem.SubListener<PremitEventInfo>(Shid);
 
-        Debug.Log(a.CurrentHP);
-        Health.Modify(a, new HealthDataPacket(0, null, StatModifierType.Flat, -300), MitigationType.Pre | MitigationType.Post);
-        Debug.Log(a.CurrentHP);
+        //Debug.Log(a.CurrentHP);
+        //Health.Modify(a, new HealthDataPacket(0, null, StatModifierType.Flat, -300), MitigationType.Pre | MitigationType.Post);
+        //Debug.Log(a.CurrentHP);
 
-        GameEventSystem.UnsubListener<PremitEventInfo>(Shid);
+        //GameEventSystem.UnsubListener<PremitEventInfo>(Shid);
     }
 
     private void OnApplicationQuit() { CloseServer(); }

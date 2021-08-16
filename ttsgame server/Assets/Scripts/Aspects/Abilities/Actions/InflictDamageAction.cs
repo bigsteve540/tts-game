@@ -8,8 +8,9 @@ public class InflictDamageAction : AbilityAction
     [Space]
     public uint Damage = default;
     public StatModifierType Type = default;
+    public bool IgnoreArmor = default;
 
-    public override void InvokeAction(IEntityBehaviour _caster, dynamic _targets)
+    public override void InvokeAction(IEntityBehaviour _caster, object _targets)
     {
         if (Interruptable)
         {
@@ -18,10 +19,12 @@ public class InflictDamageAction : AbilityAction
                 return;
         }
 
-        for (int i = 0; i < _targets.Count; i++)
+        IList<IEntityBehaviour> targetsBoxed = (IList<IEntityBehaviour>)_targets;
+
+        for (int i = 0; i < targetsBoxed.Count; i++)
         {
-            Debug.Log($"damijing {_targets[i].Name}");
-            Health.Modify(_targets[i], new HealthDataPacket(_caster.EntityID, this, Type, (int)Damage * -1), MitigationType.Pre | MitigationType.Post);
+            Debug.Log($"damijing {targetsBoxed[i].Name}");
+            Health.Modify(targetsBoxed[i], new HealthDataPacket(_caster.EntityID, this, Type, (int)Damage * -1, IgnoreArmor));
         }
     }
 }

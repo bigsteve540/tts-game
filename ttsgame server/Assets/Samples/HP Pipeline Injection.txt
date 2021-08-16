@@ -1,0 +1,9 @@
+Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
+
+void Shid(PremitEventInfo _info) { _info.Value -= 100; }
+
+GameEventSystem.SubListener<PremitEventInfo>(Shid);
+
+Debug.Log(a.CurrentHP);
+Health.Modify(a, new HealthDataPacket(0, null, StatModifierType.Flat, -300), MitigationType.Pre | MitigationType.Post);
+Debug.Log(a.CurrentHP);
