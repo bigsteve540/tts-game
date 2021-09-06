@@ -76,6 +76,7 @@ public class DeploymentUI : MonoBehaviour
 
     public void ButtonInteract(int _buttonID)
     {
+        Debug.Log("fuck");
         activeSelection = _buttonID;
 
         if(deployingBody == null)

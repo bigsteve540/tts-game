@@ -17,5 +17,5 @@ MonoBehaviour:
   InitiativeOffset: 0
   MaxActionPoints: 100
   MaxHealth: 2500
-  BaseArmor: 0
+  BaseArmor: 120
   Abilities: []

@@ -39,7 +39,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private string ip = "90.198.198.250";
+    private string ip = "94.8.185.225";
     private ushort port = 9009;
 
     public Client Client { get; private set; }

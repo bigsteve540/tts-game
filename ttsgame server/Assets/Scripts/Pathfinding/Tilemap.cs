@@ -27,8 +27,6 @@ public static class Tilemap
         Width = _layout.Width;
         Height = _layout.Height;
 
-        GeneratePathingGraph(_layout.Width, _layout.Height);
-
         tiles = new Tile[_layout.Width * _layout.Height];
         for (int i = 0; i < tiles.Length; i++)
         {
@@ -37,6 +35,8 @@ public static class Tilemap
                 mapdataMapper[_layout.MapData[i]],
                 _layout.MapData[i].ToString());
         }
+
+        GeneratePathingGraph();
 
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateTilemap);
         msg.Add(_layout.Width);
@@ -88,44 +88,17 @@ public static class Tilemap
                 tileTypes[i] = tiles[i].ConvertStateToByte();
         return tileTypes;
     }
-    private static void GeneratePathingGraph(int _sizeX, int _sizeY)
+    private static void GeneratePathingGraph()
     {
-        graph = new Node[_sizeX, _sizeY];
-        for (int x = 0; x < graph.GetLength(0); x++)
-            for (int y = 0; y < graph.GetLength(1); y++)
-                graph[x, y] = new Node(x,y);
-
-        for (int x = 0; x < graph.GetLength(0); x++)
-            for (int y = 0; y < graph.GetLength(1); y++)
+        for (int x = 0; x < Width; x++)
+            for (int y = 0; y < Height; y++)
             {
                 bool legalLeft = x > 0;
-                bool legalRight = x < _sizeX - 1;
-                bool legalUp = y < _sizeY - 1;
+                bool legalRight = x < Width - 1;
+                bool legalUp = y < Height - 1;
                 bool legalDown = y > 0;
 
-                if (legalLeft)
-                    graph[x, y].Edges[0] = graph[x - 1, y];
-
-                if (legalLeft && legalUp)
-                    graph[x, y].Edges[1] = graph[x - 1, y + 1];
-
-                if (legalUp)
-                    graph[x, y].Edges[2] = graph[x, y + 1];
-
-                if (legalRight && legalUp)  
-                    graph[x, y].Edges[3] = graph[x + 1, y + 1];
-
-                if (legalRight)                  
-                    graph[x, y].Edges[4] = graph[x + 1, y];
-
-                if (legalDown && legalRight)         
-                    graph[x, y].Edges[5] = graph[x + 1, y - 1];
-
-                if (legalDown)       
-                    graph[x, y].Edges[6] = graph[x, y - 1];
-
-                if (legalDown && legalLeft)    
-                    graph[x, y].Edges[7] = graph[x - 1, y - 1];
+                tiles[Width * x + y].SetNeighbours(new bool[] { legalLeft, legalUp, legalRight, legalDown });
             }
     }
 

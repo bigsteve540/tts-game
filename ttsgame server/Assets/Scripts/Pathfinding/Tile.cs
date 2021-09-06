@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
+public enum TileNeighbour { Left, Left_Up, Up, Right_Up, Right, Down_Right, Down, Down_Left }
 public class Tile
 {
     public static ReadOnlyDictionary<int, List<Vector2>> DeploymentZones;
@@ -23,6 +24,7 @@ public class Tile
     public IEntityBehaviour EntityOnTile { get; private set; }
 
     private TileType BaseState { get; }
+    private Tile[] Neighbours = new Tile[8];
 
     public Tile(Vector2 _coords, TileType _baseState, string _mapStringCode)
     {
@@ -56,4 +58,33 @@ public class Tile
         State = BaseState;
     }
     public float GetMovementCost() { return tileCostMultiplier[State]; }
+    public Tile GetNeighbour(TileNeighbour _target)
+    {
+        return Neighbours[(int)_target];
+    }
+    public void SetNeighbours(bool[] _legalities) //ORDER: [L(0), LU, U(1), RU, R(2), DR, D(3), DL]
+    {
+        if (_legalities[0]) //left
+            Neighbours[0] = Tilemap.GetTile((int)Coords.x - 1, (int)Coords.y);
+
+        if (_legalities[0] && _legalities[1]) //left up
+            Neighbours[1] = Tilemap.GetTile((int)Coords.x - 1, (int)Coords.y + 1);
+
+        if (_legalities[1]) //up
+            Neighbours[2] = Tilemap.GetTile((int)Coords.x    , (int)Coords.y + 1);
+
+        if (_legalities[1] && _legalities[2]) //up right
+            Neighbours[3] = Tilemap.GetTile((int)Coords.x + 1, (int)Coords.y + 1);
+        if (_legalities[2]) //right
+            Neighbours[4] = Tilemap.GetTile((int)Coords.x + 1, (int)Coords.y);
+
+        if (_legalities[2] && _legalities[3]) //down right
+            Neighbours[5] = Tilemap.GetTile((int)Coords.x + 1, (int)Coords.y - 1);
+
+        if (_legalities[3]) //down
+            Neighbours[6] = Tilemap.GetTile((int)Coords.x    , (int)Coords.y - 1);
+
+        if (_legalities[0] && _legalities[3]) //down left
+            Neighbours[7] = Tilemap.GetTile((int)Coords.x - 1, (int)Coords.y - 1);
+    }
 }
