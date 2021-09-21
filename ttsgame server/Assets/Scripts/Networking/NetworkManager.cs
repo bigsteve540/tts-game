@@ -86,37 +86,32 @@ public class NetworkManager : MonoBehaviour
         Server.ClientDisconnected += PlayerLeft;
 
         Server.Start(port, maxClientCount, actionQueue);
-
-        Tilemap.Init(GameMaps.TestMap);
-        List<Tile> path = Tilemap.GeneratePathToTile(new Vector2(0, 0), new Vector2(9, 9));
-        for (int i = 1; i < path.Count; i++)
-            Debug.DrawLine(new Vector3(path[i - 1].Coords.x, 1f, path[i - 1].Coords.y), new Vector3(path[i].Coords.x, 1f, path[i].Coords.y), Color.black, Mathf.Infinity);
     }
 
     private void OnApplicationQuit() { CloseServer(); }
 
-    private void NewPlayerConnected(object sender, ServerClientConnectedEventArgs e)
+    private void NewPlayerConnected(object _sender, ServerClientConnectedEventArgs _e)
     {
         if (Server.ClientCount == maxClientCount)
         {
             GameManager.GameState = GameState.Ban;
             Server.SendToAll(Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.LoadDraft));
             DraftManager.Init();
-            new Player(e.Client.Id);
+            new Player(_e.Client.Id);
             return;
         }
-        new Player(e.Client.Id);
+        new Player(_e.Client.Id);
     }
 
-    private void MessageReceived(object sender, ServerMessageReceivedEventArgs e)
+    private void MessageReceived(object _sender, ServerMessageReceivedEventArgs _e)
     {
-        messageHandlers[e.Message.GetUShort()](e.FromClient, e.Message);
+        messageHandlers[_e.Message.GetUShort()](_e.FromClient, _e.Message);
     }
 
-    private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
+    private void PlayerLeft(object _sender, ClientDisconnectedEventArgs _e)
     {
-        Player.AllActive[e.Id].Wipe();
-        Player.AllActive.Remove(e.Id);
+        Player.AllActive[_e.Id].Wipe();
+        Player.AllActive.Remove(_e.Id);
     }
 
     public void CloseServer()

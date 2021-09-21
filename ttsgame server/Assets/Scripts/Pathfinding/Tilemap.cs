@@ -133,7 +133,6 @@ public static class Tilemap
 
     public static List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
     {
-        //TODO: Convert to using Tile class
         Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
         Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();
 

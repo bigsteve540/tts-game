@@ -32,7 +32,7 @@ public class Player
 
     public Player Wipe()
     {
-        //TODO: need to do appropriately cleanup of aspects and stuff
+        //TODO: need to do appropriate cleanup of aspects and stuff
         return this;
     }
 }
