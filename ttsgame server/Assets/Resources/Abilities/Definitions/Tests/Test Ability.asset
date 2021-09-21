@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Test Ability
   Description: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   ActionPointCost: 0
-  Actions: []
-  targeting:
+  Targeting:
     Type: 0
     Filter: {fileID: 0}
+  Actions: []

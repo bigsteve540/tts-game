@@ -11,9 +11,6 @@ public static class Tilemap
     public static int Height { get; private set; }
     private static Tile[] tiles;
 
-    private static Node[,] graph;
-
-
     private static Dictionary<char, TileType> mapdataMapper = new Dictionary<char, TileType>
     {
         {'.', TileType.Normal }, {'1', TileType.Normal }, {'2', TileType.Normal }, {'3', TileType.Normal }, {'4', TileType.Normal },
@@ -134,60 +131,64 @@ public static class Tilemap
         }
     }
 
-    public static List<Node> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
+    public static List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
     {
-        Dictionary<Node, float> distances = new Dictionary<Node, float>();
-        Dictionary<Node, Node> previous = new Dictionary<Node, Node>();
+        //TODO: Convert to using Tile class
+        Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
+        Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();
 
-        List<Node> unvisited = new List<Node>();
+        List<Tile> unvisited = new List<Tile>();
 
-        Node source = graph[(int)_origin.x, (int)_origin.y];
-        Node goal = graph[(int)_goal.x, (int)_goal.y];
+        Tile source = GetTile((int)_origin.x, (int)_origin.y);
+        Tile goal = GetTile((int)_goal.x, (int)_goal.y);
 
         distances.Add(source, 0f);
         previous.Add(source, null);
 
-        foreach (Node node in graph)
+        foreach (Tile tile in tiles)
         {
-            if (node != source)
+            if (tile != source)
             {
-                distances[node] = Mathf.Infinity;
-                previous[node] = null;
+                distances[tile] = Mathf.Infinity;
+                previous[tile] = null;
             }
-            unvisited.Add(node);
+            unvisited.Add(tile);
         }
 
         while (unvisited.Count > 0)
         {
-            Node node = null;
-            foreach (Node uNode in unvisited)
-                if (node == null || distances[uNode] < distances[node])
-                    node = uNode;
+            Tile tile = null;
+            foreach (Tile uTile in unvisited)
+                if (tile == null || distances[uTile] < distances[tile])
+                    tile = uTile;
 
-            if (node == goal)
+            if (tile == goal)
                 break;
 
-            unvisited.Remove(node);
+            unvisited.Remove(tile);
 
-            for (int i = 0; i < node.Edges.Length; i++)
-                if (node.Edges[i] != null)
+            for (int i = 0; i < Tile.NEIGHBOUR_COUNT; i++)
+            {
+                Tile targetNeighbour = tile.GetNeighbour((TileNeighbour)i);
+                if (targetNeighbour != null)
                 {
-                    int tileIndexor = Width * (int)node.Edges[i].Position.x + (int)node.Edges[i].Position.y;
-                    float moveCost = distances[node] + (((i % 2 == 0) ? Movement.HORIZONTAL_MOVE_COST : Movement.DIAGONAL_MOVE_COST) * tiles[tileIndexor].GetMovementCost());
+                    int tileIndexor = Width * (int)targetNeighbour.Coords.x + (int)targetNeighbour.Coords.y;
+                    float moveCost = distances[tile] + (((i % 2 == 0) ? Movement.HORIZONTAL_MOVE_COST : Movement.DIAGONAL_MOVE_COST) * tiles[tileIndexor].GetMovementCost());
 
-                    if (moveCost < distances[node.Edges[i]])
+                    if (moveCost < distances[targetNeighbour])
                     {
-                        distances[node.Edges[i]] = moveCost;
-                        previous[node.Edges[i]] = node;
+                        distances[targetNeighbour] = moveCost;
+                        previous[targetNeighbour] = tile;
                     }
                 }
+            }
         }
 
         if (previous[goal] == null)
             return null;
 
-        List<Node> goalPath = new List<Node>();
-        Node current = goal;
+        List<Tile> goalPath = new List<Tile>();
+        Tile current = goal;
 
         while (current != null)
         {
@@ -197,8 +198,11 @@ public static class Tilemap
 
         goalPath.Reverse();
 
-        if (GetTile((int)goal.Position.x, (int)goal.Position.y).State == TileType.Impassable)
+        if (GetTile((int)goal.Coords.x, (int)goal.Coords.y).State == TileType.Impassable)
+        {
+            Debug.Log("Last tile is impassable");
             goalPath.RemoveAt(goalPath.Count - 1);
+        }
         return goalPath;
     }
 }

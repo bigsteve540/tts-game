@@ -87,35 +87,10 @@ public class NetworkManager : MonoBehaviour
 
         Server.Start(port, maxClientCount, actionQueue);
 
-        //Ability casting test sample
-        //Player p = new Player(1);
-        //p.AddAspect("A000", new Vector2(0, 0));
-        //p.AddAspect("A001", new Vector2(0, 1));
-
-        //Aspect[] testers = new Aspect[]
-        //{
-        //    new Aspect(0, "A000", new Vector2(0, 0));
-        //Aspect a = new Aspect(0, "A001", new Vector2(0, 3));
-        //    new Aspect(0, "A001", new Vector2(1, 5))
-        //};
-
-        //Timeline.Progress();
-        //(p.Aspects[0] as IAbilityCasterBehaviour).CastAbility(Message.Create(MessageSendMode.reliable, 99));
-        //Timeline.Progress();
-        //a.MoveToTile(0, 8);
-
-        //Health Affect Pipeline Injection Test Sample
-        //Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
-
-        //void Shid(PremitEventInfo _info) { _info.Value -= 100; }
-
-        //GameEventSystem.SubListener<PremitEventInfo>(Shid);
-
-        //Debug.Log(a.CurrentHP);
-        //Health.Modify(a, new HealthDataPacket(0, null, StatModifierType.Flat, -300), MitigationType.Pre | MitigationType.Post);
-        //Debug.Log(a.CurrentHP);
-
-        //GameEventSystem.UnsubListener<PremitEventInfo>(Shid);
+        Tilemap.Init(GameMaps.TestMap);
+        List<Tile> path = Tilemap.GeneratePathToTile(new Vector2(0, 0), new Vector2(9, 9));
+        for (int i = 1; i < path.Count; i++)
+            Debug.DrawLine(new Vector3(path[i - 1].Coords.x, 1f, path[i - 1].Coords.y), new Vector3(path[i].Coords.x, 1f, path[i].Coords.y), Color.black, Mathf.Infinity);
     }
 
     private void OnApplicationQuit() { CloseServer(); }

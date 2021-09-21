@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-public enum TileNeighbour { Left, Left_Up, Up, Right_Up, Right, Down_Right, Down, Down_Left }
+public enum TileNeighbour { West, North_West, North, North_East, East, South_East, South, South_West }
 public class Tile
 {
+    public const int NEIGHBOUR_COUNT = 8;
     public static ReadOnlyDictionary<int, List<Vector2>> DeploymentZones;
     private static Dictionary<int, List<Vector2>> deploymentZones = new Dictionary<int, List<Vector2>>();
     private static Dictionary<TileType, float> tileCostMultiplier = new Dictionary<TileType, float>
@@ -24,7 +25,7 @@ public class Tile
     public IEntityBehaviour EntityOnTile { get; private set; }
 
     private TileType BaseState { get; }
-    private Tile[] Neighbours = new Tile[8];
+    private Tile[] Neighbours = new Tile[NEIGHBOUR_COUNT];
 
     public Tile(Vector2 _coords, TileType _baseState, string _mapStringCode)
     {

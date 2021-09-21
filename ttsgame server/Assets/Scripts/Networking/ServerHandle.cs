@@ -52,6 +52,7 @@ public static class ServerHandle
 
     public static void CastAspectAbility(ServerClient _fromClient, Message _message)
     {
+        //TODO: should reference active entity not entity sent by client
         (GameManager.Entities[_message.GetInt()] as IAbilityCasterBehaviour).CastAbility(_message);
     }
 }

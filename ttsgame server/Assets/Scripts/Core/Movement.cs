@@ -16,18 +16,20 @@ public static class Movement
         { MovementType.Blink, InterruptEventType.Movement_Start }
     };
 
-    public static int GetInitiativeCostForPath(List<Node> _path)
+    public static int GetInitiativeCostForPath(List<Tile> _path)
     {
         int total = 0;
         for (int i = 0; i < _path.Count - 1; i++)
-            for (int j = 0; j < _path[i].Edges.Length; j++)
-                if (_path[i].Edges[j] == _path[i + 1])
+            for (int j = 0; j < Tile.NEIGHBOUR_COUNT; j++)
+            {
+                if (_path[i].GetNeighbour((TileNeighbour)j) == _path[i + 1])
                     total += j % 2 == 0 ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST;
+            }
         return total;
     }
     public static int GetInitiativeCostForPath(Vector2 _origin, Vector2 _goal)
     {
-        List<Node> path = Tilemap.GeneratePathToTile(_origin, _goal);
+        List<Tile> path = Tilemap.GeneratePathToTile(_origin, _goal);
         return GetInitiativeCostForPath(path);
     }
 
@@ -35,7 +37,7 @@ public static class Movement
     {
         Vector2 newPos = new Vector2(_newX, _newY);
 
-        List<Node> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
+        List<Tile> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
         int pathCost = GetInitiativeCostForPath(path);
 
         InterruptData data = new InterruptData(_aspect.EntityID, movementTypes[_type], path);

@@ -92,7 +92,6 @@ public static class DraftManager
         msg.Add(ActivePlayerID);
         msg.Add(_aspectCode);
         NetworkManager.Instance.Server.SendToAll(msg);
-
     }
 
     private static void OnUserFailsToSelectAspect()
