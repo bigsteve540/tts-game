@@ -7,16 +7,10 @@ public static class DraftManager
 {
     public static int ActivePlayerID { get; private set; } = 0; //0 indicates not set
 
-    public static Dictionary<int, (string[] Bans, string[] Picks)> PlayerPicksNBans;
-
     private static int draftStepIterator = 0;
     
     public static void Init()
     {
-        PlayerPicksNBans = new Dictionary<int, (string[], string[])>();
-        for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
-            PlayerPicksNBans.Add(i, (new string[GameSettings.TotalBans], new string[GameSettings.AspectCountPerPlayer]));
-
         ActivePlayerID = 1;
 
         SystemClockManager.Begin(GameSettings.PlayerDraftSelectionTime);
@@ -35,33 +29,19 @@ public static class DraftManager
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick)
             return;
 
-        int comparator = GameManager.GameState == GameState.Ban ? GameSettings.BanCountPerPlayer : GameSettings.AspectCountPerPlayer;
-
         switch (GameManager.GameState)
         {
             case GameState.Ban:
-                for (int i = 0; i < comparator; i++)
-                    if (PlayerPicksNBans[_clientID].Bans[i] == null || PlayerPicksNBans[_clientID].Bans[i] == string.Empty)
-                    {
-                        PlayerPicksNBans[_clientID].Bans[i] = _aspectCode;
-                        break;
-                    }
+                Player.AllActive[(ushort)_clientID].BanPool.AssignDraftChoice(_aspectCode);
                 break;
             case GameState.Pick:
-
-                for (int i = 0; i < comparator; i++)
-                    if (PlayerPicksNBans[_clientID].Picks[i] == null || PlayerPicksNBans[_clientID].Picks[i] == string.Empty)
-                    {
-                        PlayerPicksNBans[_clientID].Picks[i] = _aspectCode;
-                        break;
-                    }
+                Player.AllActive[(ushort)_clientID].PickPool.AssignDraftChoice(_aspectCode);
                 break;
         }
         GenerateDraftMessage(_aspectCode);
         TestIteratorOverDraftMax();
 
-        string stateTypeForDebug = GameManager.GameState == GameState.Ban ? "banned" : "picked";
-        Debug.Log($"Player {ActivePlayerID} Successfully {stateTypeForDebug} {_aspectCode}");
+        Debug.Log($"Player {ActivePlayerID} Successfully {(GameManager.GameState == GameState.Ban ? "banned" : "picked")} {_aspectCode}");
 
         AssignNextActivePlayer();
     }

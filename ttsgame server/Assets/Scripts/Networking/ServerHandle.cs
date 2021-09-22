@@ -17,14 +17,16 @@ public static class ServerHandle
 
     public static void DeploymentCompleted(ServerClient _fromClient, Message _message)
     {
+        List<Vector2> aspectPositions = new List<Vector2>();
         for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
         {
-            Vector2 pos = _message.GetVector2();
-            if (Tilemap.GetTile(pos).DeploymentID != _fromClient.Id)
-                throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id}.");
-            Debug.Log($"Player {_fromClient.Id} completed deployment. Generating aspects...");
-            Player.AllActive[_fromClient.Id].AddAspect(DraftManager.PlayerPicksNBans[_fromClient.Id].Picks[i], pos);
+            aspectPositions.Add(_message.GetVector2());
+            if (Tilemap.GetTile(aspectPositions[i]).DeploymentID != _fromClient.Id)
+                throw new Exception($"Illegal placement of entity attempted by client {_fromClient.Id} at position {aspectPositions[i]} in deployment zone designated for client {Tilemap.GetTile(aspectPositions[i]).DeploymentID}");
         }
+
+        Debug.Log($"Player {_fromClient.Id} completed deployment. Generating aspects...");
+        Player.AllActive[_fromClient.Id].AssignAspectsFromPool(aspectPositions);
 
         if(++readyPlayers == NetworkManager.Instance.Server.MaxClientCount)
         {

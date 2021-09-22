@@ -7,32 +7,60 @@ public class Player
 {
     public static Dictionary<ushort, Player> AllActive { get; private set; } = new Dictionary<ushort, Player>();
 
-    public IEntityBehaviour[] Aspects;
-
     public int GroupID { get; private set; } = -1;
-    private int aspectsIterator = 0;
+
+    public AspectPool BanPool;
+    public AspectPool PickPool;
+
+    public IEntityBehaviour[] Aspects;
 
     public Player(ushort _id)
     {
-        AllActive.Add(_id, this);
         GroupID = _id;
+        AllActive.Add(_id, this);
+
+        BanPool = new AspectPool(GameSettings.BanCountPerPlayer);
+        PickPool = new AspectPool(GameSettings.AspectCountPerPlayer);
     }
 
-    public void AddAspect(string _code, Vector2 _pos)
+    public void AssignAspectsFromPool(List<Vector2> _positions)
     {
-        if (Aspects == null)
-            Aspects = new IEntityBehaviour[GameSettings.AspectCountPerPlayer];
+        Aspects = new IEntityBehaviour[GameSettings.AspectCountPerPlayer];
 
-        if (aspectsIterator >= Aspects.Length)
-            return;
-
-        Aspects[aspectsIterator++] = new Aspect(GroupID, _code, _pos);
-        Tilemap.GetTile(Aspects[aspectsIterator - 1].MapPosition).PlaceEntity(Aspects[aspectsIterator - 1]);
+        for (int i = 0; i < GameSettings.AspectCountPerPlayer; i++)
+        {
+            Aspects[i] = new Aspect(GroupID, PickPool.GetDraftChoice(i), _positions[i]);
+            Tilemap.GetTile(_positions[i]).PlaceEntity(Aspects[i]);
+        }
     }
+
 
     public Player Wipe()
     {
         //TODO: need to do appropriate cleanup of aspects and stuff
         return this;
+    }
+
+    public class AspectPool
+    {
+        string[] drafts;
+
+        int iteratorMax = 0;
+        int draftIterator = 0;
+
+        public void AssignDraftChoice(string _aspectCode)
+        {
+            if (draftIterator >= iteratorMax)
+                return;
+
+            drafts[draftIterator++] = _aspectCode;
+        }
+        public string GetDraftChoice(int _index) { return drafts[_index]; }
+
+        public AspectPool(int _poolCount)
+        {
+            iteratorMax = _poolCount;
+            drafts = new string[iteratorMax];
+        }
     }
 }

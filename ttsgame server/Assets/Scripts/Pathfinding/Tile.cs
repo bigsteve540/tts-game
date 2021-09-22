@@ -43,6 +43,7 @@ public class Tile
                 deploymentZones.Add(_result, new List<Vector2>());
 
             deploymentZones[_result].Add(Coords);
+            DeploymentID = _result;
         }
     }
 
@@ -51,6 +52,8 @@ public class Tile
     public void PlaceEntity(IEntityBehaviour _entity)
     {
         EntityOnTile = _entity;
+        EntityOnTile.MapPosition = Coords;
+
         State = TileType.Impassable;
     }
     public void RemoveEntity()

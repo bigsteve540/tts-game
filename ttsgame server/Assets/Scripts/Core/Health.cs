@@ -29,8 +29,7 @@ public struct HealthDataPacket
 public enum MitigationType { Pre, Post }
 public static class Health
 {
-    private static PremitEventInfo premit;
-    private static PostmitEventInfo postmit;
+    private static MitigationEventInfo mitEventInfo;
 
     public static void Modify(IEntityBehaviour _target, HealthDataPacket _info, MitigationType _mitType = MitigationType.Pre | MitigationType.Post)
     {
@@ -58,29 +57,26 @@ public static class Health
                 break;
         }
 
-        if (_mitType.HasFlag(MitigationType.Pre))
-        {
-            if (premit == null)
-                premit = new PremitEventInfo(val);
-            else
-                premit.Value = val;
-            GameEventSystem.CallEvent(premit);
-            val = premit.Value;
-        }
+        TriggerMitigationEvent(_mitType, MitigationType.Pre, ref val);
 
         val = Mathf.Clamp(val + (_info.IgnoresArmor ? 0 : _target.CurrentArmor), _info.IsDamage ? val : 0, _info.IsDamage ? 0 : val);
 
-        if (_mitType.HasFlag(MitigationType.Post))
-        {
-            if (postmit == null)
-                postmit = new PostmitEventInfo(val);
-            else
-                postmit.Value = val;
-            GameEventSystem.CallEvent(postmit);
-            val = postmit.Value;
-        }
+        TriggerMitigationEvent(_mitType, MitigationType.Post, ref val);
 
         //client msg to update ui with val
         _target.SetCurrentHP((uint)Mathf.Clamp(_target.CurrentHP + val, 0f, _target.MaxHP));
+    }
+
+    static void TriggerMitigationEvent(MitigationType _flags, MitigationType _typeToTest, ref int _val)
+    {
+        if (_flags.HasFlag(_typeToTest))
+        {
+            if (mitEventInfo == null)
+                mitEventInfo = new MitigationEventInfo(_typeToTest, _val);
+            else
+                mitEventInfo.Value = _val;
+            GameEventSystem.CallEvent(mitEventInfo);
+            _val = mitEventInfo.Value;
+        }
     }
 }

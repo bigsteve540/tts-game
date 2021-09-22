@@ -92,15 +92,14 @@ public class NetworkManager : MonoBehaviour
 
     private void NewPlayerConnected(object _sender, ServerClientConnectedEventArgs _e)
     {
+        new Player(_e.Client.Id);
         if (Server.ClientCount == maxClientCount)
         {
             GameManager.GameState = GameState.Ban;
             Server.SendToAll(Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.LoadDraft));
             DraftManager.Init();
-            new Player(_e.Client.Id);
             return;
         }
-        new Player(_e.Client.Id);
     }
 
     private void MessageReceived(object _sender, ServerMessageReceivedEventArgs _e)
