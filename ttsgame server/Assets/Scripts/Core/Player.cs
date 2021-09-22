@@ -48,7 +48,7 @@ public class Player
         int iteratorMax = 0;
         int draftIterator = 0;
 
-        public void AssignDraftChoice(string _aspectCode)
+        public void AssignDraftChoice(string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
         {
             if (draftIterator >= iteratorMax)
                 return;

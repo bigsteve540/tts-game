@@ -17,14 +17,7 @@ public static class DraftManager
         SystemClockManager.OnClockTimeout += OnUserFailsToSelectAspect;
     }
 
-    private static void AssignNextActivePlayer()
-    {
-        if (++ActivePlayerID > GameSettings.TotalPlayers)
-            ActivePlayerID = 1;
-        SystemClockManager.Restart();
-    }
-
-    public static void AssignAspect(int _clientID, string _aspectCode) //TODO: make this check that bans are not duplicated after there are enough aspects to allow for effective banning
+    public static void AssignAspect(ushort _clientID, string _aspectCode)
     {
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick)
             return;
@@ -32,10 +25,10 @@ public static class DraftManager
         switch (GameManager.GameState)
         {
             case GameState.Ban:
-                Player.AllActive[(ushort)_clientID].BanPool.AssignDraftChoice(_aspectCode);
+                Player.AllActive[_clientID].BanPool.AssignDraftChoice(_aspectCode);
                 break;
             case GameState.Pick:
-                Player.AllActive[(ushort)_clientID].PickPool.AssignDraftChoice(_aspectCode);
+                Player.AllActive[_clientID].PickPool.AssignDraftChoice(_aspectCode);
                 break;
         }
         GenerateDraftMessage(_aspectCode);
@@ -45,6 +38,7 @@ public static class DraftManager
 
         AssignNextActivePlayer();
     }
+
     private static void TestIteratorOverDraftMax()
     {
         draftStepIterator++;
@@ -73,10 +67,15 @@ public static class DraftManager
         msg.Add(_aspectCode);
         NetworkManager.Instance.Server.SendToAll(msg);
     }
-
     private static void OnUserFailsToSelectAspect()
     {
         SystemClockManager.OnClockTimeout -= OnUserFailsToSelectAspect;
         NetworkManager.Instance.CloseServer();
+    }
+    private static void AssignNextActivePlayer()
+    {
+        if (++ActivePlayerID > GameSettings.TotalPlayers)
+            ActivePlayerID = 1;
+        SystemClockManager.Restart();
     }
 }

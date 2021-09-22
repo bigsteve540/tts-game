@@ -58,7 +58,7 @@ public static class Health
         }
 
         TriggerMitigationEvent(_mitType, MitigationType.Pre, ref val);
-
+        //TODO: this seems kinda fucking dumb and i dont really get what its doing tbh
         val = Mathf.Clamp(val + (_info.IgnoresArmor ? 0 : _target.CurrentArmor), _info.IsDamage ? val : 0, _info.IsDamage ? 0 : val);
 
         TriggerMitigationEvent(_mitType, MitigationType.Post, ref val);
