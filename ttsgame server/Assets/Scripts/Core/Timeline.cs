@@ -20,7 +20,6 @@ public static class Timeline
     public static uint TotalElapsedInitiative { get; private set; } = 0;
     public static uint EventCount { get { return (uint)timelineEvents.Count; } }
 
-    
     private static List<Pair<uint,ITimelineEvent>> timelineEvents = new List<Pair<uint, ITimelineEvent>>();
 
     public static void AddTimelineEvent(uint _initiative, ITimelineEvent _event)

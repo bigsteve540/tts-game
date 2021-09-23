@@ -56,7 +56,6 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         MapPosition = _mapPos;
 
         Abilities = d.Abilities;
-        Debug.Log($"Generated {Name} for group {GroupingID}");
     }
 
     public void CastAbility(Message _message)
@@ -76,6 +75,8 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
         Timeline.Progress();
     }
+
+    public void Die() { throw new NotImplementedException(); }
 }
 
 public class AspectTurn : ITimelineEvent

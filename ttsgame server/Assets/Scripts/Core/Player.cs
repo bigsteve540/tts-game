@@ -31,6 +31,7 @@ public class Player
         {
             Aspects[i] = new Aspect(GroupID, PickPool.GetDraftChoice(i), _positions[i]);
             Tilemap.GetTile(_positions[i]).PlaceEntity(Aspects[i]);
+            Debug.Log($"Generated {Aspects[i].Name} for group {Aspects[i].GroupingID}");
         }
     }
 

@@ -24,7 +24,7 @@ public class InflictDamageAction : AbilityAction
         for (int i = 0; i < targetsBoxed.Count; i++)
         {
             Debug.Log($"damijing {targetsBoxed[i].Name}");
-            Health.Modify(targetsBoxed[i], new HealthDataPacket(_caster.EntityID, this, Type, (int)Damage * -1, IgnoreArmor));
+            Health.Damage(targetsBoxed[i], new HealthDataPacket(_caster.EntityID, this, Type, (int)Damage * -1, IgnoreArmor));
         }
     }
 }

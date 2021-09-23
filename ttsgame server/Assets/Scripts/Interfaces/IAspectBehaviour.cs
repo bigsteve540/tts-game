@@ -42,6 +42,7 @@ public interface ICombatBehaviour
     int CurrentArmor { get; set; }
 
     void SetCurrentHP(uint _val);
+    void Die();
 }
 
 public interface IAbilityCasterBehaviour
