@@ -3,7 +3,7 @@ using RiptideNetworking;
 using System.Collections.Generic;
 
 
-
+//TODO: likely gonna strip abilities back to classes with individual implementations
 [CreateAssetMenu(fileName = "New Ability", menuName = "Aspects/Abilities/Standard")]
 public class AspectAbilityData : ScriptableObject
 {
