@@ -54,7 +54,10 @@ public static class Utilities
         if (_targetFilter.Type == TargetingType.Self)
             return new List<IEntityBehaviour> { _caster };
 
-        final = FilterByRelation(_caster.GroupingID, _targetFilter.Filter);
+        final = _targetFilter.Filter.InitialSamplesFromClient ? 
+            GameManager.GetMultipleEntities(_message.GetInts()) : 
+            FilterByRelation(_caster.GroupingID, _targetFilter.Filter);
+
         List<IEntityBehaviour> toRemove = new List<IEntityBehaviour>(GameManager.Entities.Count);
 
         for (int i = 0; i < _targetFilter.Filter.SelectionFilters.Length; i++)
@@ -67,9 +70,6 @@ public static class Utilities
                 case SelectionFilter.FilterType.Closest:
                     FilterClosest(settings, ref final, ref toRemove);
                     break;
-                case SelectionFilter.FilterType.ClientDesignated:
-                    FilterClientDesignated(_message.GetInts(), ref final, ref toRemove);
-                    break;
                 case SelectionFilter.FilterType.Radius:
                     FilterRadius(settings, ref final, toRemove);
                     break;
@@ -81,7 +81,7 @@ public static class Utilities
         }
         return final;
     }
-    public static List<Vector2> FilterTiles() //TODO
+    public static List<Vector2> FilterTiles() //TODO:
     {
         return null;
     }
@@ -94,11 +94,11 @@ public static class Utilities
             bool entityNeutrality = entity.GroupingID == 0;
             bool entityAlly = entity.GroupingID == _selfGroupID;
 
-            if ((_filter.TargetType & TargetFilter.TargetingRelation.Neutral) == TargetFilter.TargetingRelation.Neutral && entityNeutrality)
+            if ((_filter.TargetType & TargetFilter.TargetingRelation.Neutral) == TargetFilter.TargetingRelation.Neutral && !entityAlly && entityNeutrality)
                 final.Add(entity);
             else if ((_filter.TargetType & TargetFilter.TargetingRelation.Enemy) == TargetFilter.TargetingRelation.Enemy && !entityAlly && !entityNeutrality)
                 final.Add(entity);
-            else if ((_filter.TargetType & TargetFilter.TargetingRelation.Ally) == TargetFilter.TargetingRelation.Ally)
+            else if ((_filter.TargetType & TargetFilter.TargetingRelation.Ally) == TargetFilter.TargetingRelation.Ally && entityAlly && !entityNeutrality)
                 final.Add(entity);
         }
         return final;
@@ -124,19 +124,6 @@ public static class Utilities
             }
         else
             _targetList.Add(inRange[0].Entity);
-    }
-    private static void FilterClientDesignated(int[] _ids, ref List<IEntityBehaviour> _targetList, ref List<IEntityBehaviour> _removerList)
-    {
-        for (int i = 0; i < _targetList.Count; i++)
-        {
-            bool found = false;
-            for (int l = 0; l < _ids.Length; l++)
-                if (_targetList[i].EntityID == _ids[l])
-                    found = true;
-
-            if (!found)
-                _removerList.Add(_targetList[i]);
-        }
     }
     private static void FilterRadius(FilterSettings _settings, ref List<IEntityBehaviour> _targetList, List<IEntityBehaviour> _removerList)
     {

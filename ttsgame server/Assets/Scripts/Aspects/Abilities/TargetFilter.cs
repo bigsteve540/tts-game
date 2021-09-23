@@ -20,7 +20,9 @@ public class TargetFilter : ScriptableObject
 
     public TargetingRelation TargetType;
     public SelfInclusion IncludeSelf;
-
+    [Space]
+    public bool InitialSamplesFromClient;
+    [Space]
     public SelectionFilter[] SelectionFilters;
 }
 
@@ -31,8 +33,7 @@ public class SelectionFilter
     {
         Radius,
         Random,
-        Closest,
-        ClientDesignated
+        Closest
     }
 
     public FilterType Type;

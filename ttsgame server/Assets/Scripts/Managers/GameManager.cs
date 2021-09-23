@@ -19,4 +19,13 @@ public class GameManager : MonoBehaviour //TODO: prolly doesnt need to be monobe
         _entity.Turn = new AspectTurn(_entity, _entity.BaseInitiative);
         return IDCounter++;
     }
+
+    public static List<IEntityBehaviour> GetMultipleEntities(params int[] _ids)
+    {
+        List<IEntityBehaviour> final = new List<IEntityBehaviour>();
+        foreach (int id in _ids)
+            if (Entities.ContainsKey(id))
+                final.Add(Entities[id]);
+        return final;
+    }
 }
