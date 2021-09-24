@@ -17,7 +17,7 @@ namespace Tests
             Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
 
             Assert.AreEqual(1, a.GroupingID);
-            Assert.AreEqual(GameManager.Entities.Count - 1, a.EntityID);
+            Assert.AreEqual(GameManager.Entities.Count, a.EntityID);
 
             Assert.AreEqual(d.Name, a.Name);
             Assert.AreEqual("A000", a.Code);
@@ -35,7 +35,7 @@ namespace Tests
             Assert.AreEqual(d.MaxActionPoints, a.CurrentActionPoints);
 
             Assert.AreEqual(a.MapPosition, new Vector2(0, 0));
-            Assert.AreSame(d.Abilities, a.Abilities);
+            Assert.AreSame(d.Abilities, (a as IAbilityCasterBehaviour).AbilityCaster.Abilities);
         }
     }
 }

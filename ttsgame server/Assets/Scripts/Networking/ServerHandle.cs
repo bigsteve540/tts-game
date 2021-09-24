@@ -55,7 +55,10 @@ public static class ServerHandle
     public static void CastAspectAbility(ServerClient _fromClient, Message _message)
     {
         if (GameManager.ActiveEntity.EntityID == _message.GetInt() && GameManager.ActiveEntity.GroupingID == _fromClient.Id)
-            (GameManager.ActiveEntity as IAbilityCasterBehaviour).CastAbility(_message);   
+        {
+            (GameManager.ActiveEntity as IAbilityCasterBehaviour).AbilityCaster.Cast(_message);
+        }
+             
     }
 }
 

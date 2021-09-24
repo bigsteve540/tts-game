@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEntityBehaviour : ITimelineBehaviour, IMoveBehaviour, ICombatBehaviour {}
+public interface IEntityBehaviour : ITimelineApplicatorBehaviour, IMoveBehaviour, ICombatBehaviour {}
 
-public interface ITimelineBehaviour : IEntityLabels
+public interface ITimelineApplicatorBehaviour : IEntityLabels
 {
     uint BaseInitiative { get; }
     int InitiativeOffset { get; }
@@ -47,8 +47,5 @@ public interface ICombatBehaviour
 
 public interface IAbilityCasterBehaviour
 {
-    AspectAbilityData[] Abilities { get; }
-    List<Func<InterruptData, bool>> ActiveInterrupters { get; set; }
-
-    void CastAbility(Message _message);
+    AbilityCaster AbilityCaster { get; }
 }

@@ -28,13 +28,14 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
     public int BaseArmor { get; }
     public int CurrentArmor { get; set; }
 
-    public AspectAbilityData[] Abilities { get; }
-    public List<Func<InterruptData, bool>> ActiveInterrupters { get; set; } = new List<Func<InterruptData, bool>>();
+    public AbilityCaster AbilityCaster { get; }
 
     public Aspect(int _groupID, string _code, Vector2 _mapPos)
     {
         GroupingID = _groupID;
         EntityID = GameManager.RegisterEntity(this);
+
+        Turn = new AspectTurn(EntityID, BaseInitiative);
 
         AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
 
@@ -55,24 +56,14 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 
         MapPosition = _mapPos;
 
-        Abilities = d.Abilities;
-    }
-
-    public void CastAbility(Message _message)
-    {
-        if (GameManager.ActiveEntity != this)
-            return;
-
-        int abIndex = _message.GetInt();
-        Abilities[abIndex].TriggerAbility(this, _message);
-        CurrentActionPoints -= (uint)Abilities[abIndex].ActionPointCost;
+        AbilityCaster = new AbilityCaster(d.Abilities);
     }
 
     public void SetCurrentHP(uint _val) { CurrentHP = _val; }
 
     public void EndTurn()
     {
-        Turn = new AspectTurn(this, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
+        Turn = new AspectTurn(EntityID, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
         Timeline.Progress();
     }
 
@@ -83,25 +74,23 @@ public class AspectTurn : ITimelineEvent
 {
     public bool PlaceInfront => false;
 
-    private IEntityBehaviour caster;
-    public AspectTurn(IEntityBehaviour _caster, uint _initiative)
+    private int casterID;
+    public AspectTurn(int _casterID, uint _initiative)
     {
-        caster = _caster;
+        casterID = _casterID;
         Timeline.AddTimelineEvent(_initiative, this);
     }
 
     public void Activate()
     {
         //set entity to active, tell client its their turn, if a client inputs something it can be ignored if it's not for active entity & from the appropriate owner of said entity
-        GameManager.ActiveEntity = caster;
+        Debug.Log($"this is {GameManager.GetEntity<IEntityLabels>(casterID).Name}'s turn");
+        GameManager.ActiveEntity = GameManager.Entities[casterID];
+
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.AssignActiveAspect);
-        msg.Add(caster.EntityID);
+        msg.Add(casterID);
         NetworkManager.Instance.Server.SendToAll(msg);
 
-        foreach (Func<InterruptData, bool> interrupter in (caster as IAbilityCasterBehaviour).ActiveInterrupters)
-            GameEventSystem.UnsubInterrupt(interrupter);
-        (caster as IAbilityCasterBehaviour).ActiveInterrupters.Clear();
-
-        Debug.Log($"this is {caster.Name}'s turn");
+        GameManager.GetEntity<IAbilityCasterBehaviour>(casterID).AbilityCaster.ClearInterrupters();
     }
 }
