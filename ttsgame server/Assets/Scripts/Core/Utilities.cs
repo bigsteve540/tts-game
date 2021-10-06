@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Linq;
+using InterruptParameters;
 
 public struct InterruptData
 {
     public int TriggererID { get; }
     public InterruptEventType InterruptFlags { get; }
 
-    public dynamic[] ExtraInterruptData { get; }
+    public IInterruptParameters Parameters { get; }
 
-    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, params object[] _extraData) //set flags with | operator
+    public InterruptData(int _triggererID, InterruptEventType _interruptTypes, IInterruptParameters _parameters) //set flags with | operator
     {
         TriggererID = _triggererID;
         InterruptFlags = _interruptTypes;
-        ExtraInterruptData = _extraData.Length > 0 ? _extraData : null;
+        Parameters = _parameters;
     }
 }
 

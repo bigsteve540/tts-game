@@ -11,8 +11,7 @@ public interface ITimelineApplicatorBehaviour : IEntityLabels
     uint BaseInitiative { get; }
     int InitiativeOffset { get; }
 
-    uint TotalActionPoints { get; }
-    uint CurrentActionPoints { get; }
+    EntityValue ActionPoints { get; }
 
     ITimelineEvent Turn { get; set; }
 
@@ -27,25 +26,21 @@ public interface IEntityLabels
     int GroupingID { get; }
 }
 
-public interface IMoveBehaviour
+public interface IMoveBehaviour : IEntityLabels
 {
     Vector2 MapPosition { get; set; }
     uint FacingDirection { get; set; }
 }
 
-public interface ICombatBehaviour
+public interface ICombatBehaviour : IEntityLabels
 {
-    uint MaxHP { get; }
-    uint CurrentHP { get; }
+    EntityValue Health { get; }
+    EntityStatistic Armor { get; }
 
-    int BaseArmor { get; }
-    int CurrentArmor { get; set; }
-
-    void SetCurrentHP(uint _val);
     void Die();
 }
 
-public interface IAbilityCasterBehaviour
+public interface IAbilityCasterBehaviour : IEntityLabels
 {
     AbilityCaster AbilityCaster { get; }
 }

@@ -15,12 +15,12 @@ public class AbilityCaster
 
     public void ClearInterrupters()
     {
-        foreach (IInterrupter interrupter in Abilities)
+        foreach (IAbilityInterrupter interrupter in Abilities)
             GameEventSystem.UnsubInterrupt(interrupter.InterruptionTest);
     }
 
-    public AbilityCaster(IAbilityLabels[] _abilities)
+    public AbilityCaster(AbilityContainer _container)
     {
-        Abilities = _abilities;
+        Abilities = _container.Abilities;
     }
 }

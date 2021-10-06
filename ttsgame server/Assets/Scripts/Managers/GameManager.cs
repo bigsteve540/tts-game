@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Abilities.Genevive;
 
 public enum GameState { Prep, Ban, Pick, Deploy, Play, Post }
 

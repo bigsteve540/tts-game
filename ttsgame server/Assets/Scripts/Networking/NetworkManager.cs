@@ -51,7 +51,7 @@ public class NetworkManager : MonoBehaviour
     public delegate void MessageHandler(ServerClient fromClient, Message message);
     private Dictionary<ushort, MessageHandler> messageHandlers;
 
-    private void Awake() { Instance = this; }
+    public void Awake() { Instance = this; }
     private void FixedUpdate() { actionQueue.ExecuteAll(); }
 
     public void Start()
@@ -78,6 +78,7 @@ public class NetworkManager : MonoBehaviour
         actionQueue = new ActionQueue();
 
         GameSettings.Init(GameMode.Standard);
+
         maxClientCount = (ushort)GameSettings.TotalPlayers;
 
         Server = new Server();

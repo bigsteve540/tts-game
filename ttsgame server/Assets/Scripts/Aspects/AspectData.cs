@@ -3,6 +3,8 @@
 [CreateAssetMenu(fileName = "New Aspect", menuName ="Aspects/New Aspect")]
 public class AspectData : ScriptableObject
 {
+    public string Code = default;
+    [Space]
     public string Name = default;
     [Space]
     public uint BaseInitiative = default; //dictates where on the timeline aspects will begin the game
@@ -12,6 +14,4 @@ public class AspectData : ScriptableObject
     [Space]
     public uint MaxHealth = default;
     public int BaseArmor = default;
-    [Space]
-    public AbilityData[] Abilities = default;
 }

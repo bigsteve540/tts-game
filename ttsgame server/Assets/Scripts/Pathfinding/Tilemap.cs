@@ -9,6 +9,8 @@ public static class Tilemap
 {
     public static int Width { get; private set; }
     public static int Height { get; private set; }
+
+    public static IReadOnlyCollection<Tile> Tiles { get; private set; }
     private static Tile[] tiles;
 
     private static Dictionary<char, TileType> mapdataMapper = new Dictionary<char, TileType>
@@ -32,6 +34,8 @@ public static class Tilemap
                 mapdataMapper[_layout.MapData[i]],
                 _layout.MapData[i].ToString());
         }
+
+        Tiles = Array.AsReadOnly(tiles);
 
         GeneratePathingGraph();
 
@@ -68,6 +72,7 @@ public static class Tilemap
         tiles[toIndexor].PlaceEntity(tiles[fromIndexor].EntityOnTile);
         tiles[fromIndexor].RemoveEntity();
     }
+
     public static Tile GetTile(int _indexX, int _indexY)
     {
         return tiles[Width * _indexX + _indexY];
@@ -129,79 +134,5 @@ public static class Tilemap
                 go.GetComponent<MeshRenderer>().material.color = groundColor;
             }
         }
-    }
-
-    public static List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
-    {
-        Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
-        Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();
-
-        List<Tile> unvisited = new List<Tile>();
-
-        Tile source = GetTile((int)_origin.x, (int)_origin.y);
-        Tile goal = GetTile((int)_goal.x, (int)_goal.y);
-
-        distances.Add(source, 0f);
-        previous.Add(source, null);
-
-        foreach (Tile tile in tiles)
-        {
-            if (tile != source)
-            {
-                distances[tile] = Mathf.Infinity;
-                previous[tile] = null;
-            }
-            unvisited.Add(tile);
-        }
-
-        while (unvisited.Count > 0)
-        {
-            Tile tile = null;
-            foreach (Tile uTile in unvisited)
-                if (tile == null || distances[uTile] < distances[tile])
-                    tile = uTile;
-
-            if (tile == goal)
-                break;
-
-            unvisited.Remove(tile);
-
-            for (int i = 0; i < Tile.NEIGHBOUR_COUNT; i++)
-            {
-                Tile targetNeighbour = tile.GetNeighbour((TileNeighbour)i);
-                if (targetNeighbour != null)
-                {
-                    int tileIndexor = Width * (int)targetNeighbour.Coords.x + (int)targetNeighbour.Coords.y;
-                    float moveCost = distances[tile] + (((i % 2 == 0) ? Movement.HORIZONTAL_MOVE_COST : Movement.DIAGONAL_MOVE_COST) * tiles[tileIndexor].GetMovementCost());
-
-                    if (moveCost < distances[targetNeighbour])
-                    {
-                        distances[targetNeighbour] = moveCost;
-                        previous[targetNeighbour] = tile;
-                    }
-                }
-            }
-        }
-
-        if (previous[goal] == null)
-            return null;
-
-        List<Tile> goalPath = new List<Tile>();
-        Tile current = goal;
-
-        while (current != null)
-        {
-            goalPath.Add(current);
-            current = previous[current];
-        }
-
-        goalPath.Reverse();
-
-        if (GetTile((int)goal.Coords.x, (int)goal.Coords.y).State == TileType.Impassable)
-        {
-            Debug.Log("Last tile is impassable");
-            goalPath.RemoveAt(goalPath.Count - 1);
-        }
-        return goalPath;
-    }
+    }  
 }

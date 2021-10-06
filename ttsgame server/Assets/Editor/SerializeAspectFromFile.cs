@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
+
 public class SerializeAspectFromFile 
 {
     const string FILE_DIRECTORY = @"Aspect Data";
@@ -46,11 +47,11 @@ public class SerializeAspectFromFile
             MaxHealth = _toSerialize.MaxHealth;
             BaseArmor = _toSerialize.BaseArmor;
 
-            int abilityLen = _toSerialize.Abilities.Length;
+            int abilityLen = AbilityContainer.AbilitiesMap[_toSerialize.Code].Abilities.Length;
             Abilities = new AspectAbilityWrapper[abilityLen];
 
             for (int i = 0; i < abilityLen; i++)
-                Abilities[i] = new AspectAbilityWrapper(_toSerialize.Abilities[i]);
+                Abilities[i] = new AspectAbilityWrapper(AbilityContainer.AbilitiesMap[_toSerialize.Code].Abilities[i]);
         }
     }
 
@@ -58,13 +59,12 @@ public class SerializeAspectFromFile
     struct AspectAbilityWrapper
     {
         public string AbilityName;
+        public string Description;
 
-        public uint ActionPointCost;
-
-        public AspectAbilityWrapper(AbilityData _toSerialize)
+        public AspectAbilityWrapper(IAbilityLabels _toSerialize)
         {
             AbilityName = _toSerialize.Name;
-            ActionPointCost = _toSerialize.ActionPointCost;
+            Description = _toSerialize.Description;
         }
     }
 }

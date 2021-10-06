@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -11,8 +12,10 @@ namespace Tests
         [Test]
         public void Aspect_Create_Passes()
         {
-            // Use the Assert class to test conditions
-            AspectData d = Resources.Load<AspectData>($"Aspects/A000");
+            GameManager.Entities.Clear();
+            AbilityContainer.AbilitiesMap.Clear();
+
+            AspectData d = Resources.LoadAll<AspectData>($"Aspects").Where(aspect => aspect.Code == "A000").First();
 
             Aspect a = new Aspect(1, "A000", new Vector2(0, 0));
 
@@ -22,20 +25,16 @@ namespace Tests
             Assert.AreEqual(d.Name, a.Name);
             Assert.AreEqual("A000", a.Code);
 
-            Assert.AreEqual(d.MaxHealth, a.MaxHP);
-            Assert.AreEqual(d.MaxHealth, a.CurrentHP);
-
-            Assert.AreEqual(d.BaseArmor, a.BaseArmor);
-            Assert.AreEqual(d.BaseArmor, a.CurrentArmor);
+            Assert.AreEqual(d.MaxHealth, a.Health.Current);
+            Assert.AreEqual(d.BaseArmor, a.Armor.Current);
+            Assert.AreEqual(d.MaxActionPoints, a.ActionPoints.Current);
 
             Assert.AreEqual(d.BaseInitiative, a.BaseInitiative);
             Assert.AreEqual(d.InitiativeOffset, a.InitiativeOffset);
 
-            Assert.AreEqual(d.MaxActionPoints, a.TotalActionPoints);
-            Assert.AreEqual(d.MaxActionPoints, a.CurrentActionPoints);
 
             Assert.AreEqual(a.MapPosition, new Vector2(0, 0));
-            Assert.AreSame(d.Abilities, (a as IAbilityCasterBehaviour).AbilityCaster.Abilities);
+            Assert.AreEqual(d.Code, (a as IAbilityCasterBehaviour).Code);
         }
     }
 }

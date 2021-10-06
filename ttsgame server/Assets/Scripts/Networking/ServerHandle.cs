@@ -38,7 +38,7 @@ public static class ServerHandle
                     msg.Add(player.GroupID);
                     msg.Add(player.Aspects[i].EntityID);
                     msg.Add(player.Aspects[i].Code);
-                    msg.Add(player.Aspects[i].CurrentHP);
+                    msg.Add(player.Aspects[i].Health.MeterValue);
                     msg.Add(player.Aspects[i].MapPosition);
                     NetworkManager.Instance.Server.SendToAll(msg);
                 }

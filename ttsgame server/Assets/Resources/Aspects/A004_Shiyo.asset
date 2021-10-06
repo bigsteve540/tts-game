@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
-  m_Name: A003
+  m_Name: A004_Shiyo
   m_EditorClassIdentifier: 
-  Name: Jassepi
+  Code: A004
+  Name: Shiyo
   BaseInitiative: 0
   InitiativeOffset: 0
   MaxActionPoints: 100
-  MaxHealth: 7000
+  MaxHealth: 8000
   BaseArmor: 0
-  Abilities: []

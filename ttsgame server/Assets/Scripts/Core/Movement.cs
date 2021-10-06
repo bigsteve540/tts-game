@@ -1,58 +1,43 @@
-﻿using System.Collections;
+﻿using InterruptParameters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum MovementType { Standard, Dash, Blink }
+using Game.Pathing;
+using RiptideNetworking;
 
 public static class Movement
 {
-    public const int DIAGONAL_MOVE_COST = 10;
-    public const int HORIZONTAL_MOVE_COST = 5;
+    public const InterruptEventType MOVE_ALL = InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby;
+    public const InterruptEventType MOVE_DASH = InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby;
+    public const InterruptEventType MOVE_BLINK = InterruptEventType.Movement_Start;
 
-    private static Dictionary<MovementType, InterruptEventType> movementTypes = new Dictionary<MovementType, InterruptEventType>()
+    public static void MoveEntityAlongPath(IEntityBehaviour _target, Path _path, InterruptEventType _interruptFlags)
     {
-        { MovementType.Standard, InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby },
-        { MovementType.Dash, InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby },
-        { MovementType.Blink, InterruptEventType.Movement_Start }
-    };
+        InterruptData data = new InterruptData(_target.EntityID, _interruptFlags, _path);
 
-    public static int GetInitiativeCostForPath(List<Tile> _path)
-    {
-        int total = 0;
-        for (int i = 0; i < _path.Count - 1; i++)
-            for (int j = 0; j < Tile.NEIGHBOUR_COUNT; j++)
-            {
-                if (_path[i].GetNeighbour((TileNeighbour)j) == _path[i + 1])
-                    total += j % 2 == 0 ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST;
-            }
-        return total;
-    }
-    public static int GetInitiativeCostForPath(Vector2 _origin, Vector2 _goal)
-    {
-        List<Tile> path = Tilemap.GeneratePathToTile(_origin, _goal);
-        return GetInitiativeCostForPath(path);
-    }
-
-    public static void MoveEntity(IEntityBehaviour _aspect, int _newX, int _newY, MovementType _type)
-    {
-        Vector2 newPos = new Vector2(_newX, _newY);
-
-        List<Tile> path = Tilemap.GeneratePathToTile(_aspect.MapPosition, newPos);
-        int pathCost = GetInitiativeCostForPath(path);
-
-        InterruptData data = new InterruptData(_aspect.EntityID, movementTypes[_type], path);
-
-        if (GameEventSystem.CheckEventInterrupted(data) || pathCost > _aspect.CurrentActionPoints)
+        if (GameEventSystem.CheckEventInterrupted(data) || _path.PathCost > _target.ActionPoints.MeterValue)
             return;
 
-        _aspect.FacingDirection = Utilities.ConvertToCardinal(Vector2.Angle(Vector2.up, _aspect.MapPosition - newPos));
-        _aspect.MapPosition = newPos;
+        _target.FacingDirection = Utilities.ConvertToCardinal(Vector2.Angle(Vector2.up, _target.MapPosition - _path.End.Coords));
+        _target.MapPosition = _path.End.Coords;
 
-        Tilemap.MoveEntityBetweenTiles(_aspect.MapPosition, newPos);
+        Tilemap.MoveEntityBetweenTiles(_target.MapPosition, _path.End.Coords);
 
         //TODO: may be healthier to make whatever calls this method do the network messaging instead, as it may not always be required to send movement info to clients
         //Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.UpdateEntityPosition);
         //msg.Add(_aspect.Code);
         //msg.Add(newPos);
+    }
+
+    public class Move : IAbilityStandard
+    {
+        public uint ActionPostCost => 0;
+        public string Name => nameof(Move);
+        public string Description => "Move to a target location.";
+
+        public void Trigger(int _casterID, Message _message)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

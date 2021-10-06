@@ -1,73 +1,94 @@
 ﻿using RiptideNetworking;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 {
     public int GroupingID { get; } //use to "group" entities together: 0 reserved for neutral, negative for server-owned entities, positive for player controlled
-
-    public string Name { get; }
-    public int EntityID { get; }
     public string Code { get; }
 
-    public uint BaseInitiative { get; } 
-    public int InitiativeOffset { get; }
+    public string Name { get; private set; }
+    public int EntityID { get; private set; }
 
-    public uint TotalActionPoints { get; }
-    public uint CurrentActionPoints { get; private set; }
+    public uint BaseInitiative { get; private set; } 
+    public int InitiativeOffset { get; private set; }
+
+    public EntityValue ActionPoints { get; private set; }
 
     public Vector2 MapPosition { get; set; }
     public uint FacingDirection { get; set; }
 
     public ITimelineEvent Turn { get; set; }
 
-    public uint MaxHP { get; }
-    public uint CurrentHP { get; private set; }
-
-    public int BaseArmor { get; }
-    public int CurrentArmor { get; set; }
+    public EntityValue Health { get; private set; }
+    public EntityStatistic Armor { get; private set; }
 
     public AbilityCaster AbilityCaster { get; }
+
+    public void AssignTurn(ITimelineEvent _turn) { Turn = _turn; }
+
+    public void EndTurn()
+    {
+        Turn = new AspectTurn(EntityID, ActionPoints.MeterValue < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
+        Timeline.Progress();
+    }
+
+    public void Die() { throw new NotImplementedException(); }
 
     public Aspect(int _groupID, string _code, Vector2 _mapPos)
     {
         GroupingID = _groupID;
         EntityID = GameManager.RegisterEntity(this);
 
-        Turn = new AspectTurn(EntityID, BaseInitiative);
-
-        AspectData d = Resources.Load<AspectData>($"Aspects/{_code}");
-
-        Name = d.Name;
         Code = _code;
-
-        MaxHP = d.MaxHealth;
-        CurrentHP = MaxHP;
-
-        BaseArmor = d.BaseArmor;
-        CurrentArmor = BaseArmor;
-
-        BaseInitiative = d.BaseInitiative;
-        InitiativeOffset = d.InitiativeOffset;
-
-        TotalActionPoints = d.MaxActionPoints;
-        CurrentActionPoints = TotalActionPoints;
+        InitialiseStatistics(Code);
 
         MapPosition = _mapPos;
 
-        AbilityCaster = new AbilityCaster(d.Abilities);
+        if (AbilityContainer.AbilitiesMap.ContainsKey(Code))
+            AbilityCaster = new AbilityCaster(AbilityContainer.AbilitiesMap[Code]);
+
+        AssignTurn(new AspectTurn(EntityID, BaseInitiative));
     }
-
-    public void SetCurrentHP(uint _val) { CurrentHP = _val; }
-
-    public void EndTurn()
+    public Aspect(int _groupID, string _code, Vector2 _mapPos, ITimelineEvent _turn)
     {
-        Turn = new AspectTurn(EntityID, CurrentActionPoints < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
-        Timeline.Progress();
+        GroupingID = _groupID;
+        EntityID = GameManager.RegisterEntity(this);
+
+        Code = _code;
+        InitialiseStatistics(Code);
+
+        MapPosition = _mapPos;
+
+        if (!AbilityContainer.AbilitiesMap.ContainsKey(Code))
+            new AbilityContainer(Code);
+
+        AbilityCaster = new AbilityCaster(AbilityContainer.AbilitiesMap[Code]);
+
+        AssignTurn(_turn);
     }
 
-    public void Die() { throw new NotImplementedException(); }
+    private void InitialiseStatistics(string _code)
+    {
+        AspectData data = Resources.LoadAll<AspectData>($"Aspects").Where(aspect => aspect.Code == _code).First();
+
+        Name = data.Name;
+
+        Armor = new EntityStatistic(data.BaseArmor);
+        Health = new EntityValue(EntityID, EntityValueType.Health, (int)data.MaxHealth, (_val) => 
+        {
+            if (Mathf.Sign(_val) == -1)
+                _val += Armor.Current;
+            return _val;
+        });
+
+        BaseInitiative = data.BaseInitiative;
+        InitiativeOffset = data.InitiativeOffset;
+
+        ActionPoints = new EntityValue(EntityID, EntityValueType.Action_Points, (int)data.MaxActionPoints);
+    }
 }
 
 public class AspectTurn : ITimelineEvent

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class GameEventSystem
 {
+    //WARNING: GetHashCode does NOT prevent hash collisions but they are unique enough for the time being.
     delegate void EventListener(GameEventInfo _info);
 
     static bool iterating = false;

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a58e3326b7d076348a98143fbfd466de, type: 3}
-  m_Name: A001
+  m_Name: A003_Jassepi
   m_EditorClassIdentifier: 
-  Name: Genevive
+  Code: A003
+  Name: Jassepi
   BaseInitiative: 0
   InitiativeOffset: 0
   MaxActionPoints: 100
-  MaxHealth: 2500
-  BaseArmor: 120
-  Abilities: []
+  MaxHealth: 7000
+  BaseArmor: 0
