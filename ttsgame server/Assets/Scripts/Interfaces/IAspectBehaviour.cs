@@ -37,7 +37,7 @@ public interface ICombatBehaviour : IEntityLabels
     EntityValue Health { get; }
     EntityStatistic Armor { get; }
 
-    void Die();
+    void Die(OnMeterEmpty _info);
 }
 
 public interface IAbilityCasterBehaviour : IEntityLabels

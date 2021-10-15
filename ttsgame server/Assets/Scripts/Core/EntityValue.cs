@@ -33,6 +33,8 @@ public class EntityValue : EntityStatistic
 
     private MitigationEventInfo mitEventInfo;
     private EntityValueEffectParameters parameters;
+    private OnMeterEmpty meterEmptyInfo;
+
     private System.Func<int, int> mitigator { get; }
     private int entityID { get; }
 
@@ -75,12 +77,19 @@ public class EntityValue : EntityStatistic
 
         if(MeterValue == 0)
         {
-            //TODO: create deathinfo pack for gameeventsystem
+            meterEmptyInfo = new OnMeterEmpty(entityID, MeterType, _meterEffector);
+            GameEventSystem.CallEvent(meterEmptyInfo);
         }
     }
 
     public void FillToCurrent() { MeterValue = Current; }
-    public void SetValueTo0() { MeterValue = 0; }
+    public void SetValueTo0()
+    {
+        MeterValue = 0;
+        meterEmptyInfo = new OnMeterEmpty(entityID, MeterType, 
+            new ValueEffector(entityID, this, ValueEffectorType.Flat, MeterValue));
+        GameEventSystem.CallEvent(meterEmptyInfo);
+    }
 
     private void TriggerMitigationEvents(MitigationType _flags, MitigationType _typeToMit, int _val)
     {

@@ -8,6 +8,7 @@ public static class ServerHandle
 {
     private static int readyPlayers = 0;
 
+    [MessageHandler((ushort)ClientToServerRequest.DraftInteract)]
     public static void DraftInteract(ServerClient _fromClient, Message _message)
     {
         if (GameManager.GameState != GameState.Ban && GameManager.GameState != GameState.Pick || _fromClient.Id != DraftManager.ActivePlayerID)
@@ -15,6 +16,7 @@ public static class ServerHandle
         DraftManager.AssignAspect(_fromClient.Id, _message.GetString());
     }
 
+    [MessageHandler((ushort)ClientToServerRequest.DeploymentCompleted)]
     public static void DeploymentCompleted(ServerClient _fromClient, Message _message)
     {
         List<Vector2> aspectPositions = new List<Vector2>();
@@ -52,6 +54,7 @@ public static class ServerHandle
         }
     }
 
+    [MessageHandler((ushort)ClientToServerRequest.CastAspectAbility)]
     public static void CastAspectAbility(ServerClient _fromClient, Message _message)
     {
         if (GameManager.ActiveEntity.EntityID == _message.GetInt() && GameManager.ActiveEntity.GroupingID == _fromClient.Id)

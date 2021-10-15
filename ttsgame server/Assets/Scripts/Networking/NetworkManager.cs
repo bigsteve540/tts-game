@@ -20,7 +20,7 @@ public enum ClientToServerRequest : ushort
     DeploymentCompleted,
     CastAspectAbility
 }
-
+//FIXME: update client to Riptide v0.7.0
 public class NetworkManager : MonoBehaviour
 {
     private static NetworkManager instance;
@@ -43,16 +43,9 @@ public class NetworkManager : MonoBehaviour
     private ushort maxClientCount;
 
     public Server Server { get; private set; }
-    private ActionQueue actionQueue;
-
-    /// <summary>Encapsulates a method that handles a message from a certain client.</summary>
-    /// <param name="fromClient">The client from whom the message was received.</param>
-    /// <param name="message">The message that was received.</param>
-    public delegate void MessageHandler(ServerClient fromClient, Message message);
-    private Dictionary<ushort, MessageHandler> messageHandlers;
 
     public void Awake() { Instance = this; }
-    private void FixedUpdate() { actionQueue.ExecuteAll(); }
+    private void FixedUpdate() { Server.Tick(); }
 
     public void Start()
     {
@@ -68,25 +61,19 @@ public class NetworkManager : MonoBehaviour
         RiptideLogger.Initialize(Debug.Log, true);
 #endif
 
-        messageHandlers = new Dictionary<ushort, MessageHandler>()
-        {
-            { (ushort)ClientToServerRequest.DraftInteract, ServerHandle.DraftInteract },
-            { (ushort)ClientToServerRequest.DeploymentCompleted, ServerHandle.DeploymentCompleted },
-            { (ushort)ClientToServerRequest.CastAspectAbility, ServerHandle.CastAspectAbility }
-        };
-
-        actionQueue = new ActionQueue();
-
         GameSettings.Init(GameMode.Standard);
 
         maxClientCount = (ushort)GameSettings.TotalPlayers;
 
         Server = new Server();
         Server.ClientConnected += NewPlayerConnected;
-        Server.MessageReceived += MessageReceived;
         Server.ClientDisconnected += PlayerLeft;
 
-        Server.Start(port, maxClientCount, actionQueue);
+        Server.Start(port, maxClientCount);
+        Tilemap.Init(GameMaps.TestMap);
+
+        Aspect a = new Aspect(-99, "A000", new Vector2(0, 0));
+        Movement.MoveEntityAlongPath(a, new Game.Pathing.Path(a.MapPosition, new Vector2(9, 9), InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby));
     }
 
     private void OnApplicationQuit() { CloseServer(); }
@@ -103,11 +90,6 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private void MessageReceived(object _sender, ServerMessageReceivedEventArgs _e)
-    {
-        messageHandlers[_e.Message.GetUShort()](_e.FromClient, _e.Message);
-    }
-
     private void PlayerLeft(object _sender, ClientDisconnectedEventArgs _e)
     {
         Player.AllActive[_e.Id].Wipe();
@@ -119,7 +101,6 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
 
         Server.ClientConnected -= NewPlayerConnected;
-        Server.MessageReceived -= MessageReceived;
         Server.ClientDisconnected -= PlayerLeft;
     }
 }

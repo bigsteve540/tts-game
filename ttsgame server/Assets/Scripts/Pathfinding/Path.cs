@@ -16,6 +16,8 @@ namespace Game.Pathing
         public Tile Start => Tiles[0];
         public Tile End => Tiles[Tiles.Count - 1];
 
+        public InterruptEventType MovementFlags { get; }
+
         //TODO: create a version of this which is embedded within the GeneratePathToTile method to make it minimal alloc
         private uint GetInitiativeCostForPath(List<Tile> _path)
         {
@@ -30,9 +32,12 @@ namespace Game.Pathing
         {
             return GetInitiativeCostForPath(GeneratePathToTile(_origin, _goal));
         }
-
+        
+        //TODO: make blinks ignore impassable/difficult terrain
         private List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
         {
+            bool isBlink = (MovementFlags == InterruptEventType.Movement_Start);
+
             Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
             Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();
 
@@ -71,7 +76,7 @@ namespace Game.Pathing
                     Tile targetNeighbour = tile.GetNeighbour((TileNeighbour)i);
                     if (targetNeighbour != null)
                     {
-                        float moveCost = distances[tile] + (((i % 2 == 0) ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST) * Tilemap.GetTile(targetNeighbour.Coords).GetMovementCost());
+                        float moveCost = distances[tile] + (((i % 2 == 0) ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST) * (isBlink ? 1f : Tilemap.GetTile(targetNeighbour.Coords).GetMovementCost()));
 
                         if (moveCost < distances[targetNeighbour])
                         {
@@ -96,6 +101,7 @@ namespace Game.Pathing
 
             goalPath.Reverse();
 
+            //TODO: make this check recursive to find the nearest valid tile placement along path
             if (Tilemap.GetTile((int)goal.Coords.x, (int)goal.Coords.y).State == TileType.Impassable)
             {
                 Debug.Log("Last tile is impassable");
@@ -104,10 +110,11 @@ namespace Game.Pathing
             return goalPath;
         }
 
-        public Path(Vector2 _origin, Vector2 _goal, bool _isTeleport)
+        public Path(Vector2 _origin, Vector2 _goal, InterruptEventType _movementFlags)
         {
             Tiles = GeneratePathToTile(_origin, _goal);
             PathCost = GetInitiativeCostForPath(Tiles);
+            MovementFlags = _movementFlags;
         }
     }
 }

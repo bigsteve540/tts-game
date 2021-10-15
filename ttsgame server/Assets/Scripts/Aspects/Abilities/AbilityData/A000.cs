@@ -25,17 +25,14 @@ namespace Abilities.Genevive
         {
             IEntityBehaviour target = GameManager.Entities[_message.GetInt()];
 
-            Parameters = new Path(GameManager.Entities[_casterID].MapPosition, target.MapPosition, false);
-
+            Parameters = new Path(GameManager.Entities[_casterID].MapPosition, target.MapPosition, InterruptFlags);
             InterruptData = new InterruptData(_casterID, InterruptFlags, Parameters);
+
             if (GameEventSystem.CheckEventInterrupted(InterruptData))
                 return;
 
-            new ValueEffector();
-
-            Movement.MoveEntityAlongPath(GameManager.Entities[_casterID], (Parameters as Path), InterruptFlags);
-
-            throw new System.NotImplementedException();
+            Movement.MoveEntityAlongPath(GameManager.Entities[_casterID], (Parameters as Path));
+            target.Health.Modify(new ValueEffector(_casterID, this, ModType, Value));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace InterruptParameters
     {
         List<Tile> Tiles { get; }
         uint PathCost { get; }
+        InterruptEventType MovementFlags { get; }
     }
     public interface IMeterEffectParameters : IInterruptParameters
     {

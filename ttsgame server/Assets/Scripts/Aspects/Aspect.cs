@@ -31,11 +31,22 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
 
     public void EndTurn()
     {
+        if (GameManager.ActiveEntity.EntityID != EntityID)
+            return;
+
         Turn = new AspectTurn(EntityID, ActionPoints.MeterValue < 50 ? (uint)(100 - InitiativeOffset) : (uint)(50 - InitiativeOffset));
         Timeline.Progress();
     }
 
-    public void Die() { throw new NotImplementedException(); }
+    public void Die(OnMeterEmpty _info)
+    {
+        if (_info.MeterType == EntityValueType.Health && _info.EntityID == EntityID)
+        {
+            //TODO: death stuff
+            if (GameManager.ActiveEntity == this)
+                EndTurn();
+        }
+    }
 
     public Aspect(int _groupID, string _code, Vector2 _mapPos)
     {
@@ -68,6 +79,7 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         AbilityCaster = new AbilityCaster(AbilityContainer.AbilitiesMap[Code]);
 
         AssignTurn(_turn);
+        GameEventSystem.SubListener<OnMeterEmpty>(Die);
     }
 
     private void InitialiseStatistics(string _code)

@@ -11,9 +11,9 @@ public static class Movement
     public const InterruptEventType MOVE_DASH = InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby;
     public const InterruptEventType MOVE_BLINK = InterruptEventType.Movement_Start;
 
-    public static void MoveEntityAlongPath(IEntityBehaviour _target, Path _path, InterruptEventType _interruptFlags)
+    public static void MoveEntityAlongPath(IEntityBehaviour _target, Path _path)
     {
-        InterruptData data = new InterruptData(_target.EntityID, _interruptFlags, _path);
+        InterruptData data = new InterruptData(_target.EntityID, _path.MovementFlags, _path);
 
         if (GameEventSystem.CheckEventInterrupted(data) || _path.PathCost > _target.ActionPoints.MeterValue)
             return;

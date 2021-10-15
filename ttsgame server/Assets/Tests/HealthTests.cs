@@ -11,7 +11,6 @@ namespace Tests
         const int FLAT_DAMAGE = -200;
         const int FLAT_HEAL = 100;
 
-
         public class DamageTests
         {
             [Test]
