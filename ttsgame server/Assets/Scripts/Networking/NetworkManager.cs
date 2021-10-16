@@ -73,7 +73,7 @@ public class NetworkManager : MonoBehaviour
         Server.Start(port, maxClientCount);
         Tilemap.Init(GameMaps.TestBisectedMap);
 
-        Path p = new Path(new Vector2(0, 0), new Vector2(4, 4), InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby);
+        Path p = new Path(new Vector2(0, 0), new Vector2(4, 4), Movement.MOVE_ALL);
         Debug.Log(p.Tiles.Count);
     }
 

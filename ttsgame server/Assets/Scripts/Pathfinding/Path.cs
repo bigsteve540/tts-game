@@ -52,6 +52,7 @@ namespace Game.Pathing
                 unvisited.Add(tile);
             }
 
+            //this part is EXTREMELY slow, would like to find a way to optimise this further
             while (unvisited.Count > 0)
             {
                 Tile tile = null;
