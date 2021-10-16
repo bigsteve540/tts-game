@@ -18,25 +18,18 @@ namespace Game.Pathing
 
         public InterruptEventType MovementFlags { get; }
 
-        //TODO: create a version of this which is embedded within the GeneratePathToTile method to make it minimal alloc
-        private uint GetInitiativeCostForPath(List<Tile> _path)
+        private uint GetInitiativeCostForPath()
         {
             uint total = 0;
-            for (int i = 0; i < _path.Count - 1; i++)
-                for (int j = 0; j < Tile.NEIGHBOUR_COUNT; j++)
-                    if (_path[i].GetNeighbour((TileNeighbour)j) == _path[i + 1])
-                        total += j % 2 == 0 ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST;
+            for (int i = 0; i < Tiles.Count - 1; i++)
+                total += (Tiles[i + 1].Coords.x == Tiles[i].Coords.x || Tiles[i + 1].Coords.y == Tiles[i].Coords.y) ? HORIZONTAL_MOVE_COST : DIAGONAL_MOVE_COST;
             return total;
         }
-        private uint GetInitiativeCostForPath(Vector2 _origin, Vector2 _goal)
-        {
-            return GetInitiativeCostForPath(GeneratePathToTile(_origin, _goal));
-        }
         
-        //TODO: make blinks ignore impassable/difficult terrain
         private List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
         {
-            bool isBlink = (MovementFlags == InterruptEventType.Movement_Start);
+            bool isBlink = MovementFlags == InterruptEventType.Movement_Start;
+            Debug.Log(isBlink);
 
             Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
             Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();
@@ -87,10 +80,15 @@ namespace Game.Pathing
                 }
             }
 
-            if (previous[goal] == null)
-                return null;
-
             List<Tile> goalPath = new List<Tile>();
+
+            //TODO: if end goal is unreachable, should output the path up until the point of being blocked
+            if (previous[goal] == null)
+            {
+                goalPath.Add(source);
+                return goalPath;
+            }
+
             Tile current = goal;
 
             while (current != null)
@@ -100,21 +98,30 @@ namespace Game.Pathing
             }
 
             goalPath.Reverse();
+            goalPath = RecursiveImpassableTileRemove(goalPath.Count, goalPath);
 
-            //TODO: make this check recursive to find the nearest valid tile placement along path
-            if (Tilemap.GetTile((int)goal.Coords.x, (int)goal.Coords.y).State == TileType.Impassable)
-            {
-                Debug.Log("Last tile is impassable");
-                goalPath.RemoveAt(goalPath.Count - 1);
-            }
             return goalPath;
+        }
+
+        private List<Tile> RecursiveImpassableTileRemove(int _cntr, List<Tile> _tiles)
+        {
+            _cntr--;
+            if (_cntr == -1)
+                return _tiles;
+
+            if (_tiles[_cntr].State != TileType.Impassable)
+                return _tiles;
+
+            Debug.Log($"Tile {_cntr} is impassable");
+            _tiles.RemoveAt(_cntr);
+            return RecursiveImpassableTileRemove(_cntr, _tiles);
         }
 
         public Path(Vector2 _origin, Vector2 _goal, InterruptEventType _movementFlags)
         {
-            Tiles = GeneratePathToTile(_origin, _goal);
-            PathCost = GetInitiativeCostForPath(Tiles);
             MovementFlags = _movementFlags;
+            Tiles = GeneratePathToTile(_origin, _goal);
+            PathCost = GetInitiativeCostForPath();
         }
     }
 }

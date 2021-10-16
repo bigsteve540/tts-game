@@ -13,7 +13,7 @@ public class Tile
     {
         { TileType.Normal, 1f },
         { TileType.Difficult, 1.5f },
-        { TileType.Impassable, 999f }
+        { TileType.Impassable, Mathf.Infinity }
     };
 
     public Vector2 Coords { get; }

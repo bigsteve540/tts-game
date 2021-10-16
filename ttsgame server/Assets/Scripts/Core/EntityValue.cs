@@ -43,7 +43,6 @@ public class EntityValue : EntityStatistic
         if (parameters == null)
             parameters = new EntityValueEffectParameters(entityID, this, MeterType, _meterEffector.Value);
 
-        //TODO: create interruptparams class for entitymeters
         InterruptData interruptData = new InterruptData(entityID, InterruptEventType.Entity_Meter_Modify, parameters);
         if (GameEventSystem.CheckEventInterrupted(interruptData))
             return;

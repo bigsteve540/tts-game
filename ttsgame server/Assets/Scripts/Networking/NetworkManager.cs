@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
+using Game.Pathing;
 
 public enum ServerToClientRequest : ushort
 {
@@ -61,7 +62,7 @@ public class NetworkManager : MonoBehaviour
         RiptideLogger.Initialize(Debug.Log, true);
 #endif
 
-        GameSettings.Init(GameMode.Standard);
+        GameSettings.Init(GameMode.OnePDebug);
 
         maxClientCount = (ushort)GameSettings.TotalPlayers;
 
@@ -70,10 +71,10 @@ public class NetworkManager : MonoBehaviour
         Server.ClientDisconnected += PlayerLeft;
 
         Server.Start(port, maxClientCount);
-        Tilemap.Init(GameMaps.TestMap);
+        Tilemap.Init(GameMaps.TestBisectedMap);
 
-        Aspect a = new Aspect(-99, "A000", new Vector2(0, 0));
-        Movement.MoveEntityAlongPath(a, new Game.Pathing.Path(a.MapPosition, new Vector2(9, 9), InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby));
+        Path p = new Path(new Vector2(0, 0), new Vector2(4, 4), InterruptEventType.Movement_Start | InterruptEventType.Movement_Passby);
+        Debug.Log(p.Tiles.Count);
     }
 
     private void OnApplicationQuit() { CloseServer(); }

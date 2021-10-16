@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameMode { Standard }
+public enum GameMode { OnePDebug, Standard }
 public class GameSettings
 {
     public static int TeamCount { get; private set; }
@@ -24,6 +24,17 @@ public class GameSettings
         {
             case GameMode.Standard:
                 TeamCount = 2;
+                PlayersPerTeam = 1;
+
+                AspectCountPerPlayer = 5;
+                BanCountPerPlayer = 3;
+
+                PlayerDraftSelectionTime = 30;
+                PlayerDeploymentTime = 60;
+                PlayerTurnTimeLimit = 90;
+                break;
+            case GameMode.OnePDebug:
+                TeamCount = 1;
                 PlayersPerTeam = 1;
 
                 AspectCountPerPlayer = 5;

@@ -25,6 +25,27 @@ public static class GameMaps
         "11111111111111111111" +
         "11111111111111111111" +
         "11111111111111111111");
+
+    public static GameMapLayout TestAllWalls2Spawn = new GameMapLayout(5, 5,
+        "1XXXX" +
+        "XXXXX" +
+        "XXXXX" +
+        "XXXXX" +
+        "XXXX2");
+
+    public static GameMapLayout TestBisectedMap = new GameMapLayout(5, 5,
+        "1...." +
+        "....." +
+        "XXXXX" + 
+        "....." +
+        "....2");
+
+    public static GameMapLayout TestAllWalls1Spawn = new GameMapLayout(5, 5,
+        "1XXXX" +
+        "XXXXX" +
+        "XXXXX" +
+        "XXXXX" +
+        "XXXXX");
 }
 public struct GameMapLayout
 {
