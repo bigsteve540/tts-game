@@ -30,7 +30,6 @@ public static class Timeline
         else
         {
             for (int i = 0; i < timelineEvents.Count; i++)
-            {
                 if (_initiative == timelineEvents[i].Initiative)
                 {
                     if (_event.PlaceInfront)
@@ -47,7 +46,6 @@ public static class Timeline
                     timelineEvents.Insert(i, timelineEvent);
                     break;
                 }
-            }
         }
     }
 

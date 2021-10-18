@@ -28,58 +28,67 @@ public static class Tilemap
 
         tiles = new Tile[_layout.Width * _layout.Height];
         for (int i = 0; i < tiles.Length; i++)
-        {
             tiles[i] = new Tile(
                 new Vector2(i / _layout.Width, i % _layout.Width),
                 mapdataMapper[_layout.MapData[i]],
                 _layout.MapData[i].ToString());
-        }
 
         Tiles = Array.AsReadOnly(tiles);
 
         GeneratePathingGraph();
 
         Message msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateTilemap);
-        msg.Add(_layout.Width);
-        msg.Add(_layout.Height);
 
-        msg.Add(ConvertMapToBytes(), true, true);
-
-        NetworkManager.Instance.Server.SendToAll(msg);
-
-        for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
-        {
-            msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateDeploymentZones);
-            msg.Add(i);
-            msg.Add(Tile.DeploymentZones[i].Count);
-            for (int j = 0; j < Tile.DeploymentZones[i].Count; j++)
-                msg.Add(Tile.DeploymentZones[i][j]);
-            NetworkManager.Instance.Server.SendToAll(msg);
-        }
+        SendMapGenerate(ref msg);
+        SendDeploymentZoneGenerate(ref msg);
 
         DrawDebugMap();
     }
 
     public static void MoveEntityBetweenTiles(Vector2 _from, Vector2 _to) 
     {
-        int toIndexor = Width * (int)_to.x + (int)_to.y;
-        int fromIndexor = Width * (int)_from.x + (int)_from.y;
+        int toIndexor = (Width * Mathf.RoundToInt(_to.x)) + Mathf.RoundToInt(_to.y);
+        int fromIndexor = (Width * Mathf.RoundToInt(_from.x)) + Mathf.RoundToInt(_from.y);
 
-        if (tiles[toIndexor].EntityOnTile != null || tiles[toIndexor].State == TileType.Impassable)
-        {
-            //TODO: make this account for landing on an impassable tile
-        }
         tiles[toIndexor].PlaceEntity(tiles[fromIndexor].EntityOnTile);
         tiles[fromIndexor].RemoveEntity();
     }
 
+    public static Tile TryGetTile(Vector2 _origin, Vector2 _pos)
+    {
+        int flatCoord = (Width * Mathf.RoundToInt(_pos.x)) + Mathf.RoundToInt(_pos.y);
+        if (flatCoord < 0 || flatCoord > tiles.Length)
+        {
+            Vector2 originToPosNorm = (_pos - _origin).normalized;
+            float vectorLength = Vector2.Distance(_origin, _pos);
+
+            int sampleMult = Mathf.RoundToInt(vectorLength);
+            Vector2 gridSample = _origin + (sampleMult * originToPosNorm);
+            while(Vector2.Distance(_origin, gridSample) >= 0)
+            {
+                Tile sampleTile = GetTile(gridSample);
+                if (sampleTile != null)
+                    return sampleTile;
+                gridSample = _origin + (--sampleMult * originToPosNorm);
+            }
+            return null;
+        }
+        return tiles[flatCoord];
+    }
+
     public static Tile GetTile(int _indexX, int _indexY)
     {
-        return tiles[Width * _indexX + _indexY];
+        int flatCoord = (Width * _indexX) + _indexY;
+        if (flatCoord < 0 || flatCoord > tiles.Length)
+            return null;
+        return tiles[flatCoord];
     }
     public static Tile GetTile(Vector2 _pos)
     {
-        return tiles[Width * (int)_pos.x + (int)_pos.y];
+        int flatCoord = (Width * Mathf.RoundToInt(_pos.x)) + Mathf.RoundToInt(_pos.y);
+        if (flatCoord < 0 || flatCoord > tiles.Length)
+            return null;
+        return tiles[flatCoord];
     }
 
     public static byte[] ConvertMapToBytes()
@@ -102,6 +111,26 @@ public static class Tilemap
 
                 tiles[Width * x + y].SetNeighbours(new bool[] { legalLeft, legalUp, legalRight, legalDown });
             }
+    }
+
+    private static void SendMapGenerate(ref Message _msg)
+    {
+        _msg.Add(Width);
+        _msg.Add(Height);
+        _msg.Add(ConvertMapToBytes(), true, true);
+        NetworkManager.Instance.Server.SendToAll(_msg);
+    }
+    private static void SendDeploymentZoneGenerate(ref Message _msg)
+    {
+        for (int i = 1; i < GameSettings.TotalPlayers + 1; i++)
+        {
+            _msg = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientRequest.GenerateDeploymentZones);
+            _msg.Add(i);
+            _msg.Add(Tile.DeploymentZones[i].Count);
+            for (int j = 0; j < Tile.DeploymentZones[i].Count; j++)
+                _msg.Add(Tile.DeploymentZones[i][j]);
+            NetworkManager.Instance.Server.SendToAll(_msg);
+        }
     }
 
     private static void DrawDebugMap()

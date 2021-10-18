@@ -38,9 +38,9 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         Timeline.Progress();
     }
 
-    public void Die(OnMeterEmpty _info)
+    public void Die(OnMeterModified _info)
     {
-        if (_info.MeterType == EntityValueType.Health && _info.EntityID == EntityID)
+        if (_info.MeterType == EntityValueType.Health && _info.NewValue == 0 && _info.EntityID == EntityID)
         {
             //TODO: death stuff
             if (GameManager.ActiveEntity == this)
@@ -56,30 +56,15 @@ public class Aspect : IEntityBehaviour, IAbilityCasterBehaviour
         Code = _code;
         InitialiseStatistics(Code);
 
-        MapPosition = _mapPos;
-
-        if (AbilityContainer.AbilitiesMap.ContainsKey(Code))
-            AbilityCaster = new AbilityCaster(AbilityContainer.AbilitiesMap[Code]);
+        Tilemap.GetTile(_mapPos).PlaceEntity(this);
 
         AssignTurn(new AspectTurn(EntityID, BaseInitiative));
-    }
-    public Aspect(int _groupID, string _code, Vector2 _mapPos, ITimelineEvent _turn)
-    {
-        GroupingID = _groupID;
-        EntityID = GameManager.RegisterEntity(this);
-
-        Code = _code;
-        InitialiseStatistics(Code);
-
-        MapPosition = _mapPos;
 
         if (!AbilityContainer.AbilitiesMap.ContainsKey(Code))
             new AbilityContainer(Code);
 
         AbilityCaster = new AbilityCaster(AbilityContainer.AbilitiesMap[Code]);
-
-        AssignTurn(_turn);
-        GameEventSystem.SubListener<OnMeterEmpty>(Die);
+        GameEventSystem.SubListener<OnMeterModified>(Die);
     }
 
     private void InitialiseStatistics(string _code)

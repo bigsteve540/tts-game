@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnMeterEmpty : GameEventInfo
+public class OnMeterModified : GameEventInfo
 {
     public int EntityID { get; }
     public EntityValueType MeterType { get; }
-    public ValueEffector EmptyCause { get; }
+    public ValueEffector Cause { get; }
 
-    public OnMeterEmpty(int _entityID, EntityValueType _meterType, ValueEffector _emptyCause)
+    public int PreviousValue { get; }
+    public int NewValue { get; }
+
+    public OnMeterModified(int _entityID, EntityValueType _meterType, ValueEffector _cause, int _prev, int _new)
     {
         EntityID = _entityID;
         MeterType = _meterType;
-        EmptyCause = _emptyCause;
+        Cause = _cause;
+        PreviousValue = _prev;
+        NewValue = _new;
     }
 }

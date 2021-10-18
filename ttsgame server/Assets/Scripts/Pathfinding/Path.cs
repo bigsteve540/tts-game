@@ -29,7 +29,6 @@ namespace Game.Pathing
         private List<Tile> GeneratePathToTile(Vector2 _origin, Vector2 _goal)
         {
             bool isBlink = MovementFlags == InterruptEventType.Movement_Start;
-            Debug.Log(isBlink);
 
             Dictionary<Tile, float> distances = new Dictionary<Tile, float>();
             Dictionary<Tile, Tile> previous = new Dictionary<Tile, Tile>();

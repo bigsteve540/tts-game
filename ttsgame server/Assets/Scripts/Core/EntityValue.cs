@@ -33,7 +33,6 @@ public class EntityValue : EntityStatistic
 
     private MitigationEventInfo mitEventInfo;
     private EntityValueEffectParameters parameters;
-    private OnMeterEmpty meterEmptyInfo;
 
     private System.Func<int, int> mitigator { get; }
     private int entityID { get; }
@@ -65,6 +64,7 @@ public class EntityValue : EntityStatistic
                 newVal += Mathf.RoundToInt((Current - MeterValue) * modVal);
                 break;
         }
+
         if (mitigator != null)
         {
             TriggerMitigationEvents(_meterEffector.MitType, MitigationType.Pre, newVal);
@@ -72,23 +72,12 @@ public class EntityValue : EntityStatistic
             TriggerMitigationEvents(_meterEffector.MitType, MitigationType.Post, newVal);
         }
 
+        GameEventSystem.CallEvent(new OnMeterModified(entityID, MeterType, _meterEffector, MeterValue, Mathf.Clamp(MeterValue + newVal, 0, Current)));
         MeterValue = Mathf.Clamp(MeterValue + newVal, 0, Current);
-
-        if(MeterValue == 0)
-        {
-            meterEmptyInfo = new OnMeterEmpty(entityID, MeterType, _meterEffector);
-            GameEventSystem.CallEvent(meterEmptyInfo);
-        }
     }
 
-    public void FillToCurrent() { MeterValue = Current; }
-    public void SetValueTo0()
-    {
-        MeterValue = 0;
-        meterEmptyInfo = new OnMeterEmpty(entityID, MeterType, 
-            new ValueEffector(entityID, this, ValueEffectorType.Flat, MeterValue));
-        GameEventSystem.CallEvent(meterEmptyInfo);
-    }
+    public void FillToCurrentMaximum() { Modify(new ValueEffector(entityID, this, ValueEffectorType.Max, 1f)); }
+    public void SetMeterValueTo0() { Modify(new ValueEffector(entityID, this, ValueEffectorType.Max, -1f)); }
 
     private void TriggerMitigationEvents(MitigationType _flags, MitigationType _typeToMit, int _val)
     {

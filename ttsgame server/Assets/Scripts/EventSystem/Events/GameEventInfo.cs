@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: try to convert gameventsystem to use gameeventinfo as an interface instead of a class. inheritance yucky @A@
 public abstract class GameEventInfo { }
 public abstract class ValueEffectEventInfo : GameEventInfo
 {

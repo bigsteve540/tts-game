@@ -21,7 +21,7 @@ public enum ClientToServerRequest : ushort
     DeploymentCompleted,
     CastAspectAbility
 }
-//FIXME: update client to Riptide v0.7.0
+
 public class NetworkManager : MonoBehaviour
 {
     private static NetworkManager instance;
@@ -71,10 +71,10 @@ public class NetworkManager : MonoBehaviour
         Server.ClientDisconnected += PlayerLeft;
 
         Server.Start(port, maxClientCount);
-        Tilemap.Init(GameMaps.TestBisectedMap);
+        Tilemap.Init(GameMaps.TestMap);
 
-        Path p = new Path(new Vector2(0, 0), new Vector2(4, 4), Movement.MOVE_ALL);
-        Debug.Log(p.Tiles.Count);
+        Aspect a = new Aspect(-99, "A000", new Vector2(5, 0));
+        Movement.MoveEntityByDistance(a, Movement.MOVE_ALL, 7, 45);
     }
 
     private void OnApplicationQuit() { CloseServer(); }

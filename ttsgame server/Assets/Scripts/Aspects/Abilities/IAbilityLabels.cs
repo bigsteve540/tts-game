@@ -35,7 +35,6 @@ public interface IAbilityDamage : IAbilityMeterEffect
 
 public interface IAbilityInterruptable
 {
-    InterruptData InterruptData { get; }
     InterruptEventType InterruptFlags { get; }
     IInterruptParameters Parameters { get; }
 }
